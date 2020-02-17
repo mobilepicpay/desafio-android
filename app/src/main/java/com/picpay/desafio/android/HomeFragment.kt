@@ -1,4 +1,4 @@
-package me.mqueiroz.picpay
+package com.picpay.desafio.android
 
 import android.view.View
 import android.widget.Toast

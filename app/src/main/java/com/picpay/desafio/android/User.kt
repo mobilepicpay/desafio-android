@@ -1,4 +1,4 @@
-package me.mqueiroz.picpay
+package com.picpay.desafio.android
 
 import android.os.Parcelable
 import com.squareup.moshi.Json

@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/nav_host_fragment"
-        android:name="me.mqueiroz.picpay.HomeFragment"
+        android:name="com.picpay.desafio.android.HomeFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

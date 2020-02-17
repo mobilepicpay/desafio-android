@@ -1,8 +1,7 @@
-package me.mqueiroz.picpay
+package com.picpay.desafio.android
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import me.mqueiroz.picpay.R
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
