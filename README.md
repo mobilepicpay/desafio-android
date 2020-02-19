@@ -2,7 +2,7 @@
 
 Um dos desafios de qualquer time de desenvolvimento é lidar com código legado e no PicPay isso não é diferente. Um dos objetivos de trazer os melhores desenvolvedores do Brasil é atacar o problema e, por isso, uma das fases da nossa entrevista é implementar melhorias no código deste repositório.
 
-TODO: ADD APP GIF
+![alt-text](https://github.com/mobilepicpay/desafio-android/blob/master/desafio-picpay.gif)
 
 Com o passar do tempo identificamos alguns problemas que impedem esse aplicativo de escalar e acarretam problemas de experiência do usuário. A partir disso elaboramos a seguinte lista de requisitos que devem ser cumpridos ao melhorar nossa arquitetura:
 
