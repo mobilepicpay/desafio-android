@@ -6,13 +6,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.moshi.Moshi
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -22,10 +23,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val url = "http://careers.picpay.com/tests/mobdev/"
 
-    private val moshi: Moshi by lazy {
-        Moshi.Builder()
-            .build()
-    }
+    private val gson: Gson by lazy { GsonBuilder().create() }
 
     private val okHttp: OkHttpClient by lazy {
         OkHttpClient.Builder()
@@ -36,7 +34,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         Retrofit.Builder()
             .baseUrl(url)
             .client(okHttp)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 
