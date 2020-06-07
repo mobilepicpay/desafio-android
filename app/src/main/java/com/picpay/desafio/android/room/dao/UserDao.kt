@@ -23,7 +23,7 @@ interface UserDao {
 
     @Transaction
     @Query("SELECT * FROM User")
-    suspend fun get(): List<User>?
+    suspend fun getUsers(): List<User>?
 
     @Query("SELECT * FROM User WHERE id=:userId ")
     suspend fun getUser(userId: Int): User?

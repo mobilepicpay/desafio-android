@@ -36,7 +36,6 @@ class UserListFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         userListViewModel.getUsersLiveDate().observe(viewLifecycleOwner, observer)
-        getUsers()
         super.onActivityCreated(savedInstanceState)
     }
 
@@ -50,10 +49,6 @@ class UserListFragment : BaseFragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = userListAdapter
         }
-    }
-
-    private fun getUsers() {
-        userListViewModel.getUsers()
     }
 
     private fun onResult(result: UsersResult) {

@@ -7,6 +7,6 @@ object Constants {
     const val DATABASE_NAME = "picpay-app"
     const val CACHE_THRESHOLD = 1 * 3600000L // 1 hora
     const val RETRY_DELAY = 2000L
-    const val MAX_RETRIES: Int = 3
+    const val MAX_RETRIES = 2L
 
 }

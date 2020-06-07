@@ -16,7 +16,7 @@ class UserListViewModel(
 
     fun getUsersLiveDate() = usersLiveData
 
-    fun getUsers() {
+    init {
         viewModelScope.launch {
             userRepository.getUsers().collect { userResult ->
                 usersLiveData.value = userResult

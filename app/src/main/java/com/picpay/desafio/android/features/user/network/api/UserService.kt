@@ -1,12 +1,11 @@
-package com.picpay.desafio.android.network.api
+package com.picpay.desafio.android.features.user.network.api
 
 import androidx.annotation.WorkerThread
-import com.picpay.desafio.android.network.response.UserResponse
-import kotlinx.coroutines.Deferred
+import com.picpay.desafio.android.features.user.network.response.UserResponse
 import retrofit2.Response
 import retrofit2.http.GET
 
-interface PicPayService {
+interface UserService {
 
     @WorkerThread
     @GET("users")

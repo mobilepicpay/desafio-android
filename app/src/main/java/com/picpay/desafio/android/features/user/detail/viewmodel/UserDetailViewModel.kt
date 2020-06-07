@@ -18,8 +18,9 @@ class UserDetailViewModel(
 
     fun getUser(userId: Int) {
         viewModelScope.launch {
-            userRepository.getUser(userId).collect {
-                userLiveData.value = it
+            val flow = userRepository.getUser(userId)
+            flow.collect { result: UserResult ->
+                userLiveData.value = result
             }
         }
     }

@@ -3,13 +3,11 @@ package com.picpay.desafio.android.di
 import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.picpay.desafio.android.BuildConfig
-import com.picpay.desafio.android.features.user.detail.ui.UserDetailFragment
 import com.picpay.desafio.android.features.user.detail.viewmodel.UserDetailViewModel
 import com.picpay.desafio.android.features.user.list.adapter.UserListAdapter
-import com.picpay.desafio.android.features.user.list.ui.UserListFragment
 import com.picpay.desafio.android.features.user.list.viewmodel.UserListViewModel
 import com.picpay.desafio.android.features.user.repository.UserRepository
-import com.picpay.desafio.android.network.api.PicPayService
+import com.picpay.desafio.android.features.user.network.api.UserService
 import com.picpay.desafio.android.room.db.PicPayDatabase
 import com.picpay.desafio.android.utils.Constants
 import okhttp3.OkHttpClient
@@ -61,7 +59,7 @@ object KoinModule {
                 .build()
         }
 
-        single { get<Retrofit>().create(PicPayService::class.java) }
+        single { get<Retrofit>().create(UserService::class.java) }
     }
 
     private val databaseModule = module {

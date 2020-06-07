@@ -1,6 +1,6 @@
 package com.picpay.desafio.android.utils
 
-import com.picpay.desafio.android.room.models.StringKeyValuePair
+import com.picpay.desafio.android.room.models.KeyValuePair
 
 object Utils {
 
@@ -11,7 +11,7 @@ object Utils {
         return (System.currentTimeMillis() - lastApiCallMillis.toLong()) >= cacheThresholdInMillis
     }
 
-    fun getCurrentTimeKeyValuePair(key: String): StringKeyValuePair {
-        return StringKeyValuePair(key, System.currentTimeMillis().toString())
+    fun getCurrentTimeKeyValuePair(key: String): KeyValuePair {
+        return KeyValuePair(key, System.currentTimeMillis().toString())
     }
 }
