@@ -2,7 +2,7 @@ package com.picpay.desafio.android
 
 import android.app.Application
 import com.picpay.desafio.data.di.DataModule
-import com.picpay.desafio.presentation.di.PresentationModule
+import com.picpay.desafio.android.di.PresentationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

@@ -1,1 +1,1 @@
-include ':app', ':data', ':domain', ':presentation'
+include ':app', ':data', ':domain'
