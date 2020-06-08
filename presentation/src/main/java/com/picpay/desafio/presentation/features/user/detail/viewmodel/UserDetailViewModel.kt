@@ -3,8 +3,8 @@ package com.picpay.desafio.presentation.features.user.detail.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.picpay.desafio.domain.result.Result
 import com.picpay.desafio.domain.models.User
+import com.picpay.desafio.domain.result.Result
 import com.picpay.desafio.domain.usecases.GetUserDetail
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
