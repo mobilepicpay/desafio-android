@@ -7,7 +7,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
-import com.picpay.desafio.android.features.main.MainActivity
+import com.picpay.desafio.presentation.features.main.MainActivity
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -18,16 +18,13 @@ import org.junit.Test
 class MainActivityTest {
 
     private val server = MockWebServer()
-
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
 
     @Test
     fun shouldDisplayTitle() {
         launchActivity<MainActivity>().apply {
             val expectedTitle = context.getString(R.string.title)
-
             moveToState(Lifecycle.State.RESUMED)
-
             onView(withText(expectedTitle)).check(matches(isDisplayed()))
         }
     }

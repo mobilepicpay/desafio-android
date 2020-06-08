@@ -1,7 +1,8 @@
 package com.picpay.desafio.android
 
 import android.app.Application
-import com.picpay.desafio.android.di.KoinModule
+import com.picpay.desafio.data.di.DataModule
+import com.picpay.desafio.presentation.di.PresentationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -15,10 +16,17 @@ class PicPayApplication : Application() {
             Timber.plant(Timber.DebugTree())
         }
 
+        setupKoin()
+    }
+
+    private fun setupKoin() {
+        val modules = PresentationModule.getModules()
+        modules.addAll(DataModule.getModules())
+
         startKoin {
             androidLogger()
             androidContext(this@PicPayApplication)
-            modules(KoinModule.getModules())
+            modules(modules)
         }
     }
 }
