@@ -1,9 +1,6 @@
 package com.picpay.desafio.android.main
 
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
@@ -16,11 +13,9 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.features.main.MainActivity
-import com.picpay.desafio.android.features.user.list.ui.UserListFragment
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
+
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
@@ -41,18 +36,12 @@ class MainActivityTest {
     }
 
     @Test
-    fun test_NavigationControl() {
-        val mockNavController = mock(NavController::class.java)
-        val fragmentScenario = launchFragmentInContainer<UserListFragment>()
-
-        fragmentScenario.onFragment { fragment ->
-            Navigation.setViewNavController(fragment.requireView(), mockNavController)
+    fun test_NavigationToUserDetail() {
+        launchActivity<MainActivity>().apply {
+            onView(withId(R.id.recyclerView)).perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click())
+            )
+            onView(withId(R.id.user_detail_fragment)).check(matches(isDisplayed()))
         }
-
-        onView(withId(R.id.recyclerView)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(2, click())
-        )
-
-        verify(mockNavController).navigate(R.id.action_userListFragment_to_userDetailFragment)
     }
 }

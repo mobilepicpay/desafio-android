@@ -31,6 +31,7 @@ buildscript {
         core_ktx_test_version = "1.2.0"
         ext_ktx_test_version = "1.1.0"
         gson = "2.8.6"
+        mockito_version = "3.2.4"
     }
 
     repositories {

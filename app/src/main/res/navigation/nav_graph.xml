@@ -11,16 +11,25 @@
 
         <action
             android:id="@+id/action_userListFragment_to_userDetailFragment"
-            app:destination="@id/userDetailFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:destination="@id/userDetailFragment" />
+
     </fragment>
 
     <fragment
         android:id="@+id/userDetailFragment"
         android:name="com.picpay.desafio.android.features.user.detail.ui.UserDetailFragment"
-        android:label="UserDetailFragment" />
+        android:label="UserDetailFragment">
+
+        <argument
+            android:name="user_id"
+            app:argType="integer"
+            android:defaultValue="0" />
+
+        <argument
+            android:name="user_img"
+            android:defaultValue="null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 
 </navigation>

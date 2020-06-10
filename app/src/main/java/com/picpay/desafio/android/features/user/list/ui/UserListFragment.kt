@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import android.widget.ImageView
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.base.BaseFragment
-import com.picpay.desafio.android.features.user.detail.ui.UserDetailFragment.Companion.USER_ID_PARAM
 import com.picpay.desafio.android.features.user.list.adapter.UserListAdapter
 import com.picpay.desafio.android.features.user.list.viewmodel.UserListViewModel
 import com.picpay.desafio.domain.models.User
@@ -63,9 +62,15 @@ class UserListFragment : BaseFragment() {
         userListAdapter.setData(userList, ::onItemListClick)
     }
 
-    private fun onItemListClick(userId: Int) {
-        val bundle = bundleOf(USER_ID_PARAM to userId)
-        findNavController().navigate(R.id.action_userListFragment_to_userDetailFragment, bundle)
+    private fun onItemListClick(user: User, imageView: ImageView) {
+        val extras = FragmentNavigatorExtras(
+            imageView to user.img
+        )
+
+        val action = UserListFragmentDirections
+            .actionUserListFragmentToUserDetailFragment(user.id, user.img)
+
+        findNavController().navigate(action, extras)
     }
 
     private fun handleProgress(loading: Boolean) {
