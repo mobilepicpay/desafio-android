@@ -62,7 +62,6 @@ class MainActivityTest {
         server.shutdown()
     }
 
-
     @Test
     fun shouldDisplayListItem() {
         mockSucces()
@@ -81,7 +80,6 @@ class MainActivityTest {
             onView(withText(expectedError))
         }
         server.shutdown()
-
     }
 
     private fun mockSucces() {

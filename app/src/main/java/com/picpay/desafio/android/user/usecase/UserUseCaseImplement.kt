@@ -14,7 +14,6 @@ class UserUseCaseImplement(private val repository: UserRepository) : UserUseCase
         }
     }
 
-
     private fun getUserResultNotEmptyOrError(result: Result<List<User>>): Result<List<User>> {
         return if (result.isSuccess && result.getOrNull().isNullOrEmpty()) {
             Result.failure(UserEmptyException())

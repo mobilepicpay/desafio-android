@@ -27,7 +27,6 @@ class UserUseCaseImplementTest {
             assertNull(result.exceptionOrNull())
             assertEquals(UserMock.mockUserEntity(), result.getOrNull())
         }
-
     }
 
     @Test
@@ -58,7 +57,6 @@ class UserUseCaseImplementTest {
             assertNull(result.getOrNull())
             assertEquals("lista vazia", result.exceptionOrNull()?.message)
         }
-
     }
 
     @Test
