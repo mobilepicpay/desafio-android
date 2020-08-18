@@ -10,4 +10,14 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Chmod Permissions #if permission for Gradlew Dependencies fail, use this.
+          command: sudo chmod +x ./gradlew
+      - run:
+          name: build
           command: ./gradlew build
+      - run:
+          name: Check Code Style
+          command: ./gradlew clean ktlintCheck --no-daemon
+      - run:
+          name: Check Unit Tests
+          command: ./gradlew clean test --no-daemon
