@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.user.UserListAdapter
 import com.picpay.desafio.android.user.model.User
 import com.picpay.desafio.android.user.viewmodel.UserViewModel
-import com.picpay.desafio.android.user.viewmodel.events.UserViewEvents
 import com.picpay.desafio.android.user.viewmodel.status.UserStatus
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -24,8 +23,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         observeStates()
-        observeEvents()
-        viewmodel.start()
+        viewmodel.fetch()
     }
 
     private fun observeStates() {
@@ -34,16 +32,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 when (it) {
                     is UserStatus.UserError -> showError()
                     is UserStatus.UserSuccess -> showUserList(it.users)
-                }
-            }
-        })
-    }
-
-    private fun observeEvents() {
-        viewmodel.event.observe(this, Observer { event ->
-            event?.let {
-                when (it) {
-                    is UserViewEvents.UserViewShowLoading -> progressBar.visibility = (it.visible)
                 }
             }
         })
