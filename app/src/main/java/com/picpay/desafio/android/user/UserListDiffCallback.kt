@@ -1,7 +1,7 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.user
 
 import androidx.recyclerview.widget.DiffUtil
-import com.picpay.desafio.android.User
+import com.picpay.desafio.android.user.model.User
 
 class UserListDiffCallback(
     private val oldList: List<User>,
@@ -9,18 +9,14 @@ class UserListDiffCallback(
 ) : DiffUtil.Callback() {
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].username.equals(newList[newItemPosition].username)
+        return oldList[oldItemPosition].id == newList[newItemPosition].id
     }
 
-    override fun getOldListSize(): Int {
-        return oldList.size
-    }
+    override fun getOldListSize() = oldList.size
 
-    override fun getNewListSize(): Int {
-        return newList.size
-    }
+    override fun getNewListSize() = newList.size
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return true
+        return oldList[oldItemPosition].username == newList[newItemPosition].username
     }
 }
