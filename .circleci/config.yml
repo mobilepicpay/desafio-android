@@ -13,7 +13,7 @@ jobs:
           name: Chmod Permissions #if permission for Gradlew Dependencies fail, use this.
           command: sudo chmod +x ./gradlew
       - run:
-          name: build
+          name: Build
           command: ./gradlew build
       - run:
           name: Check Code Style
