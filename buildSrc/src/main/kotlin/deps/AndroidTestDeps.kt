@@ -1,0 +1,5 @@
+package deps
+
+object AndroidTestDeps {
+
+}
