@@ -1,8 +1,8 @@
-package com.picpay.desafio.android.shared.data
+package com.picpay.desafio.android.shared.data.remote
 
 import com.google.gson.annotations.SerializedName
 
-data class UserResponse(
+data class UserRemote(
     @SerializedName("img") val img: String,
     @SerializedName("name") val name: String,
     @SerializedName("id") val id: Int,

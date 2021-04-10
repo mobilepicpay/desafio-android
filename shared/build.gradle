@@ -1,5 +1,15 @@
+import compilers.Compilers
+import deps.Deps
+
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+}
+
+dependencies {
+    implementation(Deps.room)
+
+    kapt(Compilers.room)
 }

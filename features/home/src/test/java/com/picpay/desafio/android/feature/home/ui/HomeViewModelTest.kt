@@ -1,8 +1,8 @@
 package com.picpay.desafio.android.feature.home.ui
 
 import com.google.common.truth.Truth.assertThat
-import com.picpay.desafio.android.feature.home.interactor.user.GetUserListError
 import com.picpay.desafio.android.feature.home.interactor.user.GetUserListUseCase
+import com.picpay.desafio.android.feature.home.interactor.user.GetUserListUseCase.GetUserListError
 import com.picpay.desafio.android.feature.home.interactor.user.UserEntity
 import com.picpay.desafio.android.feature.home.testing.MockKViewModelTest
 import com.picpay.desafio.android.feature.home.ui.HomeViewModel.HomeViewEvent
@@ -81,7 +81,7 @@ internal class HomeViewModelTest : MockKViewModelTest<HomeViewModel, HomeViewSta
     @Test
     fun `onCreate SHOULD emit Error AND SendErrorToast WHEN useCase returns NoInternetError`() {
         // Given
-        coEvery { getUserListUseCase() } returns EntityResult.Error(GetUserListError.NoInternet)
+        coEvery { getUserListUseCase() } returns EntityResult.Error(GetUserListError.NoInternetError)
         // When
         viewModel.onCreate()
         // Then

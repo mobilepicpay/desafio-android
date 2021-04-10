@@ -39,7 +39,7 @@ class UserListItemViewHolder(private val binding: ListItemUserBinding) : Recycle
         binding.progressBar.visibility = View.VISIBLE
 
         Glide.with(itemView)
-            .load(user.img)
+            .load(user.imageUrl)
             .error(R.drawable.ic_round_account_circle)
             .addListener(imageLoadListener)
             .into(binding.picture)

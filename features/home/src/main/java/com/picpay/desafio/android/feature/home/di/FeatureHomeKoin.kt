@@ -13,7 +13,7 @@ import org.koin.dsl.module
 object FeatureHomeKoin : KoinModule() {
 
     private val gatewayModule = module {
-        factory<UserGateway> { DefaultUserGateway() }
+        factory<UserGateway> { DefaultUserGateway(get(), get(), get()) }
     }
 
     private val useCaseModule = module {

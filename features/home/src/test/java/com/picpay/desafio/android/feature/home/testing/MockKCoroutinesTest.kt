@@ -4,7 +4,7 @@ import io.mockk.MockKAnnotations
 import org.junit.After
 import org.junit.Before
 
-abstract class MockKUseCaseTest {
+abstract class MockKCoroutinesTest {
 
     protected val dispatching = TestDispatching()
 

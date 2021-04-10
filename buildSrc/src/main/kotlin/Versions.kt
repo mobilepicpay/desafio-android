@@ -15,6 +15,8 @@ internal object Versions {
     const val okHttp = "4.9.0"
     const val gson = "2.8.6"
 
+    const val room = "2.2.6"
+
     const val glide = "4.12.0"
 
     const val timber = "4.7.1"

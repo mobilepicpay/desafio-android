@@ -38,6 +38,11 @@ object Deps {
         "com.google.code.gson:gson:${Versions.gson}"
     )
 
+    val room = arrayListOf(
+        "androidx.room:room-runtime:${Versions.room}",
+        "androidx.room:room-ktx:${Versions.room}"
+    )
+
     val glide = arrayListOf(
         "com.github.bumptech.glide:glide:${Versions.glide}"
     )
