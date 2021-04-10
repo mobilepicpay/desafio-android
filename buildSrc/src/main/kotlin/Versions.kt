@@ -1,6 +1,6 @@
 internal object Versions {
     const val kotlin = "1.4.32"
-    const val kotlinCoroutines = "1.4.1"
+    const val kotlinCoroutines = "1.4.3"
 
     const val androidCore = "1.3.2"
     const val androidAppCompat = "1.2.0"

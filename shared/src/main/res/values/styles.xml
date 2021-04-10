@@ -1,0 +1,20 @@
+<resources>
+
+    <style name="Knights"/>
+    <!-- Base application theme. -->
+    <style name="Knights.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Knights.TextView" />
+
+    <style name="Knights.TextView.ScreenTitleTextView" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

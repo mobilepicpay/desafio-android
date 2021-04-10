@@ -1,21 +1,24 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-parcelize'
-apply plugin: 'kotlin-kapt'
+import deps.AndroidTestDeps
+import deps.Deps
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
 
 android {
-    compileSdkVersion 30
     defaultConfig {
         applicationId "com.picpay.desafio.android"
-        minSdkVersion 21
-        targetSdkVersion 30
+
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
-        debug {}
+        debug {
+
+        }
 
         release {
             minifyEnabled true
@@ -23,62 +26,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    buildFeatures {
-        viewBinding true
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':features:home')
+    implementation project(path: ':shared')
 
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$Versions.kotlin"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$Versions.kotlinCoroutines"
+    implementation(
+            Deps.kotlin,
+            Deps.android,
+            Deps.koin,
+            Deps.timber,
+    )
 
-    // Android
-    implementation "androidx.core:core-ktx:$Versions.androidCore"
-    implementation "androidx.appcompat:appcompat:$Versions.androidAppCompat"
-    implementation "androidx.constraintlayout:constraintlayout:$Versions.constraintLayout"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$Versions.androidLifecycle"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$Versions.androidLifecycle"
-    implementation "com.google.android.material:material:$Versions.materialDesign"
-    implementation "de.hdodenhof:circleimageview:$Versions.circleImageView"
-
-    // Dependency Injection Framework
-    implementation "org.koin:koin-core:$Versions.koin"
-    implementation "org.koin:koin-android:$Versions.koin"
-    implementation "org.koin:koin-androidx-viewmodel:$Versions.koin"
-
-    // REST API Service
-    implementation "com.squareup.retrofit2:retrofit:$Versions.retrofit"
-    implementation "com.squareup.retrofit2:converter-gson:$Versions.retrofit"
-    implementation "com.squareup.okhttp3:logging-interceptor:$Versions.okHttp"
-    implementation "com.google.code.gson:gson:$Versions.gson"
-
-    // Image API Service
-    implementation "com.github.bumptech.glide:glide:$Versions.glide"
-    kapt "com.github.bumptech.glide:compiler:$Versions.glide"
-
-    // Logger
-    implementation "com.jakewharton.timber:timber:$Versions.timber"
-
-    // Unit Test
-    testImplementation "junit:junit:$Versions.junit"
-    testImplementation "com.google.truth:truth:$Versions.truth"
-    testImplementation "io.mockk:mockk:$Versions.mockk"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$Versions.kotlinCoroutinesTest"
-
-    // Ui Test
-    androidTestImplementation "androidx.test:runner:$Versions.runner"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$Versions.espresso"
+    androidTestImplementation(
+            AndroidTestDeps.runner,
+            AndroidTestDeps.espresso
+    )
 }

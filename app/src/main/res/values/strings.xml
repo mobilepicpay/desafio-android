@@ -1,6 +1,3 @@
 <resources>
-    <string name="app_name">PicPay</string>
-    <string name="title">Contatos</string>
-    <string name="error">Ocorreu um erro. Tente novamente.</string>
-
+    <string name="app_name">Knights</string>
 </resources>

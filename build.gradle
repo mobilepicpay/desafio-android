@@ -1,3 +1,7 @@
+import deps.AndroidTestDeps
+import deps.Deps
+import deps.TestDeps
+
 buildscript {
     repositories {
         google()
@@ -14,6 +18,35 @@ allprojects {
     repositories {
         google()
         jcenter()
+    }
+}
+
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            android {
+                compileSdkVersion 30
+
+                defaultConfig {
+                    minSdkVersion 21
+                    targetSdkVersion 30
+                    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+                }
+
+                compileOptions {
+                    sourceCompatibility JavaVersion.VERSION_1_8
+                    targetCompatibility JavaVersion.VERSION_1_8
+                }
+
+                kotlinOptions {
+                    jvmTarget = JavaVersion.VERSION_1_8.toString()
+                }
+
+                buildFeatures {
+                    viewBinding true
+                }
+            }
+        }
     }
 }
 

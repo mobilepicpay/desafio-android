@@ -1,0 +1,38 @@
+import compilers.Compilers
+import deps.AndroidTestDeps
+import deps.Deps
+import deps.TestDeps
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+dependencies {
+    implementation project(path: ':shared')
+
+    implementation(
+            Deps.kotlin,
+            Deps.android,
+            Deps.circleImageView,
+            Deps.retrofit,
+            Deps.koin,
+            Deps.glide,
+            Deps.timber
+    )
+
+    kapt(Compilers.glide)
+
+    testImplementation(
+            TestDeps.junit,
+            TestDeps.truth,
+            TestDeps.mockk,
+            TestDeps.coroutines
+    )
+
+    androidTestImplementation(
+            AndroidTestDeps.runner,
+            AndroidTestDeps.espresso
+    )
+}
