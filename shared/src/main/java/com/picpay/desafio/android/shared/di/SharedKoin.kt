@@ -1,7 +1,9 @@
 package com.picpay.desafio.android.shared.di
 
 import com.google.gson.GsonBuilder
-import com.picpay.desafio.android.shared.data.PicPayService
+import com.picpay.desafio.android.shared.coroutine.CoroutineDispatching
+import com.picpay.desafio.android.shared.coroutine.DefaultDispatching
+import com.picpay.desafio.android.shared.data.PicPayApi
 import okhttp3.OkHttpClient
 import org.koin.core.KoinApplication
 import org.koin.core.context.loadKoinModules
@@ -9,7 +11,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object SharedKoin {
+object SharedKoin: KoinModule() {
 
     private val retrofitModule = module {
         single<Retrofit> {
@@ -24,14 +26,18 @@ object SharedKoin {
                 .build()
         }
 
-        single<PicPayService> {
-            get<Retrofit>().create(PicPayService::class.java)
+        single<PicPayApi> {
+            get<Retrofit>().create(PicPayApi::class.java)
         }
     }
 
-    fun loadSharedModules(koinApplication: KoinApplication) {
+    private val coroutineModule = module {
+        single<CoroutineDispatching> { DefaultDispatching() }
+    }
+
+    override fun loadModule(koinApplication: KoinApplication) {
         koinApplication.apply {
-            loadKoinModules(retrofitModule)
+            loadKoinModules(retrofitModule + coroutineModule)
         }
     }
 }

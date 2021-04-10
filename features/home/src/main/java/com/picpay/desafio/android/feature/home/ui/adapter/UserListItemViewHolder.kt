@@ -10,7 +10,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.picpay.desafio.android.feature.home.R
 import com.picpay.desafio.android.feature.home.databinding.ListItemUserBinding
-import com.picpay.desafio.android.shared.data.User
+import com.picpay.desafio.android.feature.home.interactor.user.UserEntity
 
 class UserListItemViewHolder(private val binding: ListItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -33,7 +33,7 @@ class UserListItemViewHolder(private val binding: ListItemUserBinding) : Recycle
 
     }
 
-    fun bind(user: User) {
+    fun bind(user: UserEntity) {
         binding.name.text = user.name
         binding.username.text = user.username
         binding.progressBar.visibility = View.VISIBLE

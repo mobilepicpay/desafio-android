@@ -5,7 +5,8 @@ import Versions
 object Deps {
     val kotlin = arrayListOf(
         "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}",
-        "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}",
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlinCoroutines}"
     )
 
     val android = arrayListOf(

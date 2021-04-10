@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.feature.home.entity
+package com.picpay.desafio.android.feature.home.interactor.user
 
 data class UserEntity(
     val id: Int,

@@ -1,20 +1,46 @@
 package com.picpay.desafio.android.feature.home.ui
 
-import com.picpay.desafio.android.feature.home.ui.HomeViewModel.Event
-import com.picpay.desafio.android.feature.home.ui.HomeViewModel.State
+import com.picpay.desafio.android.feature.home.interactor.user.GetUserListUseCase
+import com.picpay.desafio.android.feature.home.interactor.user.UserEntity
+import com.picpay.desafio.android.feature.home.ui.HomeViewModel.HomeViewEvent
+import com.picpay.desafio.android.feature.home.ui.HomeViewModel.HomeViewState
 import com.picpay.desafio.android.shared.coroutine.CoroutineDispatching
 import com.picpay.desafio.android.shared.coroutine.CoroutineViewModel
+import com.picpay.desafio.android.shared.domain.EntityResult
+import kotlinx.coroutines.launch
 
-internal class HomeViewModel(dispatching: CoroutineDispatching) : CoroutineViewModel<State, Event>(dispatching) {
-    sealed class State {
-        object Loading : State()
-        object LoadUserList : State()
-        object Error : State()
+internal class HomeViewModel(
+    dispatching: CoroutineDispatching,
+    private val getUserListUseCase: GetUserListUseCase
+) : CoroutineViewModel<HomeViewState, HomeViewEvent>(dispatching) {
+
+    sealed class HomeViewState {
+        object Loading : HomeViewState()
+        data class UserList(val list: List<UserEntity>) : HomeViewState()
+        object Error : HomeViewState()
     }
 
-    sealed class Event
+    sealed class HomeViewEvent {
+        object SendErrorToast : HomeViewEvent()
+    }
 
     fun onCreate() {
-        // TODO carregar a lista de usuarios
+        scope.launch {
+            _state.value = HomeViewState.Loading
+
+            getUserListUseCase().also {
+                when (it) {
+                    is EntityResult.Success -> {
+                        _state.value = HomeViewState.UserList(it.value)
+                    }
+
+                    is EntityResult.Error -> {
+                        _state.value = HomeViewState.Error
+                        _event.value = HomeViewEvent.SendErrorToast
+                    }
+
+                }
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.picpay.desafio.android
 
 import android.app.Application
+import com.picpay.desafio.android.feature.home.di.FeatureHomeKoin
 import com.picpay.desafio.android.shared.di.SharedKoin
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -16,14 +17,17 @@ class App : Application() {
     }
 
     private fun initLogger() {
-        Timber.plant(Timber.DebugTree())
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 
     private fun initDependencyInjection() {
         startKoin {
             androidContext(this@App)
 
-            SharedKoin.loadSharedModules(this)
+            arrayListOf(SharedKoin, FeatureHomeKoin)
+                .forEach { it.loadModule(this) }
         }
     }
 }

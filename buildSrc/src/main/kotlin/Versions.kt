@@ -24,6 +24,7 @@ internal object Versions {
     const val truth = "1.1.2"
     const val mockk = "1.10.2"
     const val kotlinCoroutinesTest = "1.3.9"
+    const val androidCoreTest = "2.1.0"
 
     // AndroidTest
     const val runner = "1.3.0"

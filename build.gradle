@@ -46,6 +46,32 @@ subprojects {
                     viewBinding true
                 }
             }
+
+            dependencies {
+
+                implementation(
+                        Deps.kotlin,
+                        Deps.android,
+                        Deps.circleImageView,
+                        Deps.retrofit,
+                        Deps.lifecycle,
+                        Deps.koin,
+                        Deps.timber
+                )
+
+                testImplementation(
+                        TestDeps.junit,
+                        TestDeps.truth,
+                        TestDeps.mockk,
+                        TestDeps.coroutines,
+                        TestDeps.androidCore
+                )
+
+                androidTestImplementation(
+                        AndroidTestDeps.runner,
+                        AndroidTestDeps.espresso
+                )
+            }
         }
     }
 }

@@ -19,4 +19,8 @@ object TestDeps {
     val coroutines = arrayListOf(
         "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinCoroutinesTest}"
     )
+
+    val androidCore = arrayListOf(
+        "androidx.arch.core:core-testing:${Versions.androidCoreTest}"
+    )
 }

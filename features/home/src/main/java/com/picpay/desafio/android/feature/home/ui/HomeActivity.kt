@@ -1,67 +1,86 @@
 package com.picpay.desafio.android.feature.home.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.feature.home.R
-import com.picpay.desafio.android.feature.home.ui.adapter.UserListAdapter
 import com.picpay.desafio.android.feature.home.databinding.HomeActivityBinding
-import com.picpay.desafio.android.shared.data.PicPayService
-import com.picpay.desafio.android.shared.data.User
-import okhttp3.OkHttpClient
-import org.koin.android.ext.android.inject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.picpay.desafio.android.feature.home.interactor.user.UserEntity
+import com.picpay.desafio.android.feature.home.ui.adapter.UserListAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var adapter: UserListAdapter
 
-    private val service: PicPayService by inject()
-
     private lateinit var binding: HomeActivityBinding
+
+    private val viewModel: HomeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        bindView()
+        setupView()
+
+        setupObservables()
+        viewModel.onCreate()
+    }
+
+    private fun bindView() {
         binding = HomeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 
-    override fun onResume() {
-        super.onResume()
-
+    private fun setupView() {
         adapter = UserListAdapter()
         binding.recyclerView.let {
             it.adapter = adapter
             it.layoutManager = LinearLayoutManager(this)
         }
+    }
+
+    private fun setupObservables() {
+        viewModel.state.observe(this, { it?.let { renderState(it) } })
+        viewModel.event.observe(this, { it?.let { performEvent(it) } })
+    }
+
+    private fun renderState(state: HomeViewModel.HomeViewState) {
+        Timber.i("State ----> ${state::class.java.simpleName}")
+        when (state) {
+            HomeViewModel.HomeViewState.Error -> renderError()
+            HomeViewModel.HomeViewState.Loading -> renderLoading()
+            is HomeViewModel.HomeViewState.UserList -> renderUserList(state.list)
+        }
+    }
+
+    private fun renderError() {
+        binding.userListProgressBar.visibility = View.GONE
+        binding.recyclerView.visibility = View.GONE
+    }
+
+    private fun renderLoading() {
         binding.userListProgressBar.visibility = View.VISIBLE
+    }
 
-        service.getUsers()
-            .enqueue(object : Callback<List<User>> {
-                override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                    val message = getString(R.string.error)
+    private fun renderUserList(list: List<UserEntity>) {
+        binding.userListProgressBar.visibility = View.GONE
 
-                    binding.userListProgressBar.visibility = View.GONE
-                    binding.recyclerView.visibility = View.GONE
+        adapter.users = list
+    }
 
-                    Toast.makeText(this@HomeActivity, message, Toast.LENGTH_SHORT)
-                        .show()
-                }
+    private fun performEvent(event: HomeViewModel.HomeViewEvent) {
+        Timber.i("Event ----> ${event::class.java.simpleName}")
+        when (event) {
+            HomeViewModel.HomeViewEvent.SendErrorToast -> performSendErrorToast()
+        }
+    }
 
-                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                    binding.userListProgressBar.visibility = View.GONE
-
-                    adapter.users = response.body()!!
-                }
-            })
+    private fun performSendErrorToast() {
+        Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT)
+            .show()
     }
 }
