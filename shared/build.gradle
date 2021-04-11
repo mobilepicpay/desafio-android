@@ -8,6 +8,12 @@ plugins {
     id 'kotlin-kapt'
 }
 
+android {
+    defaultConfig {
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+}
+
 dependencies {
     implementation(Deps.room)
 

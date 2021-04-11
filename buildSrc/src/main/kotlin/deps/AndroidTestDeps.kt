@@ -4,7 +4,7 @@ import Versions
 
 object AndroidTestDeps {
     val junit = arrayListOf(
-        "androidx.test.ext:junit:1.1.2"
+        "androidx.test.ext:junit:${Versions.androidTestJUnit}"
     )
 
     val runner = arrayListOf(

@@ -29,6 +29,7 @@ internal object Versions {
     const val androidCoreTest = "2.1.0"
 
     // AndroidTest
+    const val androidTestJUnit = "1.1.2"
     const val runner = "1.3.0"
     const val espresso = "3.3.0"
 }

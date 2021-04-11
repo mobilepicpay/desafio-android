@@ -1,8 +1,9 @@
-package com.picpay.desafio.android.feature.home
+package com.picpay.desafio.android.feature.home.runner
 
 import android.app.Application
 import android.content.Context
 import androidx.test.runner.AndroidJUnitRunner
+import com.picpay.desafio.android.feature.home.FeatureHomeApplication
 
 class FeatureHomeTestRunner : AndroidJUnitRunner() {
 

@@ -1,3 +1,5 @@
 package com.picpay.desafio.android.shared.exception
 
-class NoInternetException: KnightsException()
+import java.lang.RuntimeException
+
+class NoInternetException: RuntimeException()

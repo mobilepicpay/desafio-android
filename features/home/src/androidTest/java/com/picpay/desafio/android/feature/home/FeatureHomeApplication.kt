@@ -2,6 +2,7 @@ package com.picpay.desafio.android.feature.home
 
 import android.app.Application
 import com.picpay.desafio.android.feature.home.di.FeatureHomeKoin
+import com.picpay.desafio.android.feature.home.di.SharedMockKoin
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

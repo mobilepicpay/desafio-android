@@ -5,7 +5,7 @@
     <application>
         <activity
             android:name=".ui.HomeActivity"
-            android:theme="@style/Theme.AppCompat.Light">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="com.picpay.desafio.android.feature.home.OPEN" />
 

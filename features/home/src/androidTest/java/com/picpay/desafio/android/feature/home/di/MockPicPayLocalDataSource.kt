@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.feature.home
+package com.picpay.desafio.android.feature.home.di
 
 import com.picpay.desafio.android.shared.data.local.PicPayLocalDataSource
 import com.picpay.desafio.android.shared.data.local.UserLocal

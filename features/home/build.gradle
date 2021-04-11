@@ -9,7 +9,7 @@ plugins {
 
 android {
     defaultConfig {
-        testInstrumentationRunner "com.picpay.desafio.android.feature.home.FeatureHomeTestRunner"
+        testInstrumentationRunner "com.picpay.desafio.android.feature.home.runner.FeatureHomeTestRunner"
     }
 }
 
