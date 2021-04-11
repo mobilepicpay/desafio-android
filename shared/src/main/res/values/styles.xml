@@ -1,9 +1,8 @@
 <resources>
 
-    <style name="Knights"/>
-    <!-- Base application theme. -->
-    <style name="Knights.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="Knights" />
+
+    <style name="Knights.AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
