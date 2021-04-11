@@ -68,6 +68,7 @@ subprojects {
                 )
 
                 androidTestImplementation(
+                        AndroidTestDeps.junit,
                         AndroidTestDeps.runner,
                         AndroidTestDeps.espresso
                 )

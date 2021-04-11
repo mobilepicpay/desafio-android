@@ -22,7 +22,6 @@ object SharedKoin : KoinModule() {
             val url = "http://careers.picpay.com/tests/mobdev/"
             val gson = GsonBuilder().create()
 
-
             val okHttp = OkHttpClient.Builder().also {
                 if (BuildConfig.DEBUG) {
                     it.addInterceptor(
