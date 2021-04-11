@@ -4,15 +4,14 @@ import com.picpay.desafio.android.feature.home.interactor.user.GetUserListUseCas
 import com.picpay.desafio.android.feature.home.interactor.user.UserEntity
 import com.picpay.desafio.android.feature.home.ui.HomeViewModel.HomeViewEvent
 import com.picpay.desafio.android.feature.home.ui.HomeViewModel.HomeViewState
-import com.picpay.desafio.android.shared.coroutine.CoroutineDispatching
+import com.picpay.desafio.android.shared.coroutine.CoroutineService
 import com.picpay.desafio.android.shared.coroutine.CoroutineViewModel
 import com.picpay.desafio.android.shared.domain.EntityResult
-import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
-    dispatching: CoroutineDispatching,
-    private val getUserListUseCase: GetUserListUseCase
-) : CoroutineViewModel<HomeViewState, HomeViewEvent>(dispatching) {
+    coroutineService: CoroutineService,
+    private val getUserListUseCase: GetUserListUseCase,
+) : CoroutineViewModel<HomeViewState, HomeViewEvent>(coroutineService) {
 
     sealed class HomeViewState {
         object Loading : HomeViewState()
@@ -25,7 +24,7 @@ internal class HomeViewModel(
     }
 
     fun onCreate() {
-        scope.launch {
+        scope.launchIdling {
             _state.value = HomeViewState.Loading
 
             getUserListUseCase().also {

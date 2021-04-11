@@ -18,11 +18,6 @@ class HomeActivityTest {
     @get:Rule
     var activityRule: ActivityScenarioRule<HomeActivity> = ActivityScenarioRule(HomeActivity::class.java)
 
-    @After
-    fun after() {
-        activityRule.scenario.close()
-    }
-
     @Test
     fun shouldDisplayTitle() {
         onView(withId(R.id.title)).check(matches(withText("Contatos")))

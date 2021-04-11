@@ -3,8 +3,8 @@ package com.picpay.desafio.android.shared.di
 import androidx.room.Room
 import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.shared.BuildConfig
-import com.picpay.desafio.android.shared.coroutine.CoroutineDispatching
-import com.picpay.desafio.android.shared.coroutine.DefaultDispatching
+import com.picpay.desafio.android.shared.coroutine.CoroutineService
+import com.picpay.desafio.android.shared.coroutine.DefaultCoroutineService
 import com.picpay.desafio.android.shared.data.local.PicPayDataBase
 import com.picpay.desafio.android.shared.data.remote.PicPayRemoteDataSource
 import okhttp3.OkHttpClient
@@ -50,7 +50,7 @@ object SharedKoin : KoinModule() {
     }
 
     private val coroutineModule = module {
-        single<CoroutineDispatching> { DefaultDispatching() }
+        single<CoroutineService> { DefaultCoroutineService() }
     }
 
     override fun loadModule(koinApplication: KoinApplication) {

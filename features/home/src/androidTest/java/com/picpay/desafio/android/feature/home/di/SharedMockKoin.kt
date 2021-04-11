@@ -1,7 +1,7 @@
 package com.picpay.desafio.android.feature.home.di
 
-import com.picpay.desafio.android.shared.coroutine.CoroutineDispatching
-import com.picpay.desafio.android.shared.coroutine.DefaultDispatching
+import com.picpay.desafio.android.shared.coroutine.CoroutineService
+import com.picpay.desafio.android.shared.coroutine.DefaultCoroutineService
 import com.picpay.desafio.android.shared.data.local.PicPayLocalDataSource
 import com.picpay.desafio.android.shared.data.remote.PicPayRemoteDataSource
 import com.picpay.desafio.android.shared.di.KoinModule
@@ -20,7 +20,7 @@ object SharedMockKoin : KoinModule() {
     }
 
     private val coroutineModule = module {
-        single<CoroutineDispatching> { DefaultDispatching() }
+        single<CoroutineService> { DefaultCoroutineService() }
     }
 
     override fun loadModule(koinApplication: KoinApplication) {

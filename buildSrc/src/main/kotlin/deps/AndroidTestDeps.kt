@@ -12,6 +12,7 @@ object AndroidTestDeps {
     )
 
     val espresso = arrayListOf(
-        "androidx.test.espresso:espresso-core:${Versions.espresso}"
+        "androidx.test.espresso:espresso-core:${Versions.espresso}",
+        "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
     )
 }

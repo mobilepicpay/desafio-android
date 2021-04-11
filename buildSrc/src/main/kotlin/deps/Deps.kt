@@ -50,4 +50,8 @@ object Deps {
     val timber = arrayListOf(
         "com.jakewharton.timber:timber:${Versions.timber}"
     )
+
+    val idlingResource = arrayListOf(
+        "androidx.test.espresso:espresso-idling-resource:${Versions.espresso}"
+    )
 }

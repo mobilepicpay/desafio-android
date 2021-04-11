@@ -22,7 +22,7 @@ abstract class MockKViewModelTest<VM : CoroutineViewModel<STATE, EVENT>, STATE, 
 
     private val eventObserver: Observer<EVENT> = Observer { it?.let { events.add(it) } }
 
-    protected val dispatching = TestDispatching()
+    protected val dispatching = TestService()
 
     @InjectMockKs
     protected lateinit var viewModel: VM

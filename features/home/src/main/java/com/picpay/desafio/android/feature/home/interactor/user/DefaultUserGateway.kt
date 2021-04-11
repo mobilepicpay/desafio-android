@@ -1,6 +1,6 @@
 package com.picpay.desafio.android.feature.home.interactor.user
 
-import com.picpay.desafio.android.shared.coroutine.CoroutineDispatching
+import com.picpay.desafio.android.shared.coroutine.CoroutineService
 import com.picpay.desafio.android.shared.data.local.PicPayLocalDataSource
 import com.picpay.desafio.android.shared.data.local.UserLocal
 import com.picpay.desafio.android.shared.data.remote.PicPayRemoteDataSource
@@ -12,12 +12,12 @@ import retrofit2.HttpException
 import java.net.UnknownHostException
 
 class DefaultUserGateway(
-    private val dispatching: CoroutineDispatching,
+    private val service: CoroutineService,
     private val remote: PicPayRemoteDataSource,
     private val local: PicPayLocalDataSource
 ) : UserGateway {
 
-    override suspend fun getUserList(): List<UserEntity> = withContext(dispatching.IO) {
+    override suspend fun getUserList(): List<UserEntity> = withContext(service.IO) {
         val users = local.getUserList()
         if (users.isNotEmpty()) {
             return@withContext users.toEntity()

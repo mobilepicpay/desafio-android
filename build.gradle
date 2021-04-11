@@ -55,7 +55,7 @@ subprojects {
                         Deps.retrofit,
                         Deps.lifecycle,
                         Deps.koin,
-                        Deps.timber
+                        Deps.timber,
                 )
 
                 testImplementation(

@@ -2,6 +2,7 @@ package com.picpay.desafio.android.feature.home.ui.adapter
 
 import android.graphics.drawable.Drawable
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -13,6 +14,9 @@ import com.picpay.desafio.android.feature.home.databinding.ListItemUserBinding
 import com.picpay.desafio.android.feature.home.interactor.user.UserEntity
 
 class UserListItemViewHolder(private val binding: ListItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    @VisibleForTesting
+    fun getBinding() = binding
 
     private val imageLoadListener = object : RequestListener<Drawable> {
         override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {

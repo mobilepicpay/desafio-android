@@ -4,12 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.picpay.desafio.android.shared.presentation.lifecycle.SingleLiveData
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
 
 @Suppress("PropertyName")
-abstract class CoroutineViewModel<STATE, EVENT>(dispatching: CoroutineDispatching) : ViewModel() {
+abstract class CoroutineViewModel<STATE, EVENT>(coroutineService: CoroutineService) : ViewModel() {
     protected val _state = MutableLiveData<STATE>()
 
     val state: LiveData<STATE> get() = _state
@@ -20,7 +19,7 @@ abstract class CoroutineViewModel<STATE, EVENT>(dispatching: CoroutineDispatchin
 
     private val supervisorJob = SupervisorJob()
 
-    protected val scope = CoroutineScope(dispatching.Main + supervisorJob)
+    protected val scope = CustomCoroutineScope(supervisorJob, coroutineService)
 
     override fun onCleared() {
         super.onCleared()
