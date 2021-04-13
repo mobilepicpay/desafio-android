@@ -10,5 +10,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         FeatureNavigator.openHome(this)
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        finish()
     }
 }

@@ -6,7 +6,7 @@ import org.junit.Before
 
 abstract class MockKCoroutinesTest {
 
-    protected val dispatching = TestService()
+    protected val dispatching = TestCoroutineService()
 
     @Before
     fun setup() {

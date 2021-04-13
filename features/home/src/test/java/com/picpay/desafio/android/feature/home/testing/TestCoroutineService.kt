@@ -5,7 +5,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 
 @Suppress("EXPERIMENTAL_API_USAGE")
-class TestService : CoroutineService {
+class TestCoroutineService : CoroutineService {
 
     private val dispatcher = TestCoroutineDispatcher()
 
