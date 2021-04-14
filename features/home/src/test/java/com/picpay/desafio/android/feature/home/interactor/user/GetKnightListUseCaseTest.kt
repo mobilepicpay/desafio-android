@@ -1,8 +1,8 @@
 package com.picpay.desafio.android.feature.home.interactor.user
 
 import com.google.common.truth.Truth.assertThat
-import com.picpay.desafio.android.feature.home.interactor.user.GetUserListUseCase.GetUserListError.NoInternetError
-import com.picpay.desafio.android.feature.home.interactor.user.GetUserListUseCase.GetUserListError.ServerError
+import com.picpay.desafio.android.feature.home.interactor.user.GetKnightListUseCase.GetKnightListError.NoInternetError
+import com.picpay.desafio.android.feature.home.interactor.user.GetKnightListUseCase.GetKnightListError.ServerError
 import com.picpay.desafio.android.feature.home.testing.MockKCoroutinesTest
 import com.picpay.desafio.android.shared.domain.EntityResult
 import com.picpay.desafio.android.shared.exception.NoInternetException
@@ -15,13 +15,13 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class GetUserListCoroutinesTest : MockKCoroutinesTest() {
+class GetKnightListUseCaseTest : MockKCoroutinesTest() {
 
     @MockK
     private lateinit var userGateway: UserGateway
 
     @InjectMockKs
-    private lateinit var useCase: GetUserListUseCase
+    private lateinit var useCase: GetKnightListUseCase
 
     @Test
     fun `useCase SHOULD return Success`() = runBlockingTest {
@@ -34,18 +34,22 @@ class GetUserListCoroutinesTest : MockKCoroutinesTest() {
     }
 
     @Test
-    fun `useCase SHOULD return Success WITH entity list from userGateway`() = runBlockingTest {
+    fun `useCase SHOULD return Success WITH entity list from userGateway AND name prefix Sir`() = runBlockingTest {
         // Given
         val entityList = arrayListOf(
             UserEntity(1, "Spinel", "Andre", "url"),
             UserEntity(2, "CAFU", "Pedro", "url"),
+        )
+        val expectedList = arrayListOf(
+            UserEntity(1, "Spinel", "Sir Andre", "url"),
+            UserEntity(2, "CAFU", "Sir Pedro", "url"),
         )
         coEvery { userGateway.getUserList() } returns entityList
         // When
         val result = useCase()
         // Then
         (result as EntityResult.Success).run {
-            assertThat(value).containsExactlyElementsIn(entityList)
+            assertThat(value).containsExactlyElementsIn(expectedList)
         }
     }
 

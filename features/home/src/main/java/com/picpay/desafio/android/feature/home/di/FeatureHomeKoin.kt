@@ -1,6 +1,7 @@
 package com.picpay.desafio.android.feature.home.di
 
 import com.picpay.desafio.android.feature.home.interactor.user.DefaultUserGateway
+import com.picpay.desafio.android.feature.home.interactor.user.GetKnightListUseCase
 import com.picpay.desafio.android.feature.home.interactor.user.GetUserListUseCase
 import com.picpay.desafio.android.feature.home.interactor.user.UserGateway
 import com.picpay.desafio.android.feature.home.ui.HomeViewModel
@@ -18,6 +19,7 @@ object FeatureHomeKoin : KoinModule() {
 
     private val useCaseModule = module {
         factory { GetUserListUseCase(get(), get()) }
+        factory { GetKnightListUseCase(get(), get()) }
     }
 
     private val viewModelModule = module {

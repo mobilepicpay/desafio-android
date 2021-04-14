@@ -1,6 +1,6 @@
 package com.picpay.desafio.android.feature.home.ui
 
-import com.picpay.desafio.android.feature.home.interactor.user.GetUserListUseCase
+import com.picpay.desafio.android.feature.home.interactor.user.GetKnightListUseCase
 import com.picpay.desafio.android.feature.home.interactor.user.UserEntity
 import com.picpay.desafio.android.feature.home.ui.HomeViewModel.HomeViewEvent
 import com.picpay.desafio.android.feature.home.ui.HomeViewModel.HomeViewState
@@ -10,7 +10,7 @@ import com.picpay.desafio.android.shared.domain.EntityResult
 
 internal class HomeViewModel(
     coroutineService: CoroutineService,
-    private val getUserListUseCase: GetUserListUseCase,
+    private val getKnightListUseCase: GetKnightListUseCase,
 ) : CoroutineViewModel<HomeViewState, HomeViewEvent>(coroutineService) {
 
     sealed class HomeViewState {
@@ -27,7 +27,7 @@ internal class HomeViewModel(
         scope.launchIdling {
             _state.value = HomeViewState.Loading
 
-            getUserListUseCase().also {
+            getKnightListUseCase().also {
                 when (it) {
                     is EntityResult.Success -> {
                         _state.value = HomeViewState.UserList(it.value)
@@ -37,7 +37,6 @@ internal class HomeViewModel(
                         _state.value = HomeViewState.Error
                         _event.value = HomeViewEvent.SendErrorToast
                     }
-
                 }
             }
         }

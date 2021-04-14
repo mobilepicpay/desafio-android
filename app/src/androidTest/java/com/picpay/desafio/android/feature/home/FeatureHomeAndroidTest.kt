@@ -8,7 +8,7 @@ class FeatureHomeAndroidTest : BaseAndroidTest() {
     @Test
     fun homeActivity_SHOULD_LoadFromDataFromRemote() {
         HomeBot()
-            .checkItemIsDisplayedByText("Eduardo Santos")
-            .checkItemIsDisplayedByText("Felipe Andrade")
+            .checkItemIsDisplayedByText("Sir Eduardo Santos")
+            .checkItemIsDisplayedByText("Sir Felipe Andrade")
     }
 }

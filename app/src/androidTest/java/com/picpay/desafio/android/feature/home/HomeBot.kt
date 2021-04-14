@@ -14,7 +14,7 @@ class HomeBot {
     }
 
     private fun checkScreen() = apply {
-        onView(withId(R.id.title)).check(matches(withText("Contatos")))
+        onView(withId(R.id.title)).check(matches(withText("Cavaleiros")))
     }
 
     fun checkItemIsDisplayedByText(text: String) = apply {
