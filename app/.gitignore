@@ -1,1 +1,7 @@
 /build
+/.idea
+/.gradle
+/.iml
+.idea
+.gradle
+.iml
