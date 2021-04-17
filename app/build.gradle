@@ -2,34 +2,75 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
+apply plugin: 'com.hiya.jacoco-android'
+
+jacoco {
+    toolVersion = "0.8.4"
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
+
+jacocoAndroidUnitTestReport {
+    xml.enabled true
+}
+
+//def keystorePropertiesFile = rootProject.file("keystore.properties")
+//def keystoreProperties = new Properties()
+//keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdkVersion 30
+//    signingConfigs {
+//        release {
+//            keyAlias keystoreProperties['keyAlias']
+//            keyPassword keystoreProperties['keyPassword']
+//            storeFile file(keystoreProperties['storeFile'])
+//            storePassword keystoreProperties['storePassword']
+//        }
+//    }
+
+
+    compileSdkVersion compileSDK
+    buildToolsVersion buildTools
+
     defaultConfig {
         applicationId "com.picpay.desafio.android"
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
-        multiDexEnabled = false
-
+        minSdkVersion minSDK
+        targetSdkVersion targetSDK
+        versionCode versionCodeMajor * 10000 + versionCodeMinor * 100 + versionCodePatch
+        versionName versionName
         vectorDrawables.useSupportLibrary = true
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        debug {
-            minifyEnabled false
-            debuggable true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
 
         release {
             minifyEnabled true
             shrinkResources true
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [crashlyticsEnabled: true]
+//            signingConfig signingConfigs.release
         }
+
+        debug {
+            minifyEnabled false
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+            manifestPlaceholders = [crashlyticsEnabled: false]
+            testCoverageEnabled true
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
+    testOptions.unitTests {
+        includeAndroidResources = true
     }
 
     compileOptions {
@@ -38,7 +79,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
     buildFeatures {
@@ -47,47 +88,45 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //Jetpack
+    implementation appDependencies.appCompat
+    implementation appDependencies.androidxKtx
+    implementation appDependencies.constraintLayout
+    implementation appDependencies.lifecycleViewModelKtx
+    implementation appDependencies.lifecycleLiveDataKtx
 
-    implementation "androidx.core:core-ktx:$core_ktx_version"
+    //Material
+    implementation appDependencies.material
 
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    //Memory leaks
+    debugImplementation appDependencies.leakCanary
 
-    implementation "com.google.android.material:material:$material_version"
+    // Koin
+    implementation appDependencies.koinAndroid
+    implementation appDependencies.koinAndroidViewModel
 
-    implementation "org.koin:koin-core:$koin_version"
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    api dataDependencies.gson
 
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
-
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
-
-    implementation 'com.google.code.gson:gson:2.8.6'
-
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
-    implementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
-
-    implementation "com.squareup.picasso:picasso:$picasso_version"
-    implementation "de.hdodenhof:circleimageview:$circleimageview_version"
-
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "org.mockito:mockito-core:$mockito_version"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
-    testImplementation "androidx.arch.core:core-testing:$core_testing_version"
-    implementation "org.koin:koin-test:$koin_version"
-
-    androidTestImplementation "androidx.test:runner:$test_runner_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-    androidTestImplementation "androidx.test:core-ktx:$core_ktx_test_version"
+    //Test Libs
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.robolectric
+    testImplementation testDependencies.androidxJunit
+    testImplementation testDependencies.espressoCore
+    testImplementation testDependencies.runner
+    testImplementation testDependencies.rules
+    testImplementation testDependencies.googleTruth
+    testImplementation testDependencies.archComponentTest
+    testImplementation testDependencies.coroutinesTest
+    testImplementation testDependencies.koinTest
+    androidTestImplementation testDependencies.espressoCore
+    androidTestImplementation testDependencies.runner
+    androidTestImplementation testDependencies.rules
+    androidTestImplementation testDependencies.androidxJunit
+    androidTestImplementation testDependencies.androidxCoreTest
+    androidTestImplementation testDependencies.mockWebServer
+    androidTestImplementation testDependencies.espressoContrib
+    androidTestImplementation testDependencies.espressoIntents
+    androidTestImplementation testDependencies.koinTest
+    implementation testDependencies.espressoIdlingResource
 }
