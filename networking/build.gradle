@@ -1,0 +1,12 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    api dataDependencies.retrofit
+    api dataDependencies.gson
+    api dataDependencies.loggingInterceptor
+
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.googleTruth
+    testImplementation testDependencies.mockWebServer
+}
