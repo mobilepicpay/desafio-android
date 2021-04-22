@@ -1,0 +1,70 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion compileSDK
+    buildToolsVersion buildTools
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 30
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
+dependencies {
+    implementation project(':domain')
+
+    implementation domainDependencies.kotlin
+
+    //Persistance
+    implementation dataDependencies.roomRuntime
+    kapt dataDependencies.kaptRoom
+    implementation dataDependencies.roomKtx
+
+    implementation appDependencies.koinAndroid
+
+    //Tests
+    testImplementation testDependencies.runner
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.googleTruth
+    testImplementation testDependencies.roomTest
+    testImplementation testDependencies.coroutinesTest
+    testImplementation testDependencies.robolectric
+
+    testImplementation testDependencies.androidxCoreTest
+    testImplementation testDependencies.androidxCoreTestKTX
+    testImplementation testDependencies.archComponentTest
+
+    androidTestImplementation testDependencies.roomTest
+    androidTestImplementation testDependencies.googleTruth
+    androidTestImplementation testDependencies.espressoCore
+
+    androidTestImplementation testDependencies.androidxJunit
+    androidTestImplementation testDependencies.junit
+    androidTestImplementation testDependencies.rules
+    androidTestImplementation testDependencies.runner
+
+    androidTestImplementation testDependencies.androidxCoreTest
+    androidTestImplementation testDependencies.androidxCoreTestKTX
+    androidTestImplementation testDependencies.archComponentTest
+
+}

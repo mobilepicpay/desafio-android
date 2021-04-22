@@ -1,0 +1,95 @@
+apply plugin:'com.android.library'
+apply plugin:'kotlin-android'
+apply plugin:'kotlin-kapt'
+apply plugin:'kotlin-parcelize'
+
+android {
+
+    compileSdkVersion compileSDK
+    buildToolsVersion buildTools
+
+    defaultConfig {
+        minSdkVersion minSDK
+        targetSdkVersion targetSDK
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+dependencies {
+
+    implementation project(':shared-assets')
+    implementation project(':domain')
+    implementation project(':shared-utilities')
+
+    //Jetpack
+    implementation appDependencies.appCompat
+    implementation appDependencies.androidxKtx
+    implementation appDependencies.constraintLayout
+    implementation appDependencies.lifecycleViewModelKtx
+    implementation appDependencies.lifecycleLiveDataKtx
+    implementation appDependencies.swipeRefreshLayout
+
+    //Material
+    implementation appDependencies.material
+
+    //Memory leaks
+    debugImplementation appDependencies.leakCanary
+
+    // Koin
+    implementation appDependencies.koinAndroid
+    implementation appDependencies.koinAndroidViewModel
+
+    //Test Libs
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.robolectric
+    testImplementation testDependencies.androidxJunit
+    testImplementation testDependencies.espressoCore
+    testImplementation testDependencies.runner
+    testImplementation testDependencies.rules
+    testImplementation testDependencies.googleTruth
+    testImplementation testDependencies.archComponentTest
+    testImplementation testDependencies.coroutinesTest
+    testImplementation testDependencies.koinTest
+    testImplementation testDependencies.turbine
+
+    androidTestImplementation testDependencies.espressoCore
+    androidTestImplementation testDependencies.runner
+    androidTestImplementation testDependencies.rules
+    androidTestImplementation testDependencies.androidxJunit
+    androidTestImplementation testDependencies.androidxCoreTest
+    androidTestImplementation testDependencies.mockWebServer
+    androidTestImplementation testDependencies.espressoContrib
+    androidTestImplementation testDependencies.espressoIntents
+    androidTestImplementation testDependencies.koinTest
+    androidTestImplementation testDependencies.androidxCoreTestKTX
+
+    implementation testDependencies.espressoIdlingResource
+}
