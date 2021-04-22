@@ -3,12 +3,17 @@ apply plugin:'kotlin'
 apply plugin:'kotlin-kapt'
 
 dependencies {
-
     implementation project(':domain')
+    implementation project(':networking')
 
-    api dataDependencies.retrofit
-    api dataDependencies.loggingInterceptor
-    api dataDependencies.gson
+    implementation appDependencies.koinAndroid
+
+    implementation domainDependencies.kotlin
+    implementation domainDependencies.coroutinesCore
+
+    implementation dataDependencies.retrofit
+    implementation dataDependencies.gson
+    implementation dataDependencies.loggingInterceptor
 
     testImplementation testDependencies.junit
     testImplementation testDependencies.googleTruth
@@ -17,7 +22,6 @@ dependencies {
 
 sourceCompatibility = JavaVersion.VERSION_1_8.toString()
 targetCompatibility = JavaVersion.VERSION_1_8.toString()
-
 
 sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
