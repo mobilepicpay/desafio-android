@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-parcelize'
 apply plugin: 'com.hiya.jacoco-android'
 
 jacoco {
@@ -30,7 +29,6 @@ android {
 //        }
 //    }
 
-
     compileSdkVersion compileSDK
     buildToolsVersion buildTools
 
@@ -43,6 +41,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
 
         release {
@@ -50,7 +49,6 @@ android {
             shrinkResources true
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [crashlyticsEnabled: true]
 //            signingConfig signingConfigs.release
         }
 
@@ -58,15 +56,8 @@ android {
             minifyEnabled false
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
-            manifestPlaceholders = [crashlyticsEnabled: false]
             testCoverageEnabled true
         }
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        test.java.srcDirs += 'src/test/kotlin'
-        androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
 
     testOptions.unitTests {
@@ -81,52 +72,42 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
-
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 dependencies {
+    implementation project(':feature-contacts')
+    implementation project(':domain')
+    implementation project(':networking')
+    implementation project(':persistance')
+    implementation project(':rest-picpay')
+    implementation project(':shared-assets')
 
-    //Jetpack
+    implementation domainDependencies.kotlin
+
+    // Jetpack
     implementation appDependencies.appCompat
     implementation appDependencies.androidxKtx
-    implementation appDependencies.constraintLayout
     implementation appDependencies.lifecycleViewModelKtx
     implementation appDependencies.lifecycleLiveDataKtx
-
-    //Material
-    implementation appDependencies.material
-
-    //Memory leaks
-    debugImplementation appDependencies.leakCanary
 
     // Koin
     implementation appDependencies.koinAndroid
     implementation appDependencies.koinAndroidViewModel
 
-    api dataDependencies.gson
+    // Tests
+    androidTestImplementation testDependencies.junit
+    androidTestImplementation testDependencies.androidxJunit
+    androidTestImplementation testDependencies.androidxJunitKtx
 
-    //Test Libs
-    testImplementation testDependencies.junit
-    testImplementation testDependencies.robolectric
-    testImplementation testDependencies.androidxJunit
-    testImplementation testDependencies.espressoCore
-    testImplementation testDependencies.runner
-    testImplementation testDependencies.rules
-    testImplementation testDependencies.googleTruth
-    testImplementation testDependencies.archComponentTest
-    testImplementation testDependencies.coroutinesTest
-    testImplementation testDependencies.koinTest
-    androidTestImplementation testDependencies.espressoCore
+    androidTestImplementation testDependencies.androidxCoreTest
+    androidTestImplementation testDependencies.androidxCoreTestKTX
+
     androidTestImplementation testDependencies.runner
     androidTestImplementation testDependencies.rules
-    androidTestImplementation testDependencies.androidxJunit
-    androidTestImplementation testDependencies.androidxCoreTest
+
+    androidTestImplementation testDependencies.espressoCore
+
     androidTestImplementation testDependencies.mockWebServer
-    androidTestImplementation testDependencies.espressoContrib
-    androidTestImplementation testDependencies.espressoIntents
-    androidTestImplementation testDependencies.koinTest
-    implementation testDependencies.espressoIdlingResource
+
+    testImplementation testDependencies.koinTest
 }
