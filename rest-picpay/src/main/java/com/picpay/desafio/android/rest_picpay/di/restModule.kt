@@ -1,7 +1,7 @@
-package com.picpay.desafio.android.data_remote.di
+package com.picpay.desafio.android.rest_picpay.di
 
-import com.picpay.desafio.android.data_remote.api.PicPayUserService
-import com.picpay.desafio.android.data_remote.repository.UserRepositoryImpl
+import com.picpay.desafio.android.rest_picpay.api.PicPayUserService
+import com.picpay.desafio.android.rest_picpay.repository.UserRepositoryImpl
 import com.picpay.desafio.android.domain.repository.UserRepository
 import com.picpay.desafio.android.networking.NetworkBuilder
 import com.picpay.desafio.android.networking.OkhttpBuilder

@@ -1,6 +1,6 @@
-package com.picpay.desafio.android.data_remote.mappers
+package com.picpay.desafio.android.rest_picpay.mappers
 
-import com.picpay.desafio.android.data_remote.models.RawUserResponse
+import com.picpay.desafio.android.rest_picpay.models.RawUserResponse
 import com.picpay.desafio.android.domain.models.User
 
 internal fun List<RawUserResponse>.toDomain() =

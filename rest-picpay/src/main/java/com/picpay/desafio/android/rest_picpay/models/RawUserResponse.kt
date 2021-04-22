@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.data_remote.models
+package com.picpay.desafio.android.rest_picpay.models
 
 import com.google.gson.annotations.SerializedName
 

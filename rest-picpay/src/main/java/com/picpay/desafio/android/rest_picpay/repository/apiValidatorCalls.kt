@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.data_remote.repository
+package com.picpay.desafio.android.rest_picpay.repository
 
 import com.picpay.desafio.android.networking.HttpErrorConvert
 import com.picpay.desafio.android.networking.NetworkingErrorConvert

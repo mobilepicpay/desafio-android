@@ -1,7 +1,7 @@
-package com.picpay.desafio.android.data_remote.api
+package com.picpay.desafio.android.rest_picpay.api
 
 
-import com.picpay.desafio.android.data_remote.models.RawUserResponse
+import com.picpay.desafio.android.rest_picpay.models.RawUserResponse
 import retrofit2.http.GET
 
 interface PicPayUserService {
