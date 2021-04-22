@@ -1,0 +1,25 @@
+apply plugin:'com.android.library'
+
+android {
+    compileSdkVersion compileSDK
+    buildToolsVersion buildTools
+
+    defaultConfig {
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation appDependencies.material
+    implementation appDependencies.appCompat
+}
