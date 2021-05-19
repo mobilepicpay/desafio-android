@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/picture"
+        android:id="@+id/img_picture"
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:layout_marginStart="24dp"
@@ -18,31 +18,31 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_round_account_circle" />
+        tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/txt_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/name"
-        app:layout_constraintStart_toEndOf="@+id/picture"
-        app:layout_constraintTop_toTopOf="@+id/picture"
-        tools:text="\@username" />
+        app:layout_constraintBottom_toTopOf="@+id/txt_name"
+        app:layout_constraintStart_toEndOf="@+id/img_picture"
+        app:layout_constraintTop_toTopOf="@+id/img_picture"
+        tools:text="@sample/userLayoutJson.json/data/username" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/txt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:textColor="@color/colorDetail"
-        app:layout_constraintBottom_toBottomOf="@+id/picture"
-        app:layout_constraintStart_toStartOf="@+id/username"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        tools:text="Name Surname" />
+        app:layout_constraintBottom_toBottomOf="@+id/img_picture"
+        app:layout_constraintStart_toStartOf="@+id/txt_username"
+        app:layout_constraintTop_toBottomOf="@+id/txt_username"
+        tools:text="@sample/userLayoutJson.json/data/name" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -56,8 +56,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/picture"
-        app:layout_constraintEnd_toEndOf="@+id/picture"
-        app:layout_constraintStart_toStartOf="@+id/picture"
-        app:layout_constraintTop_toTopOf="@+id/picture" />
+        app:layout_constraintBottom_toBottomOf="@+id/img_picture"
+        app:layout_constraintEnd_toEndOf="@+id/img_picture"
+        app:layout_constraintStart_toStartOf="@+id/img_picture"
+        app:layout_constraintTop_toTopOf="@+id/img_picture" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,8 +23,7 @@ android {
         debug {}
 
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -89,4 +88,13 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$test_runner_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "androidx.test:core-ktx:$core_ktx_test_version"
+    // UI
+    implementation "androidx.constraintlayout:constraintlayout:2.0.4"
+    implementation("io.coil-kt:coil:1.1.1")
+    implementation ("io.coil-kt:coil-base")
+
+    // Run DB android native
+    implementation 'androidx.room:room-ktx:2.2.6'
+    implementation 'androidx.room:room-runtime:2.2.6'
+    kapt 'androidx.room:room-compiler:2.2.6'
 }
