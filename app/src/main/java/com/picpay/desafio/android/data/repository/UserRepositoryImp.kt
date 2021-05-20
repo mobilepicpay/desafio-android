@@ -14,7 +14,7 @@ class UserRepositoryImp(
         val remote = remoteDataSource.getAllUser()
 
         val result = if(remote.isNotEmpty()){
-            localDataSource.updateCacheDB(remote)
+            localDataSource.updateCache(remote)
             remote
         } else {
             localDataSource.getAllUsers()

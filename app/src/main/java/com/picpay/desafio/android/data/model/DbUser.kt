@@ -10,6 +10,6 @@ data class DbUser(
     @PrimaryKey
     val id: Int,
     val name: String,
-    val img: String,
-    val username: String
+    val imgUrl: String,
+    val userName: String
 )

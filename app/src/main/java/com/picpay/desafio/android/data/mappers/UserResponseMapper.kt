@@ -8,8 +8,8 @@ class UserResponseMapper {
     fun convertUserResponseToUser(userResponse: UserResponse): User = User(
         id = userResponse.id,
         name = userResponse.name,
-        img = userResponse.img,
-        username = userResponse.username
+        imgUrl = userResponse.imgUrl,
+        userName = userResponse.userName
     )
 
 }

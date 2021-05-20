@@ -21,7 +21,7 @@ class UserLocalDataSourceImp(
         }
     }
 
-    override suspend fun updateCacheDB(users: List<User>) {
+    override suspend fun updateCache(users: List<User>) {
         users.forEach {
             val dbUser = userDbToDbUserMapper.convertDbUserToUser(it)
             withContext(Dispatchers.IO) {

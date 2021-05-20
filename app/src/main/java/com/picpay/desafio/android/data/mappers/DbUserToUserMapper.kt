@@ -8,8 +8,8 @@ class DbUserToUserMapper {
     fun convertDbUserToUser(dbUser: DbUser): User = User(
         id = dbUser.id,
         name = dbUser.name,
-        img = dbUser.img,
-        username = dbUser.username
+        imgUrl = dbUser.imgUrl,
+        userName = dbUser.userName
     )
 
 }

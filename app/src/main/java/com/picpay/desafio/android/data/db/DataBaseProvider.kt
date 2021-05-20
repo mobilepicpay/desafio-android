@@ -9,5 +9,5 @@ import com.picpay.desafio.android.data.model.DbUser
 
 abstract class DataBaseProvider : RoomDatabase(){
 
-    abstract fun providerUserDao(): UserDao
+    abstract fun provideUserDao(): UserDao
 }

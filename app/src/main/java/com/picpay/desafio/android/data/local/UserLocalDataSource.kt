@@ -6,6 +6,6 @@ interface UserLocalDataSource {
 
     suspend fun getAllUsers(): List<User>
 
-    suspend fun updateCacheDB(users: List<User>)
+    suspend fun updateCache(users: List<User>)
 
 }

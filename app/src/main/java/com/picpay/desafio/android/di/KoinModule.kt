@@ -57,7 +57,7 @@ class KoinModule {
                 .build()
         }
 
-        factory { get<DataBaseProvider>().providerUserDao() }
+        factory { get<DataBaseProvider>().provideUserDao() }
         factory { DbUserToUserMapper() }
         factory { UserToDbUserMapper() }
 

@@ -5,6 +5,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.domain.User
 import com.picpay.desafio.android.ui.adapter.UserAdapter
@@ -22,9 +23,9 @@ class UserActivity : AppCompatActivity(R.layout.activity_user) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        recyclerView.adapter = adapter
         observeViewModelState()
         userViewModel.getAllUsers()
-        recyclerView.adapter = adapter
     }
 
     private fun observeViewModelState() {
@@ -38,17 +39,17 @@ class UserActivity : AppCompatActivity(R.layout.activity_user) {
     }
 
     private fun handleSuccess(users: List<User>) {
-        user_list_progress_bar.visibility = GONE
+        user_list_progress_bar.isVisible = false
         adapter.setUsers(users)
     }
 
     private fun handleLoading() {
-        user_list_progress_bar.visibility = VISIBLE
+        user_list_progress_bar.isVisible = true
     }
 
     private fun handleError() {
-        val message = "Erro ao carregar a lista"
-        Toast.makeText(this@UserActivity, message, Toast.LENGTH_SHORT)
+        user_list_progress_bar.isVisible = false
+        Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT)
             .show()
     }
 }
