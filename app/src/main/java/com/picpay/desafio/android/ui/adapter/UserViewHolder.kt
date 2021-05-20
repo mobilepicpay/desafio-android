@@ -5,6 +5,8 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.RoundedCornersTransformation
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.domain.User
 import com.squareup.picasso.Picasso
@@ -19,13 +21,12 @@ class UserViewHolder(
 
         val txtName = itemView.findViewById<TextView>(R.id.txt_name)
         val txtUserName = itemView.findViewById<TextView>(R.id.txt_username)
+        val imgUrl = itemView.findViewById<ImageView>(R.id.img_picture)
 
         txtName.text = user.name
         txtUserName.text = user.username
-
-        Picasso.get()
-            .load(user.img)
-            .into(itemView.img_picture)
+        imgUrl.load(user.img) {
+            transformations(RoundedCornersTransformation())
+        }
     }
-
 }
