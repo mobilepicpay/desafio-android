@@ -13,7 +13,7 @@ class UserRepositoryImp(
     override suspend fun getAllUser(): List<User> {
         val remote = remoteDataSource.getAllUser()
 
-        val result = if(remote.isNotEmpty()){
+        val result = if (remote.isNotEmpty()) {
             localDataSource.updateCache(remote)
             remote
         } else {
@@ -21,6 +21,4 @@ class UserRepositoryImp(
         }
         return result.sortedBy { it.name }
     }
-
-
 }

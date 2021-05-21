@@ -30,7 +30,7 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
                     stateLiveData.postValue(UserViewModelState.Success(users))
                 }
             } catch (exception: Throwable) {
-                Log.e("Teste", "Testando", exception)
+                Log.e("Teste", "Erro inesperado", exception)
                 stateLiveData.postValue(UserViewModelState.Error)
             }
         }
