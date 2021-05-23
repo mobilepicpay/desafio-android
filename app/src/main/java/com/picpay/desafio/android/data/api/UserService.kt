@@ -8,4 +8,5 @@ interface UserService {
 
     @GET("users")
     suspend fun getUsers(): List<UserResponse>
+
 }

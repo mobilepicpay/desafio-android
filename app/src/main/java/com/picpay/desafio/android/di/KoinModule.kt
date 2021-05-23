@@ -33,7 +33,7 @@ class KoinModule {
             UserLocalDataSourceImp(
                 userDao = get(),
                 dbUserToUserMapper = get(),
-                userDbToDbUserMapper = get()
+                userToDbUserMapper = get()
 
             )
         }

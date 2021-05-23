@@ -11,6 +11,7 @@ class UserRepositoryImp(
 
 
     override suspend fun getAllUser(): List<User> {
+
         val remote = remoteDataSource.getAllUser()
 
         val result = if (remote.isNotEmpty()) {
@@ -21,4 +22,5 @@ class UserRepositoryImp(
         }
         return result.sortedBy { it.name }
     }
+
 }

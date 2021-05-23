@@ -39,7 +39,7 @@ class UserRemoteDataSourceImpTest {
 
         coEvery { mockService.getUsers() } returns getUserResponse()
 
-        val result = runBlocking{
+        val result = runBlocking {
             remoteDataSource.getAllUser()
         }
 
@@ -48,11 +48,12 @@ class UserRemoteDataSourceImpTest {
 
 
     @Test(expected = IOException::class)
-    fun `Quando servico jogar uma exception, tratar exception` (){
+    fun `Quando servico jogar uma exception, tratar exception`() {
 
         coEvery { mockService.getUsers() } throws IOException()
 
-        runBlocking { remoteDataSource.getAllUser()
+        runBlocking {
+            remoteDataSource.getAllUser()
         }
     }
 

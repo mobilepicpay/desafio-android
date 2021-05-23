@@ -14,4 +14,5 @@ interface UserDao {
 
     @Insert(entity = DbUser::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: DbUser)
+
 }

@@ -10,10 +10,10 @@ import kotlinx.coroutines.withContext
 class UserLocalDataSourceImp(
     private val userDao: UserDao,
     private val dbUserToUserMapper: DbUserToUserMapper,
-    private val userDbToDbUserMapper: UserToDbUserMapper
-) : UserLocalDataSource {
+    private val userToDbUserMapper: UserToDbUserMapper) : UserLocalDataSource {
 
     override suspend fun getAllUsers(): List<User> {
+
         return withContext(Dispatchers.IO) {
             userDao.getAllUsers().map {
                 dbUserToUserMapper.convertDbUserToUser(it)
@@ -22,12 +22,13 @@ class UserLocalDataSourceImp(
     }
 
     override suspend fun updateCache(users: List<User>) {
+
         users.forEach {
-            val dbUser = userDbToDbUserMapper.convertDbUserToUser(it)
+            val dbUser = userToDbUserMapper.convertUserToDbUser(it)
             withContext(Dispatchers.IO) {
                 userDao.insertUser(dbUser)
             }
         }
-
     }
+
 }

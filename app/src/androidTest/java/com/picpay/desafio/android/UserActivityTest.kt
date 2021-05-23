@@ -6,7 +6,6 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.platform.app.InstrumentationRegistry
 import com.picpay.desafio.android.ui.UserActivity
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
@@ -19,16 +18,12 @@ class UserActivityTest {
 
     private val server = MockWebServer()
 
-    private val context = InstrumentationRegistry.getInstrumentation().targetContext
-
     @Test
     fun shouldDisplayTitle() {
         launchActivity<UserActivity>().apply {
-            val expectedTitle = context.getString(R.string.title)
-
-            moveToState(Lifecycle.State.RESUMED)
-
-            onView(withText(expectedTitle)).check(matches(isDisplayed()))
+            Lifecycle.State.CREATED
+            onView(withText(R.string.title))
+                .check(matches(isDisplayed()))
         }
     }
 
@@ -46,7 +41,7 @@ class UserActivityTest {
         server.start(serverPort)
 
         launchActivity<UserActivity>().apply {
-            // TODO("validate if list displays items returned by server")
+
         }
 
         server.close()
@@ -67,3 +62,5 @@ class UserActivityTest {
         private val errorResponse by lazy { MockResponse().setResponseCode(404) }
     }
 }
+
+

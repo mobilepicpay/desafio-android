@@ -1,8 +1,8 @@
 package com.picpay.desafio.android.data.mappers
 
+import com.google.common.truth.Truth.assertThat
 import com.picpay.desafio.android.data.model.UserResponse
 import com.picpay.desafio.android.domain.User
-import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
 class UserResponseMapperTest {

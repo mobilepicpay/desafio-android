@@ -19,6 +19,11 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    dataBinding {
+        enabled = true
+    }
+
     buildTypes {
         debug {}
 
@@ -61,8 +66,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
-
 
     implementation 'com.google.code.gson:gson:2.8.6'
 
@@ -73,14 +76,16 @@ dependencies {
     implementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
 
     implementation "de.hdodenhof:circleimageview:$circleimageview_version"
+    implementation "org.koin:koin-test:$koin_version"
 
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
     testImplementation "junit:junit:$junit_version"
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
-    implementation "org.koin:koin-test:$koin_version"
 
     androidTestImplementation "androidx.test:runner:$test_runner_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "androidx.test:core-ktx:$core_ktx_test_version"
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
 
     // teste unitario
     testImplementation 'com.google.truth:truth:1.1'
@@ -93,7 +98,9 @@ dependencies {
     implementation ("io.coil-kt:coil-base")
 
     // Run DB android native
-    implementation 'androidx.room:room-ktx:2.2.6'
-    implementation 'androidx.room:room-runtime:2.2.6'
-    kapt 'androidx.room:room-compiler:2.2.6'
+    implementation 'androidx.room:room-ktx:2.3.0'
+    implementation 'androidx.room:room-runtime:2.3.0'
+    kapt 'androidx.room:room-compiler:2.3.0'
+
+
 }

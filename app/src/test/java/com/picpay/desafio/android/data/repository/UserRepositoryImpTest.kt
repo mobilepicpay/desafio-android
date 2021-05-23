@@ -33,9 +33,10 @@ class UserRepositoryImpTest {
 
     @Test
     fun `Quando remoto retornar algum dado a função getUsers deve retornar do remoto`() {
-        val expected = getUserList()
-        coEvery { mockRemoteDataSource.getAllUser() } returns expected
 
+        val expected = getUserList()
+
+        coEvery { mockRemoteDataSource.getAllUser() } returns expected
 
         val result = runBlocking { (repository.getAllUser()) }
 
@@ -58,6 +59,7 @@ class UserRepositoryImpTest {
     }
 
     private fun getUserList() = listOf(
+
         User(
             id = 1,
             name = "Sandrine Spinka",
@@ -65,11 +67,10 @@ class UserRepositoryImpTest {
             userName = "Tod86"
         ),
         User(
-            id = 1,
-            name = "Sandrine Spinka",
-            imgUrl = "https://randomuser.me/api/portraits/men/1.jpg",
-            userName = "Tod86"
+            id = 2,
+            name = "Carli Carroll",
+            imgUrl = "https://randomuser.me/api/portraits/men/2.jpg",
+            userName = "Constantin_Sawayn"
         )
     )
-
 }

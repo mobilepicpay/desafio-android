@@ -5,7 +5,7 @@ import com.picpay.desafio.android.domain.User
 
 class UserToDbUserMapper {
 
-    fun convertDbUserToUser(user: User): DbUser = DbUser(
+    fun convertUserToDbUser(user: User): DbUser = DbUser(
         id = user.id,
         name = user.name,
         imgUrl = user.imgUrl,

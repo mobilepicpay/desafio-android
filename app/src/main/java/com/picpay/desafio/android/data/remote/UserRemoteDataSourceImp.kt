@@ -12,8 +12,12 @@ class UserRemoteDataSourceImp(
 ) : UserRemoteDataSource {
 
     override suspend fun getAllUser(): List<User> {
+
         return withContext(Dispatchers.IO) {
-            service.getUsers().map { userResponseMapper.convertUserResponseToUser(it) }
+            service.getUsers().map {
+                userResponseMapper.convertUserResponseToUser(it)
+            }
         }
     }
+
 }
