@@ -1,66 +1,148 @@
 package com.picpay.desafio.android
 
-import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
+import com.picpay.desafio.android.data.repository.UserRepository
+import com.picpay.desafio.android.di.getTestModule
+import com.picpay.desafio.android.domain.User
 import com.picpay.desafio.android.ui.UserActivity
-import okhttp3.mockwebserver.Dispatcher
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
-import okhttp3.mockwebserver.RecordedRequest
+import io.mockk.coEvery
+import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.loadKoinModules
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
 
-class UserActivityTest {
+class UserActivityTest : KoinTest {
 
-    private val server = MockWebServer()
+    private val mockRepository by inject<UserRepository>()
+
+    @Before
+    fun setUp() {
+        loadKoinModules(
+            getTestModule()
+        )
+    }
+
 
     @Test
-    fun shouldDisplayTitle() {
+    fun deveMostrarTitulo() {
         launchActivity<UserActivity>().apply {
-            Lifecycle.State.CREATED
             onView(withText(R.string.title))
                 .check(matches(isDisplayed()))
         }
     }
 
     @Test
-    fun shouldDisplayListItem() {
-        server.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse {
-                return when (request.path) {
-                    "/users" -> successResponse
-                    else -> errorResponse
-                }
-            }
-        }
+    fun quandoRepositoryRetornarSucesso_DeveMostrarAPosicaoNaLista() {
+        coEvery { mockRepository.getAllUser() } returns successfulResponse()
 
-        server.start(serverPort)
+        launchActivity<UserActivity>().apply {
+            onView(withId(R.id.recyclerView))
+                .check(matches(hasChildCount(3)))
+        }
+    }
+
+    @Test
+    fun quandoRepositoryRetornarSucesso_DeveMostrarUsuariosCorretosNaLista() {
+        coEvery { mockRepository.getAllUser() } returns successfulResponse()
 
         launchActivity<UserActivity>().apply {
 
-        }
+            onView(withText("pessoa1"))
+                .check(matches(isDisplayed()))
 
-        server.close()
+            onView(withText("Pessoa1"))
+                .check(matches(isDisplayed()))
+
+            onView(withText("pessoa2"))
+                .check(matches(isDisplayed()))
+
+            onView(withText("Pessoa2"))
+                .check(matches(isDisplayed()))
+
+
+            onView(withText("pessoa3"))
+                .check(matches(isDisplayed()))
+
+            onView(withText("Pessoa3"))
+                .check(matches(isDisplayed()))
+
+        }
     }
 
-    companion object {
-        private const val serverPort = 8080
 
-        private val successResponse by lazy {
-            val body =
-                "[{\"id\":1001,\"name\":\"Eduardo Santos\",\"img\":\"https://randomuser.me/api/portraits/men/9.jpg\",\"username\":\"@eduardo.santos\"}]"
+    @Test
+    fun quandoRepositoryRetornarVazio_recylcerViewDeveSerVazio() {
 
-            MockResponse()
-                .setResponseCode(200)
-                .setBody(body)
+        coEvery { mockRepository.getAllUser() } returns emptyList()
+
+        launchActivity<UserActivity>().apply {
+            onView(withId(R.id.recyclerView))
+                .check(matches(hasChildCount(0)))
         }
-
-        private val errorResponse by lazy { MockResponse().setResponseCode(404) }
     }
+
+    @Test
+    fun quandoRepositoryRetornarSucesso_DeveDesaparecerAProgressBar() {
+
+        coEvery { mockRepository.getAllUser() } returns successfulResponse()
+
+        launchActivity<UserActivity>().apply {
+            onView(withId(R.id.user_list_progress_bar))
+                .check(matches(withEffectiveVisibility(Visibility.GONE)))
+
+        }
+    }
+
+    @Test
+    fun quandoRepositoryReornarVazio_DeveDesaparecerProgressBar() {
+
+        coEvery { mockRepository.getAllUser() } returns emptyList()
+
+        launchActivity<UserActivity>().apply {
+            onView(withId(R.id.user_list_progress_bar))
+                .check(matches(withEffectiveVisibility(Visibility.GONE)))
+        }
+    }
+
+
+    @Test
+    fun quandoRepositoryTratarException_DeveDesaparecerProgressBar() {
+
+        coEvery { mockRepository.getAllUser() } throws Exception()
+
+        launchActivity<UserActivity>().apply {
+            onView(withId(R.id.user_list_progress_bar))
+                .check(matches(withEffectiveVisibility(Visibility.GONE)))
+        }
+    }
+
+
+    private fun successfulResponse() = listOf(
+        User(
+            id = 1,
+            name = "Pessoa1",
+            imgUrl = "https://test.com",
+            userName = "pessoa1"
+        ),
+        User(
+            id = 2,
+            name = "Pessoa2",
+            imgUrl = "https://test2.com",
+            userName = "pessoa2"
+        ),
+        User(
+            id = 3,
+            name = "Pessoa3",
+            imgUrl = "https://test3.com",
+            userName = "pessoa3"
+        ),
+    )
 }
+
 
 

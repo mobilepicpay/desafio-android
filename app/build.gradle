@@ -86,6 +86,8 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "androidx.test:core-ktx:$core_ktx_test_version"
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
+    androidTestImplementation 'io.mockk:mockk-android:1.10.6'
+
 
     // teste unitario
     testImplementation 'com.google.truth:truth:1.1'
@@ -95,7 +97,7 @@ dependencies {
 
     // UI
     implementation("io.coil-kt:coil:1.1.1")
-    implementation ("io.coil-kt:coil-base")
+    implementation("io.coil-kt:coil-base")
 
     // Run DB android native
     implementation 'androidx.room:room-ktx:2.3.0'
