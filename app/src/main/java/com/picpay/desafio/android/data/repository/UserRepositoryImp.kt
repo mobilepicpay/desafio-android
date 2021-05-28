@@ -3,6 +3,7 @@ package com.picpay.desafio.android.data.repository
 import com.picpay.desafio.android.data.local.UserLocalDataSource
 import com.picpay.desafio.android.data.remote.UserRemoteDataSource
 import com.picpay.desafio.android.domain.User
+import java.io.IOException
 
 class UserRepositoryImp(
     private val localDataSource: UserLocalDataSource,
@@ -12,15 +13,19 @@ class UserRepositoryImp(
 
     override suspend fun getAllUser(): List<User> {
 
-        val remote = remoteDataSource.getAllUser()
+        return try {
 
-        val result = if (remote.isNotEmpty()) {
-            localDataSource.updateCache(remote)
-            remote
-        } else {
+            val remote = remoteDataSource.getAllUser()
+            if (remote.isNotEmpty()) {
+                localDataSource.updateCache(remote)
+                remote
+            } else {
+                localDataSource.getAllUsers()
+            }
+
+        } catch (ioException: IOException) {
             localDataSource.getAllUsers()
-        }
-        return result.sortedBy { it.name }
+        }.sortedBy { it.name }
     }
-
 }
+

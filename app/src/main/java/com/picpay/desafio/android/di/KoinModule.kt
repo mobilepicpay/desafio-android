@@ -22,6 +22,7 @@ class KoinModule {
 
     fun getModule(): Module = module {
         viewModel { UserViewModel(repository = get()) }
+
         factory<UserRepository> {
 
             UserRepositoryImp(

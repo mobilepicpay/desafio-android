@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.picpay.desafio.android.data.model.DbUser
 
 
-@Database(entities = [DbUser::class], version = 2, exportSchema = false)
+@Database(entities = [DbUser::class], version = 1, exportSchema = false)
 
 abstract class DataBaseProvider : RoomDatabase(){
 
