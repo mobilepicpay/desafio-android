@@ -10,7 +10,9 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 import com.google.common.truth.Truth.assertThat
+import io.mockk.coVerify
 import org.junit.Before
+import java.io.IOException
 
 class UserRepositoryImpTest {
 
@@ -51,6 +53,21 @@ class UserRepositoryImpTest {
 
         coEvery { mockLocalDataSource.getAllUsers() } returns emptyList()
         coEvery { mockRemoteDataSource.getAllUser() } returns expected
+
+        val result = runBlocking { repository.getAllUser() }
+
+        assertThat(result).isEqualTo(expected.sortedBy { it.name })
+
+    }
+
+    @Test
+    fun `Quando servico jogar uma exception, tratar exception e trazer resultado do local`() {
+
+        val expected = getUserList()
+
+        coEvery { mockRemoteDataSource.getAllUser() } throws IOException()
+
+        coEvery { mockLocalDataSource.getAllUsers() } returns expected
 
         val result = runBlocking { repository.getAllUser() }
 

@@ -1,8 +1,6 @@
 package com.picpay.desafio.android.ui.viewmodel.state
 
-import android.view.ViewConfiguration.get
 import com.picpay.desafio.android.domain.User
-import com.picpay.desafio.android.ui.viewmodel.UserViewModel
 
 sealed class UserViewModelState {
 
