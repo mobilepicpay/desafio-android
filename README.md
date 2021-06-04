@@ -19,20 +19,20 @@ devs, guiando o desenvolvimento.
 ## Solução
 
 1. -[x] Modular o app (Presentation, Domain, Data).
-    1.1. [Modulo de apresentacao**(Presentation)**](https://github.com/bruunoh/desafio-android/tree/dev/app), mantive todos os arquivos relacionados a nossa 
-        view, como Activity, Fragment, Adapter, ViewModel, removendo toda regra de negocio 
-        e configurações de serviços.
-    1.2. [Modulo de Negocio**(Domain)**](https://github.com/bruunoh/desafio-android/tree/dev/domain), criei um novo modulo para separar as regras da nossa aplicação da nossa view.
-    1.3. [Modulo de dados**(Data)**](https://github.com/bruunoh/desafio-android/tree/dev/data), criei um novo modulo para ficar responsavel por lidar com os dados que serão
-        retornados do serviço
-        
-    ```
-    - Haverá mudanças na lógica de negócios e gostaríamos que a arquitetura reaja bem a isso.
-    - Haverá mudanças na lógica de apresentação. Gostaríamos que a arquitetura reaja bem a isso.
-    ```
+1.1. [Modulo de apresentacao**(Presentation)**](https://github.com/bruunoh/desafio-android/tree/dev/app), mantive todos os arquivos relacionados a nossa 
+    view, como Activity, Fragment, Adapter, ViewModel, removendo toda regra de negocio 
+    e configurações de serviços.
+1.2. [Modulo de Negocio**(Domain)**](https://github.com/bruunoh/desafio-android/tree/dev/domain), criei um novo modulo para separar as regras da nossa aplicação da nossa view.
+1.3. [Modulo de dados**(Data)**](https://github.com/bruunoh/desafio-android/tree/dev/data), criei um novo modulo para ficar responsavel por lidar com os dados que serão
+    retornados do serviço
+    
+```
+- Haverá mudanças na lógica de negócios e gostaríamos que a arquitetura reaja bem a isso.
+- Haverá mudanças na lógica de apresentação. Gostaríamos que a arquitetura reaja bem a isso.
+```
 2. -[x] Alterar a arquitetura do projeto para o MVVM.
-    2.1) Optei por utilizar a arquitetura MVVM para usar o ViewModel junto com o Coroutines.
-    2.2) Foi utilizado
+2.1) Optei por utilizar a arquitetura MVVM para usar o ViewModel junto com o Coroutines.
+2.2) Foi utilizado
      
 3. -[x] Utilizar a lib Room do Jetpack para salvar o cache da aplicação.
 ```
@@ -50,16 +50,16 @@ deveriam ser nulos sendo nulos e gerenciamento de lifecycle. Gostaríamos que fo
 ```
     
 6. -[ ] Testes
-    6.1. -[ ] Testes Automatizados
-    6.2. -[ ] Testes Unitarios
-    6.3. -[ ] Testes Instrumentados
-    ```
-    - Com um grande número de desenvolvedores e uma quantidade grande de mudanças ocorrendo testes 
-    automatizados são essenciais.
-    
-    - Gostaríamos de ter testes unitários testando nossa lógica de apresentação, negócios e dados 
-      independentemente, visto que tanto a escrita quanto execução dos mesmos são rápidas.
-      
-    - Por outro lado, testes unitários rodam em um ambiente de execução diferenciado e são menos 
-      fiéis ao dia-a-dia de nossos usuários, então testes instrumentados também são importantes.
-      ```
+6.1. -[ ] Testes Automatizados
+6.2. -[ ] Testes Unitarios
+6.3. -[ ] Testes Instrumentados
+```
+- Com um grande número de desenvolvedores e uma quantidade grande de mudanças ocorrendo testes 
+automatizados são essenciais.
+
+- Gostaríamos de ter testes unitários testando nossa lógica de apresentação, negócios e dados 
+  independentemente, visto que tanto a escrita quanto execução dos mesmos são rápidas.
+  
+- Por outro lado, testes unitários rodam em um ambiente de execução diferenciado e são menos 
+  fiéis ao dia-a-dia de nossos usuários, então testes instrumentados também são importantes.
+  ```
