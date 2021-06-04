@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.picpay.desafio.android.entities.UsersDomain
 import com.picpay.desafio.android.usecases.GetUsersUseCases
 import com.picpay.desafio.android.utils.Event
+import com.picpay.desafio.android.utils.exhaustive
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -28,7 +29,7 @@ class MainViewModel(
                 }
 
                 _usersLiveData.postValue(Event(result))
-            }
+            }.exhaustive
         }
     }
 
