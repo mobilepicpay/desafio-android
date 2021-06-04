@@ -44,7 +44,8 @@ que o mesmo fosse mantido.
 ```
 
 - -[ ] Tratar retorno dos servicos
-``` Nossos relatórios de crash têm mostrado alguns crashes relacionados a campos que não 
+``` 
+- Nossos relatórios de crash têm mostrado alguns crashes relacionados a campos que não 
 deveriam ser nulos sendo nulos e gerenciamento de lifecycle. Gostaríamos que fossem corrigidos.
 ```
     
