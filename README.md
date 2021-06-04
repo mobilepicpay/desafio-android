@@ -19,27 +19,26 @@ devs, guiando o desenvolvimento.
 ## Solução
 
 1. -[x] Modular o app (Presentation, Domain, Data).
-1.1. [Modulo de apresentacao**(Presentation)**](https://github.com/bruunoh/desafio-android/tree/dev/app), mantive todos os arquivos relacionados a nossa 
+    1. [Modulo de apresentacao**(Presentation)**](https://github.com/bruunoh/desafio-android/tree/dev/app), mantive todos os arquivos relacionados a nossa 
     view, como Activity, Fragment, Adapter, ViewModel, removendo toda regra de negocio 
     e configurações de serviços.
-1.2. [Modulo de Negocio**(Domain)**](https://github.com/bruunoh/desafio-android/tree/dev/domain), criei um novo modulo para separar as regras da nossa aplicação da nossa view.
-1.3. [Modulo de dados**(Data)**](https://github.com/bruunoh/desafio-android/tree/dev/data), criei um novo modulo para ficar responsavel por lidar com os dados que serão
+    1. [Modulo de Negocio**(Domain)**](https://github.com/bruunoh/desafio-android/tree/dev/domain), criei um novo modulo para separar as regras da nossa aplicação da nossa view.
+    1. [Modulo de dados**(Data)**](https://github.com/bruunoh/desafio-android/tree/dev/data), criei um novo modulo para ficar responsavel por lidar com os dados que serão
     retornados do serviço
     
 ```
 - Haverá mudanças na lógica de negócios e gostaríamos que a arquitetura reaja bem a isso.
 - Haverá mudanças na lógica de apresentação. Gostaríamos que a arquitetura reaja bem a isso.
 ```
-2. -[x] Alterar a arquitetura do projeto para o MVVM.
-2.1) Optei por utilizar a arquitetura MVVM para usar o ViewModel junto com o Coroutines.
-2.2) Foi utilizado
+1. -[x] Alterar a arquitetura do projeto para o MVVM.
+    1. Optei por utilizar a arquitetura MVVM para usar o ViewModel junto com o Coroutines.
      
-3. -[x] Utilizar a lib Room do Jetpack para salvar o cache da aplicação.
+1. -[x] Utilizar a lib Room do Jetpack para salvar o cache da aplicação.
 ```
 - Gostaríamos de cachear os dados retornados pelo servidor.
 ```
 
-4. -[ ] Manter estado da tela com lifecycle da lib jetpack
+1. -[ ] Manter estado da tela com lifecycle da lib jetpack
 ```
 - Em mudanças de configuração o aplicativo perde o estado da tela. Gostaríamos 
 que o mesmo fosse mantido.
@@ -49,10 +48,10 @@ que o mesmo fosse mantido.
 deveriam ser nulos sendo nulos e gerenciamento de lifecycle. Gostaríamos que fossem corrigidos.
 ```
     
-6. -[ ] Testes
-6.1. -[ ] Testes Automatizados
-6.2. -[ ] Testes Unitarios
-6.3. -[ ] Testes Instrumentados
+1. -[ ] Testes
+    1. -[ ] Testes Automatizados
+    1. -[ ] Testes Unitarios
+    1. -[ ] Testes Instrumentados
 ```
 - Com um grande número de desenvolvedores e uma quantidade grande de mudanças ocorrendo testes 
 automatizados são essenciais.
