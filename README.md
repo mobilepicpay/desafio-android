@@ -19,13 +19,12 @@ devs, guiando o desenvolvimento.
 ## Solução
 
 - -[x] Modular o app (Presentation, Domain, Data).
-    - Modulo de apresentacao [(Presentation)](https://github.com/bruunoh/desafio-android/tree/dev/app), mantive todos os arquivos relacionados a nossa 
+    - Modulo [Presentation](https://github.com/bruunoh/desafio-android/tree/dev/app), mantive todos os arquivos relacionados a nossa 
     view, como Activity, Fragment, Adapter, ViewModel, removendo toda regra de negocio 
     e configurações de serviços.
-    - Modulo de Negocio [(Domain)](https://github.com/bruunoh/desafio-android/tree/dev/domain), criei um novo modulo para separar as regras da nossa aplicação da nossa view.
-    - Modulo de dados [(Data)](https://github.com/bruunoh/desafio-android/tree/dev/data), criei um novo modulo para ficar responsavel por lidar com os dados que serão
+    - Modulo [Domain](https://github.com/bruunoh/desafio-android/tree/dev/domain), criei um novo modulo para separar as regras da nossa aplicação da nossa view.
+    - Modulo [Data](https://github.com/bruunoh/desafio-android/tree/dev/data), criei um novo modulo para ficar responsavel por lidar com os dados que serão
     retornados do serviço
-    
 ```
 - Haverá mudanças na lógica de negócios e gostaríamos que a arquitetura reaja bem a isso.
 - Haverá mudanças na lógica de apresentação. Gostaríamos que a arquitetura reaja bem a isso.
