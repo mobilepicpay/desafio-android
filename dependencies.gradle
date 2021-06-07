@@ -1,0 +1,154 @@
+ext {
+
+    minSDK = 20
+    targetSDK = 29
+    compileSDK = 29
+
+    buildTools = '3.5.0'
+
+    appCompactVersion = '1.0.2'
+    kotlinVersion = '1.3.61'
+
+    AndroidArchVersion = '1.1.1'
+    databindingVersion = '3.1.4'
+    lifeCycleVersion = '2.1.0'
+    ktxVersion = '1.0.1'
+
+    constrainVersion = '1.1.3'
+    cardViewVersion = '1.0.0'
+    recyclerViewVersion = '1.0.0'
+
+    coroutineVersion = '1.3.3'
+
+    //Rx
+    rxJavaVersion = '2.2.7'
+    rxKotlinVersion = '2.2.0'
+    rxAndroidVersion = '2.1.1'
+
+    //Koin
+    koinVersion = '2.0.1'
+
+    //Retrofit
+    retrofitVersion = '2.6.0'
+
+    //Gson
+    gsonVersion = '2.8.5'
+
+    //Room version
+    roomVersion = '2.2.3'
+
+    //Test
+    junitVersion = '4.12'
+    junitExtVersion = '1.1.1'
+    espressoVersion = '3.1.1'
+    runnerVersion = '1.1.1'
+
+    materialVersion = '1.1.0'
+
+    coreTestingVersion = '2.1.0'
+
+//    moshi_version = '1.8.0'
+
+    okhttpVersion = '4.3.1'
+
+    picassoVersion = '2.71828'
+
+    circleImageViewVersion = '3.0.0'
+
+    mockitoVersion = '2.27.0'
+
+    mockitoKotlinVersion = '2.1.0'
+
+    daggerVersion = "2.23.2"
+
+    lifecycleVersion = "2.2.0"
+
+    coroutinesVersion = "1.3.5"
+
+    coreKtxTestVersion = "1.2.0"
+
+    androidxTestVersion = "1.2.0"
+
+    // Unit Test
+    androidxTestRunnerVersion = "1.3.0-alpha01"
+    espressoCoreVersion = "3.3.0-alpha01"
+    truthExtVersion = "1.3.0-alpha01"
+
+    mockKVersion = "1.9.3"
+
+    dependencies = [
+            kotlin               : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
+
+            appCompact           : "androidx.appcompat:appcompat:$appCompactVersion",
+            constraintlayout     : "androidx.constraintlayout:constraintlayout:$constrainVersion",
+            cardView             : "androidx.cardview:cardview:$cardViewVersion",
+            recyclerView         : "androidx.recyclerview:recyclerview:$recyclerViewVersion",
+
+            viewModel            : "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifeCycleVersion",
+            lifeCycle            : "android.arch.lifecycle:extensions:$AndroidArchVersion",
+
+            lifecycleLiveData    : "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion",
+            lifecycleKapt        : "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion",
+
+            dataBinding          : "com.android.databinding:compiler:$databindingVersion",
+
+            ktx                  : "androidx.core:core-ktx:$ktxVersion",
+
+            rxJava               : "io.reactivex.rxjava2:rxjava:$rxJavaVersion",
+            rxKotlin             : "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion",
+            rxAndroid            : "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion",
+
+            koin                 : "org.koin:koin-android:$koinVersion",
+            koinCore             : "org.koin:koin-core:$koinVersion",
+            koinViewModel        : "org.koin:koin-androidx-viewmodel:$koinVersion",
+            koinExt              : "org.koin:koin-androidx-ext:$koinVersion",
+            koinScope            : "org.koin:koin-androidx-scope:$koinVersion",
+
+
+            retrofit             : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            retrofitRxAdapter    : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+            retrofitGsonConverter: "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            gson                 : "com.google.code.gson:gson:$gsonVersion",
+
+            room                 : "androidx.room:room-runtime:$roomVersion",
+            roomRxJava           : "androidx.room:room-rxjava2:$roomVersion",
+            roomCompiler         : "androidx.room:room-compiler:$roomVersion",
+            roomKtx              : "androidx.room:room-ktx:$roomVersion",
+
+            material             : "com.google.android.material:material:$materialVersion",
+
+
+            daggerVersion        : "com.google.dagger:dagger:$daggerVersion",
+            daggerVersionKapt    : "com.google.dagger:dagger-compiler:$daggerVersion",
+
+            okhttpVersion        : "com.squareup.okhttp3:okhttp:$okhttpVersion",
+            okhttpMockVersion    : "com.squareup.okhttp3:mockwebserver:$okhttpVersion",
+
+            coroutinesCore       : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion",
+            coroutinesAndroid    : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion",
+
+            picasso              : "com.squareup.picasso:picasso:$picassoVersion",
+            circleImageView      : "de.hdodenhof:circleimageview:$circleImageViewVersion"
+    ]
+
+    testDependecies = [
+            coreTesting       : "androidx.arch.core:core-testing:$coreTestingVersion",
+            mockitoKotlin     : "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion",
+            mockitoCore       : "org.mockito:mockito-core:$mockitoVersion",
+            coroutines        : "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion",
+            junit             : "junit:junit:$junitVersion",
+            junitExt          : "androidx.test.ext:junit:$junitExtVersion",
+            coreKtx           : "androidx.test:core-ktx:$coreKtxTestVersion",
+            espresso          : "androidx.test.espresso:espresso-core:$espressoVersion",
+            espressoIntents   : "androidx.test.espresso:espresso-intents:$espressoVersion",
+            runner            : "androidx.test:runner:$runnerVersion",
+            koinTest          : "org.koin:koin-test:$koinVersion",
+            mockKAndroid      : "io.mockk:mockk-android:$mockKVersion",
+            mockK             : "io.mockk:mockk:$mockKVersion",
+            core              : "androidx.test:core:$androidxTestVersion",
+
+            androidxTestRunner: "androidx.test:runner:$androidxTestRunnerVersion",
+            espressoCore      : "androidx.test.espresso:espresso-core:$espressoCoreVersion",
+            truthExt          : "androidx.test.ext:truth:$truthExtVersion"
+    ]
+}
