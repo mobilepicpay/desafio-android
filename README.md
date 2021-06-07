@@ -14,14 +14,13 @@ devs, guiando o desenvolvimento.
 ## Alterações
 
 - Utilizei o **coroutines** ao inves do **RxJava**
-- Utilizei o **hilt** ao inves do **dagger2**
+- Utilizei o **koin** ao inves do **dagger2**
 
 ## Solução
 
 - -[x] Modular o app (Presentation, Domain, Data).
     - Modulo [Presentation](https://github.com/bruunoh/desafio-android/tree/dev/app), mantive todos os arquivos relacionados a nossa 
-    view, como Activity, Fragment, Adapter, ViewModel, removendo toda regra de negocio 
-    e configurações de serviços.
+    view, como Activity, Fragment, Adapter, ViewModel, removendo toda regra de negocio e configurações de serviços.
     - Modulo [Domain](https://github.com/bruunoh/desafio-android/tree/dev/domain), criei um novo modulo para separar as regras da nossa aplicação da nossa view.
     - Modulo [Data](https://github.com/bruunoh/desafio-android/tree/dev/data), criei um novo modulo para ficar responsavel por lidar com os dados que serão
     retornados do serviço
@@ -37,22 +36,21 @@ devs, guiando o desenvolvimento.
 - Gostaríamos de cachear os dados retornados pelo servidor.
 ```
 
-- -[ ] Manter estado da tela com lifecycle da lib jetpack
+- -[x] Manter estado da tela com lifecycle da lib jetpack
 ```
 - Em mudanças de configuração o aplicativo perde o estado da tela. Gostaríamos 
 que o mesmo fosse mantido.
 ```
 
-- -[ ] Tratar retorno dos servicos
+- -[x] Tratar retorno dos servicos
 ``` 
 - Nossos relatórios de crash têm mostrado alguns crashes relacionados a campos que não 
 deveriam ser nulos sendo nulos e gerenciamento de lifecycle. Gostaríamos que fossem corrigidos.
 ```
     
-- -[ ] Testes
-    - -[ ] Testes Automatizados
-    - -[ ] Testes Unitarios
-    - -[ ] Testes Instrumentados
+- -[x] Testes
+    - -[x] Testes Unitarios
+    - -[x] Testes Instrumentados
 ```
 - Com um grande número de desenvolvedores e uma quantidade grande de mudanças ocorrendo testes 
 automatizados são essenciais.
