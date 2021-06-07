@@ -31,13 +31,9 @@ devs, guiando o desenvolvimento.
 - -[x] Alterar a arquitetura do projeto para o MVVM.
     - Optei por utilizar a arquitetura MVVM para usar o ViewModel junto com o Coroutines.
      
-- -[x] Utilizar a lib Room do Jetpack para salvar o cache da aplicação.
+- -[x] Utilizei a lib Room do Jetpack para salvar o cache da aplicação.
 ```
 - Gostaríamos de cachear os dados retornados pelo servidor.
-```
-
-- -[x] Manter estado da tela com lifecycle da lib jetpack
-```
 - Em mudanças de configuração o aplicativo perde o estado da tela. Gostaríamos 
 que o mesmo fosse mantido.
 ```
