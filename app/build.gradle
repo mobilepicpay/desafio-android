@@ -33,8 +33,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
@@ -63,37 +63,46 @@ dependencies {
     implementation dependencies.ktx
 
     implementation dependencies.viewModel
-//    implementation dependencies.lifecycle
-//    implementation dependencies.lifecycleKapt
 
     implementation dependencies.lifeCycle
+    implementation dependencies.lifecycleLiveData
+    implementation dependencies.lifecycleKapt
 
-    implementation dependencies.koinVersion
 
+    // Koin
+    implementation dependencies.koinCore
     implementation dependencies.koin
     implementation dependencies.koinViewModel
+    implementation dependencies.koinScope
+    implementation dependencies.koinExt
+    androidTestImplementation testDependencies.koinTest
 
-    implementation dependencies.rxJava
-    implementation dependencies.rxKotlin
-    implementation dependencies.rxAndroid
+//    implementation dependencies.rxJava
+//    implementation dependencies.rxKotlin
+//    implementation dependencies.rxAndroid
 
-    // troquei o dagger pelo koin
-//    implementation dependencies.daggerVersion
-//    kapt dependencies.daggerVersionKapt
 
+    // Coroutines
     implementation dependencies.coroutinesCore
     implementation dependencies.coroutinesAndroid
-    testImplementation testDependencies.coroutines
+    androidTestImplementation testDependencies.coroutines
 
+    // DataBinding
     kapt dependencies.dataBinding
 
-    testImplementation testDependencies.junit
-    testImplementation testDependencies.mockitoCore
-    testImplementation testDependencies.mockitoKotlin
-    testImplementation testDependencies.coreTesting
-    implementation dependencies.koinTest
+    // Testes Intrumentais
+    androidTestImplementation testDependencies.mockK
+
+    androidTestImplementation testDependencies.junit
+    androidTestImplementation testDependencies.junitExt
 
     androidTestImplementation testDependencies.runner
     androidTestImplementation testDependencies.espresso
+    androidTestImplementation testDependencies.espressoIntents
     androidTestImplementation testDependencies.coreKtx
+
+    androidTestImplementation 'androidx.test:rules:1.3.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
 }

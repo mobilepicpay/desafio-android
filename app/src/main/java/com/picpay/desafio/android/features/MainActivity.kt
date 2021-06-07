@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.ui.user
+package com.picpay.desafio.android.features
 
 import android.os.Bundle
 import android.view.View
@@ -10,13 +10,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.ActivityMainBinding
 import com.picpay.desafio.android.entities.UsersDomain
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var usersListAdapter: UserListAdapter
-    private lateinit var binding: ActivityMainBinding
+    private val usersListAdapter: UserListAdapter by inject()
     private val viewModel: MainViewModel by viewModel()
+
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,32 +46,32 @@ class MainActivity : AppCompatActivity() {
                     MainViewModel.ViewUsersStates.Empty -> showEmptyState()
                     MainViewModel.ViewUsersStates.Error -> showError()
                 }
+                binding.userListProgressBar.visibility = View.GONE
             }
         })
     }
 
     private fun showError() {
-        val message = getString(R.string.error)
-
-        binding.userListProgressBar.visibility = View.GONE
         binding.recyclerView.visibility = View.GONE
-
-        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
-            .show()
+        runOnUiThread {
+            Toast.makeText(this@MainActivity, getString(R.string.error), Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
     private fun showEmptyState() {
-        TODO("Not yet implemented")
+        runOnUiThread {
+            Toast.makeText(this@MainActivity, getString(R.string.listEmpty), Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
     private fun showContent(users: List<UsersDomain>) {
-        binding.userListProgressBar.visibility = View.GONE
+
         usersListAdapter.users = users
     }
 
     private fun setupRecyclerView() = with(binding.recyclerView) {
-        usersListAdapter = UserListAdapter()
-
         layoutManager = LinearLayoutManager(context)
         adapter = usersListAdapter
     }

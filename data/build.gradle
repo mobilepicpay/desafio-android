@@ -20,6 +20,7 @@ android {
 
 dependencies {
     def dependencies = rootProject.ext.dependencies
+    def testDependencies = rootProject.ext.testDependecies
 
     implementation project(":domain")
 
@@ -39,4 +40,12 @@ dependencies {
 
     implementation dependencies.coroutinesCore
     implementation dependencies.coroutinesAndroid
+
+    // Testing
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.mockK
+//    testImplementation testDependencies.truthExt
+//    testImplementation testDependencies.coreTesting
+
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3"
 }

@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.ui.user
+package com.picpay.desafio.android.features
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,7 +23,9 @@ class MainViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             usersUseCases.getUsers().collect {
                 val result = when (it) {
-                    is GetUsersUseCases.ResultUsers.UsersList -> ViewUsersStates.Show(it.list)
+                    is GetUsersUseCases.ResultUsers.UsersList -> ViewUsersStates.Show(
+                        it.list
+                    )
                     GetUsersUseCases.ResultUsers.NoUsers -> ViewUsersStates.Empty
                     GetUsersUseCases.ResultUsers.Error -> ViewUsersStates.Error
                 }

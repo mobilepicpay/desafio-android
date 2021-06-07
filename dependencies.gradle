@@ -26,7 +26,7 @@ ext {
     rxAndroidVersion = '2.1.1'
 
     //Koin
-    koinVersion = '2.0.0-rc-1'
+    koinVersion = '2.0.1'
 
     //Retrofit
     retrofitVersion = '2.6.0'
@@ -39,6 +39,7 @@ ext {
 
     //Test
     junitVersion = '4.12'
+    junitExtVersion = '1.1.1'
     espressoVersion = '3.1.1'
     runnerVersion = '1.1.1'
 
@@ -66,6 +67,14 @@ ext {
 
     coreKtxTestVersion = "1.2.0"
 
+    androidxTestVersion = "1.2.0"
+
+    // Unit Test
+    androidxTestRunnerVersion = "1.3.0-alpha01"
+    espressoCoreVersion = "3.3.0-alpha01"
+    truthExtVersion = "1.3.0-alpha01"
+
+    mockKVersion = "1.9.3"
 
     dependencies = [
             kotlin               : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
@@ -78,8 +87,8 @@ ext {
             viewModel            : "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifeCycleVersion",
             lifeCycle            : "android.arch.lifecycle:extensions:$AndroidArchVersion",
 
-//            lifecycle            : "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion",
-//            lifecycleKapt        : "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion",
+            lifecycleLiveData    : "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion",
+            lifecycleKapt        : "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion",
 
             dataBinding          : "com.android.databinding:compiler:$databindingVersion",
 
@@ -90,8 +99,11 @@ ext {
             rxAndroid            : "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion",
 
             koin                 : "org.koin:koin-android:$koinVersion",
+            koinCore             : "org.koin:koin-core:$koinVersion",
             koinViewModel        : "org.koin:koin-androidx-viewmodel:$koinVersion",
-            koinTest             : "org.koin:koin-test:$koinVersion",
+            koinExt              : "org.koin:koin-androidx-ext:$koinVersion",
+            koinScope            : "org.koin:koin-androidx-scope:$koinVersion",
+
 
             retrofit             : "com.squareup.retrofit2:retrofit:$retrofitVersion",
             retrofitRxAdapter    : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
@@ -101,10 +113,10 @@ ext {
             room                 : "androidx.room:room-runtime:$roomVersion",
             roomRxJava           : "androidx.room:room-rxjava2:$roomVersion",
             roomCompiler         : "androidx.room:room-compiler:$roomVersion",
-            roomKtx               : "androidx.room:room-ktx:$roomVersion",
+            roomKtx              : "androidx.room:room-ktx:$roomVersion",
 
             material             : "com.google.android.material:material:$materialVersion",
-            koinVersion          : "org.koin:koin-core:$koinVersion",
+
 
             daggerVersion        : "com.google.dagger:dagger:$daggerVersion",
             daggerVersionKapt    : "com.google.dagger:dagger-compiler:$daggerVersion",
@@ -112,7 +124,7 @@ ext {
             okhttpVersion        : "com.squareup.okhttp3:okhttp:$okhttpVersion",
             okhttpMockVersion    : "com.squareup.okhttp3:mockwebserver:$okhttpVersion",
 
-            coroutinesCore           : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion",
+            coroutinesCore       : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion",
             coroutinesAndroid    : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion",
 
             picasso              : "com.squareup.picasso:picasso:$picassoVersion",
@@ -120,13 +132,23 @@ ext {
     ]
 
     testDependecies = [
-            coreTesting  : "androidx.arch.core:core-testing:$coreTestingVersion",
-            mockitoKotlin: "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion",
-            mockitoCore  : "org.mockito:mockito-core:$mockitoVersion",
-            coroutines   : "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion",
-            junit        : "junit:junit:$junitVersion",
-            coreKtx      : "androidx.test:core-ktx:$coreKtxTestVersion",
-            espresso     : "androidx.test.espresso:espresso-core:$espressoVersion",
-            runner       : "androidx.test:runner:$runnerVersion"
+            coreTesting       : "androidx.arch.core:core-testing:$coreTestingVersion",
+            mockitoKotlin     : "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion",
+            mockitoCore       : "org.mockito:mockito-core:$mockitoVersion",
+            coroutines        : "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion",
+            junit             : "junit:junit:$junitVersion",
+            junitExt          : "androidx.test.ext:junit:$junitExtVersion",
+            coreKtx           : "androidx.test:core-ktx:$coreKtxTestVersion",
+            espresso          : "androidx.test.espresso:espresso-core:$espressoVersion",
+            espressoIntents   : "androidx.test.espresso:espresso-intents:$espressoVersion",
+            runner            : "androidx.test:runner:$runnerVersion",
+            koinTest          : "org.koin:koin-test:$koinVersion",
+            mockKAndroid      : "io.mockk:mockk-android:$mockKVersion",
+            mockK             : "io.mockk:mockk:$mockKVersion",
+            core              : "androidx.test:core:$androidxTestVersion",
+
+            androidxTestRunner: "androidx.test:runner:$androidxTestRunnerVersion",
+            espressoCore      : "androidx.test.espresso:espresso-core:$espressoCoreVersion",
+            truthExt          : "androidx.test.ext:truth:$truthExtVersion"
     ]
 }
