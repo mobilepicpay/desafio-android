@@ -9,10 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.picpay.desafio.android.Constants
+import com.picpay.desafio.android.utls.Constants
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.ActivityMainBinding
-import com.picpay.desafio.android.remote.RetrofitService
+import com.picpay.desafio.android.remote.service.RetrofitService
 import com.picpay.desafio.android.remote.repository.PicPayRepository
 import com.picpay.desafio.android.viewmodel.MainViewModel
 

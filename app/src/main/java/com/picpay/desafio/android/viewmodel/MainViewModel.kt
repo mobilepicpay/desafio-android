@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.picpay.desafio.android.Constants
-import com.picpay.desafio.android.remote.User
+import com.picpay.desafio.android.utls.Constants
+import com.picpay.desafio.android.remote.model.User
 import com.picpay.desafio.android.remote.repository.ApiListener
 import com.picpay.desafio.android.remote.repository.PicPayRepository
 

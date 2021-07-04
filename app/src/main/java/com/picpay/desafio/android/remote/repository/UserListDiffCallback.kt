@@ -1,7 +1,7 @@
 package com.picpay.desafio.android.remote.repository
 
 import androidx.recyclerview.widget.DiffUtil
-import com.picpay.desafio.android.remote.User
+import com.picpay.desafio.android.remote.model.User
 
 class UserListDiffCallback(
     private val oldList: List<User>,

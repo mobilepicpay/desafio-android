@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.remote
+package com.picpay.desafio.android.utls
 
 import android.content.Context
 import android.net.ConnectivityManager

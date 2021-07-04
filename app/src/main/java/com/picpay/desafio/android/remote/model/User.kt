@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.remote
+package com.picpay.desafio.android.remote.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

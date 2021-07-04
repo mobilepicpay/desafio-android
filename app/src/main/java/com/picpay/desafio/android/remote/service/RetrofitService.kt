@@ -1,8 +1,9 @@
-package com.picpay.desafio.android.remote
+package com.picpay.desafio.android.remote.service
 
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.picpay.desafio.android.utls.RemoteUtls
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

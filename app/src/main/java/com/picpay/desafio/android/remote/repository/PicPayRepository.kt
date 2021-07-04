@@ -1,7 +1,7 @@
 package com.picpay.desafio.android.remote.repository
 
-import com.picpay.desafio.android.remote.PicPayService
-import com.picpay.desafio.android.remote.User
+import com.picpay.desafio.android.remote.service.PicPayService
+import com.picpay.desafio.android.remote.model.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
