@@ -1,40 +1,62 @@
 package com.picpay.desafio.android
 
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.picpay.desafio.android.data.remote.service.UserService
-import com.picpay.desafio.android.domain.entities.User
-import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.picpay.desafio.android.commons.extensions.showToast
+import com.picpay.desafio.android.commons.extensions.visible
+import com.picpay.desafio.android.commons.util.NetworkUtil
+import com.picpay.desafio.android.databinding.ActivityMainBinding
+import com.picpay.desafio.android.state.UserState
+import com.picpay.desafio.android.viewmodel.UserViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
-
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var progressBar: ProgressBar
+class MainActivity : AppCompatActivity() {
+    private val userViewModel: UserViewModel by viewModel()
+    private var binding: ActivityMainBinding? = null
     private lateinit var adapter: UserListAdapter
 
-    override fun onResume() {
-        super.onResume()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setupFields()
+        setupObservers()
+        getUsers()
+    }
 
-        recyclerView = findViewById(R.id.recyclerView)
-        progressBar = findViewById(R.id.user_list_progress_bar)
+    private fun setupObservers() {
+        userViewModel.state.observe(this) { state ->
+            when (state) {
+                is UserState.ShowLoading -> showLoading(state.show)
+                is UserState.Error -> {
+                    showToast(getString(R.string.error))
+                    hideRecyclerView()
+                }
 
-        adapter = UserListAdapter()
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+                is UserState.ShowUserList -> {
+                    adapter.users = state.userList
+                }
+            }
+        }
+    }
 
-        progressBar.visibility = View.VISIBLE
-//        service.getUsers()
+    private fun hideRecyclerView() {
+        binding?.recyclerView?.visible(false)
+    }
+
+    private fun getUsers() {
+        userViewModel.getUsers(NetworkUtil.isNetworkConnected(this@MainActivity))
+    }
+
+    private fun setupFields() {
+        binding?.apply {
+            setupRecycler()
+
 //            .enqueue(object : Callback<List<User>> {
 //                override fun onFailure(call: Call<List<User>>, t: Throwable) {
 //                    val message = getString(R.string.error)
@@ -52,5 +74,22 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 //                    adapter.users = response.body()!!
 //                }
 //            })
+        }
+    }
+
+    private fun showLoading(show: Boolean) {
+        binding?.apply {
+            userListProgressBar.visible(show)
+        }
+    }
+
+    private fun setupRecycler() {
+        binding?.apply {
+            adapter = UserListAdapter()
+            recyclerView.apply {
+                adapter = adapter
+                layoutManager = LinearLayoutManager(this@MainActivity)
+            }
+        }
     }
 }
