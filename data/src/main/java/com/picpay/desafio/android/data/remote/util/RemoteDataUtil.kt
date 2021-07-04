@@ -5,6 +5,7 @@ import com.picpay.desafio.data.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -19,7 +20,11 @@ suspend fun <T> call(apiCall: suspend () -> T): ResultWrapper<T> {
 }
 
 val okHttp: OkHttpClient by lazy {
+    val interceptor = HttpLoggingInterceptor()
+    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+
     OkHttpClient.Builder()
+        .addInterceptor(interceptor)
         .build()
 }
 

@@ -1,13 +1,9 @@
 package com.picpay.desafio.android
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.view.View
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.commons.extensions.showToast
 import com.picpay.desafio.android.commons.extensions.visible
 import com.picpay.desafio.android.commons.util.NetworkUtil
@@ -19,7 +15,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
     private val userViewModel: UserViewModel by viewModel()
     private var binding: ActivityMainBinding? = null
-    private lateinit var adapter: UserListAdapter
+    private lateinit var usersAdapter: UserListAdapter
+    private var isConnected: Boolean = false
+        get() = NetworkUtil.isNetworkConnected(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,17 +27,27 @@ class MainActivity : AppCompatActivity() {
         getUsers()
     }
 
+    private fun setupFields() {
+        binding?.apply {
+            setupRecycler()
+            ivRefresh.setOnClickListener { userViewModel.getUsers(isConnected, true) }
+        }
+    }
+
     private fun setupObservers() {
         userViewModel.state.observe(this) { state ->
             when (state) {
-                is UserState.ShowLoading -> showLoading(state.show)
+                is UserState.ShowLoading -> {
+                    showLoading(state.show)
+                }
                 is UserState.Error -> {
                     showToast(getString(R.string.error))
                     hideRecyclerView()
                 }
 
                 is UserState.ShowUserList -> {
-                    adapter.users = state.userList
+                    usersAdapter.users = state.userList
+                    showRecyclerView()
                 }
             }
         }
@@ -49,32 +57,12 @@ class MainActivity : AppCompatActivity() {
         binding?.recyclerView?.visible(false)
     }
 
-    private fun getUsers() {
-        userViewModel.getUsers(NetworkUtil.isNetworkConnected(this@MainActivity))
+    private fun showRecyclerView() {
+        binding?.recyclerView?.visible(true)
     }
 
-    private fun setupFields() {
-        binding?.apply {
-            setupRecycler()
-
-//            .enqueue(object : Callback<List<User>> {
-//                override fun onFailure(call: Call<List<User>>, t: Throwable) {
-//                    val message = getString(R.string.error)
-//
-//                    progressBar.visibility = View.GONE
-//                    recyclerView.visibility = View.GONE
-//
-//                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
-//                        .show()
-//                }
-//
-//                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-//                    progressBar.visibility = View.GONE
-//
-//                    adapter.users = response.body()!!
-//                }
-//            })
-        }
+    private fun getUsers() {
+        userViewModel.getUsers(isConnected, false)
     }
 
     private fun showLoading(show: Boolean) {
@@ -85,9 +73,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupRecycler() {
         binding?.apply {
-            adapter = UserListAdapter()
+            usersAdapter = UserListAdapter()
             recyclerView.apply {
-                adapter = adapter
+                adapter = usersAdapter
                 layoutManager = LinearLayoutManager(this@MainActivity)
             }
         }

@@ -13,8 +13,8 @@ class UserViewModel(private val useCase: UserUseCase) : ViewModel() {
     private val _state: MutableLiveData<UserState> = MutableLiveData()
     val state: LiveData<UserState> = _state
 
-    fun getUsers(isConnected: Boolean) {
-        if (state.value == null || state.value is UserState.Error) {
+    fun getUsers(isConnected: Boolean, forceUpdate: Boolean = false) {
+        if ((state.value == null || state.value is UserState.Error) || forceUpdate) {
             _state.value = UserState.ShowLoading(true)
             viewModelScope.launch {
                 when (val result = useCase.getUsers(isConnected)) {

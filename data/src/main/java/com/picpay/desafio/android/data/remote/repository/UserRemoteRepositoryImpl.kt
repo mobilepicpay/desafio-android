@@ -10,7 +10,8 @@ import com.picpay.desafio.android.domain.result.ResultWrapper
 class UserRemoteRepositoryImpl(private val service: UserService): UserRepository {
     override suspend fun getUsers(): ResultWrapper<List<User>> {
         return call {
-            UserRemoteMapper.fromListUserRemoteResponse(service.getUsers())
+            val response = service.getUsers()
+            UserRemoteMapper.fromListUserRemoteResponse(response)
         }
     }
 }
