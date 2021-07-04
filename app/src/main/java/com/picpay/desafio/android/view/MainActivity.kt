@@ -6,15 +6,13 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.picpay.desafio.android.utls.Constants
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.ActivityMainBinding
-import com.picpay.desafio.android.remote.service.RetrofitService
-import com.picpay.desafio.android.remote.repository.PicPayRepository
+import com.picpay.desafio.android.utls.Constants
 import com.picpay.desafio.android.viewmodel.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,13 +21,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var adapter: UserListAdapter
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initViewBinding()
-        initViewModel()
         configRecyclerView()
         callUsers()
 
@@ -42,14 +39,6 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = binding.recyclerView
         progressBar = binding.userListProgressBar
-    }
-
-    private fun initViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            MainViewModel.MainViewModelFactory(PicPayRepository(RetrofitService(applicationContext).getPicPayService()))
-        )
-            .get(MainViewModel::class.java)
     }
 
     private fun configRecyclerView() {
