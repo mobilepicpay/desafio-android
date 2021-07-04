@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     private fun initViewModel() {
         viewModel = ViewModelProvider(
             this,
-            MainViewModel.MainViewModelFactory(RetrofitService.getInstance())
+            MainViewModel.MainViewModelFactory(RetrofitService(applicationContext).getInstance())
         )
             .get(MainViewModel::class.java)
     }
