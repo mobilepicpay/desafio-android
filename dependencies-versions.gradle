@@ -21,6 +21,7 @@ ext {
     espresso_version = '3.1.1'
 
     koin_version = "2.0.1"
+    mockk_version = "1.12.0"
     dagger_version = "2.23.2"
     lifecycle_version = "2.2.0"
     coroutines_version = "1.4.2"

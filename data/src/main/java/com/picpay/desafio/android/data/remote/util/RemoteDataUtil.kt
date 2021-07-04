@@ -31,7 +31,7 @@ val okHttp: OkHttpClient by lazy {
 inline fun <reified T> createWebService(): T {
     return Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(BuildConfig.BASE_URL)
+        .baseUrl(BaseURL.getURL())
         .client(okHttp)
         .build()
         .create(T::class.java)

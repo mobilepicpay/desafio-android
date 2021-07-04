@@ -1,14 +1,16 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.picpay.desafio.android.R
 import com.picpay.desafio.android.commons.extensions.showToast
 import com.picpay.desafio.android.commons.extensions.visible
 import com.picpay.desafio.android.commons.util.NetworkUtil
 import com.picpay.desafio.android.databinding.ActivityMainBinding
 import com.picpay.desafio.android.state.UserState
+import com.picpay.desafio.android.ui.adapter.UserListAdapter
 import com.picpay.desafio.android.viewmodel.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

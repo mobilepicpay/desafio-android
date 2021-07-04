@@ -14,8 +14,10 @@ class UserViewModel(private val useCase: UserUseCase) : ViewModel() {
     val state: LiveData<UserState> = _state
 
     fun getUsers(isConnected: Boolean, forceUpdate: Boolean = false) {
-        if (!isConnected && forceUpdate)
+        if (!isConnected && forceUpdate) {
             _state.value = UserState.Error(ERROR_UPDATE_WITHOUT_INTERNET)
+            return
+        }
 
         if ((state.value == null || state.value is UserState.Error) || forceUpdate) {
             _state.value = UserState.ShowLoading(true)
