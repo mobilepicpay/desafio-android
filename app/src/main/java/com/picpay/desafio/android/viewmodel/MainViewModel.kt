@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.picpay.desafio.android.Constants
 import com.picpay.desafio.android.remote.PicPayService
 import com.picpay.desafio.android.remote.User
 import retrofit2.Call
@@ -25,21 +26,22 @@ class MainViewModel(networkService: Retrofit) : ViewModel() {
     private val _usersList = MutableLiveData<List<User>>()
     val userList: LiveData<List<User>> = _usersList
 
+    private val _responseStatus = MutableLiveData<Int>()
+    val responseStatus: LiveData<Int> = _responseStatus
+
 
     fun getUsers() {
         service.getUsers()
             .enqueue(object : Callback<List<User>> {
                 override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                    //val message = getString(R.string.error)
+                    _responseStatus.value = Constants.failure
 
                     _progressBar.value = View.GONE
                     _recyclerView.value = View.GONE
-
-                    //Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
-                    //   .show()
                 }
 
                 override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                    _responseStatus.value = Constants.success
                     _progressBar.value = View.GONE
                     _usersList.value = response.body()
                 }
