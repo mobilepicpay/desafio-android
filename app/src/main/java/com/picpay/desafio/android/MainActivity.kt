@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                     showLoading(state.show)
                 }
                 is UserState.Error -> {
-                    showToast(getString(R.string.error))
+                    showToast(state.error ?: getString(R.string.error))
                     hideRecyclerView()
                 }
 

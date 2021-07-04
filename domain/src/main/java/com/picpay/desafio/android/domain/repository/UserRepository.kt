@@ -4,5 +4,5 @@ import com.picpay.desafio.android.domain.entities.User
 import com.picpay.desafio.android.domain.result.ResultWrapper
 
 interface UserRepository {
-    suspend fun getUsers(): ResultWrapper<List<User>>
+    suspend fun getUsers(isConnected: Boolean): ResultWrapper<List<User>>
 }

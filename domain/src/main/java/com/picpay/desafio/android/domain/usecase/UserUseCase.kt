@@ -6,6 +6,6 @@ import com.picpay.desafio.android.domain.result.ResultWrapper
 
 class UserUseCase(private val repository: UserRepository) {
     suspend fun getUsers(isConnected: Boolean): ResultWrapper<List<User>> {
-        return repository.getUsers()
+        return repository.getUsers(isConnected)
     }
 }
