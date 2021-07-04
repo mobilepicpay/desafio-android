@@ -6,16 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.picpay.desafio.android.Constants
-import com.picpay.desafio.android.remote.PicPayService
 import com.picpay.desafio.android.remote.User
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
+import com.picpay.desafio.android.remote.repository.ApiListener
+import com.picpay.desafio.android.remote.repository.PicPayRepository
 
-class MainViewModel(networkService: Retrofit) : ViewModel() {
-
-    private val service: PicPayService = networkService.create(PicPayService::class.java)
+class MainViewModel(private val repository: PicPayRepository) : ViewModel() {
 
     private val _progressBar = MutableLiveData<Int>()
     val progressBar: LiveData<Int> = _progressBar
@@ -29,30 +24,30 @@ class MainViewModel(networkService: Retrofit) : ViewModel() {
     private val _responseStatus = MutableLiveData<Int>()
     val responseStatus: LiveData<Int> = _responseStatus
 
+    fun getUsersRepository() {
+        val listener = object : ApiListener<List<User>> {
+            override fun onSuccess(list: List<User>) {
+                _responseStatus.value = Constants.success
+                _progressBar.value = View.GONE
+                _usersList.value = list
+            }
 
-    fun getUsers() {
-        service.getUsers()
-            .enqueue(object : Callback<List<User>> {
-                override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                    _responseStatus.value = Constants.failure
+            override fun onFailure() {
+                _responseStatus.value = Constants.failure
+                _progressBar.value = View.GONE
+                _recyclerView.value = View.GONE
+            }
 
-                    _progressBar.value = View.GONE
-                    _recyclerView.value = View.GONE
-                }
+        }
 
-                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                    _responseStatus.value = Constants.success
-                    _progressBar.value = View.GONE
-                    _usersList.value = response.body()
-                }
-            })
+        repository.getUsers(listener)
     }
 
     class MainViewModelFactory(
-        private val networkService: Retrofit
+        private val repository: PicPayRepository
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return MainViewModel(networkService) as T
+            return MainViewModel(repository) as T
         }
     }
 }

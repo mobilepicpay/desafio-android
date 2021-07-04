@@ -13,6 +13,7 @@ import com.picpay.desafio.android.Constants
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.ActivityMainBinding
 import com.picpay.desafio.android.remote.RetrofitService
+import com.picpay.desafio.android.remote.repository.PicPayRepository
 import com.picpay.desafio.android.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -23,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: UserListAdapter
 
     private lateinit var viewModel: MainViewModel
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     private fun initViewModel() {
         viewModel = ViewModelProvider(
             this,
-            MainViewModel.MainViewModelFactory(RetrofitService(applicationContext).getInstance())
+            MainViewModel.MainViewModelFactory(PicPayRepository(RetrofitService(applicationContext).getPicPayService()))
         )
             .get(MainViewModel::class.java)
     }
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     private fun callUsers() {
         progressBar.visibility = View.VISIBLE
 
-        viewModel.getUsers()
+        viewModel.getUsersRepository()
         initObservers()
     }
 

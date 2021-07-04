@@ -12,12 +12,10 @@ class RetrofitService(context: Context) {
 
     private val url = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
     private val gson: Gson = GsonBuilder().create()
-
-    //private val okHttp = OkHttpClient.Builder().build()
     private val cacheSize = (10 * 1024 * 1024).toLong()
     private val cache = Cache(context.cacheDir, cacheSize)
 
-    val okHttpClient = OkHttpClient.Builder()
+    private val okHttpClient = OkHttpClient.Builder()
         .cache(cache)
         .addInterceptor { chain ->
             var request = chain.request()
@@ -37,11 +35,13 @@ class RetrofitService(context: Context) {
         .build()
 
 
-    fun getInstance(): Retrofit {
+    private fun getInstance(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(url)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
+
+    fun getPicPayService(): PicPayService = getInstance().create(PicPayService::class.java)
 }
