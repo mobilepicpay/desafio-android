@@ -5,12 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.picpay.desafio.android.utls.Constants
 import com.picpay.desafio.android.remote.model.User
 import com.picpay.desafio.android.remote.repository.ApiListener
+import com.picpay.desafio.android.remote.repository.DefaultRepository
 import com.picpay.desafio.android.remote.repository.PicPayRepository
+import com.picpay.desafio.android.utls.Constants
 
-class MainViewModel(private val repository: PicPayRepository) : ViewModel() {
+class MainViewModel(private val repository: DefaultRepository) : ViewModel() {
 
     private val _progressBar = MutableLiveData<Int>()
     val progressBar: LiveData<Int> = _progressBar
@@ -43,11 +44,4 @@ class MainViewModel(private val repository: PicPayRepository) : ViewModel() {
         repository.getUsers(listener)
     }
 
-    class MainViewModelFactory(
-        private val repository: PicPayRepository
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return MainViewModel(repository) as T
-        }
-    }
 }

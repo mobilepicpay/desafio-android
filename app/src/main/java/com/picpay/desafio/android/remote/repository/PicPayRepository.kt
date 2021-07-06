@@ -6,9 +6,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PicPayRepository(private val service: PicPayService) {
+class PicPayRepository(private val service: PicPayService): DefaultRepository {
 
-    fun getUsers(listener: ApiListener<List<User>>) {
+    override fun getUsers(listener: ApiListener<List<User>>) {
         val call: Call<List<User>> = service.getUsers()
         call.enqueue(object : Callback<List<User>> {
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
