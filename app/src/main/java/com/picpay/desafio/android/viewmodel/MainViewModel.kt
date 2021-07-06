@@ -25,7 +25,7 @@ class MainViewModel(private val repository: DefaultRepository) : ViewModel() {
     private val _responseStatus = MutableLiveData<Int>()
     val responseStatus: LiveData<Int> = _responseStatus
 
-    fun getUsersRepository() {
+    fun getUsers() {
         val listener = object : ApiListener<List<User>> {
             override fun onSuccess(list: List<User>) {
                 _responseStatus.value = Constants.success

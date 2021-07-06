@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     private fun callUsers() {
         progressBar.visibility = View.VISIBLE
 
-        viewModel.getUsersRepository()
+        viewModel.getUsers()
         initObservers()
     }
 
