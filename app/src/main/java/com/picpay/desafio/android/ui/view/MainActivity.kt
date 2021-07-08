@@ -7,7 +7,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.UserListAdapter
 import com.picpay.desafio.android.databinding.ActivityMainBinding
 import com.picpay.desafio.android.ui.presentation.UserViewModel
 import com.picpay.desafio.android.ui.presentation.UserViewObject
