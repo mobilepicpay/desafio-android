@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "name": "Tom",
+    "username": "Cruise",
+    "img": "https://jsonformatter.org/img/tom-cruise.jpg"
+  },
+  {
+    "id": "2",
+    "name": "Maria",
+    "username": "Sharapova",
+    "img": "https://jsonformatter.org/img/Maria-Sharapova.jpg"
+  },
+  {
+    "id": "3",
+    "name": "Robert",
+    "username": "Downey Jr.",
+    "img": "https://jsonformatter.org/img/Robert-Downey-Jr.jpg"
+  }
+]
