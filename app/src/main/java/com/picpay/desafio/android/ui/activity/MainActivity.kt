@@ -1,7 +1,8 @@
 package com.picpay.desafio.android.ui.activity
 
 import android.os.Bundle
-import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -14,29 +15,29 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModel()
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val userListAdapter: UserListAdapter by lazy {
+    private val adapter: UserListAdapter by lazy {
         UserListAdapter()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.recyclerView.adapter = userListAdapter
+        binding.adapter = adapter
         inscribeObserver()
-        viewModel.getUserList()
+        viewModel.getUser()
     }
 
     private fun inscribeObserver() {
         viewModel.loadingProgress.observe(this, Observer {
-            binding.userListProgressBar.visibility = View.VISIBLE
+            binding.userListProgressBar.visibility = VISIBLE
         })
         viewModel.toastError.observe(this, Observer {
-            binding.userListProgressBar.visibility = View.GONE
+            binding.userListProgressBar.visibility = GONE
             Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show()
         })
         viewModel.userList.observe(this, Observer {
-            binding.userListProgressBar.visibility = View.GONE
-            userListAdapter.users = it
+            binding.userListProgressBar.visibility = GONE
+            adapter.users = it
         })
     }
 

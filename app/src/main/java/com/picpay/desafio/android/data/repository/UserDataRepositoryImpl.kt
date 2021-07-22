@@ -13,11 +13,11 @@ class UserDataRepositoryImpl(
 
     override suspend fun getUserList(): List<User> {
         return withContext(Dispatchers.IO) {
-            userRemoteDataSource.getUserData()
+            userRemoteDataSource.getUser()
         }
     }
 
-    override suspend fun getUserCache(): List<User> {
+    override suspend fun getUserLocal(): List<User> {
         return withContext(Dispatchers.IO) {
             localDataSource.getUserData()
         }
@@ -25,7 +25,7 @@ class UserDataRepositoryImpl(
 
     override suspend fun saveUserCache(userList: List<User>) {
         withContext(Dispatchers.IO) {
-            localDataSource.setUserCache(userList)
+            localDataSource.setUserLocal(userList)
         }
     }
 }

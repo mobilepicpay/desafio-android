@@ -4,12 +4,9 @@ import com.picpay.desafio.android.data.local.datasource.UserLocalDataSource
 import com.picpay.desafio.android.data.local.datasource.UserLocalDataSourceImpl
 import com.picpay.desafio.android.data.local.db.DatabasePicPay
 import com.picpay.desafio.android.data.local.db.DatabasePicPay.Companion.createDatabase
-import com.picpay.desafio.android.data.local.mapper.DbUserMapper
-import com.picpay.desafio.android.data.local.mapper.UserRemoteMapper
 import com.picpay.desafio.android.data.remote.Client
 import com.picpay.desafio.android.data.remote.datasource.UserRemoteDataSource
 import com.picpay.desafio.android.data.remote.datasource.UserRemoteDataSourceImpl
-import com.picpay.desafio.android.data.remote.mapper.UserMapper
 import com.picpay.desafio.android.data.repository.UserDataRepository
 import com.picpay.desafio.android.data.repository.UserDataRepositoryImpl
 import com.picpay.desafio.android.ui.viewmodel.MainViewModel
@@ -18,15 +15,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val mainModule = module {
-    factory {
-        UserRemoteMapper()
-    }
-    factory {
-        DbUserMapper()
-    }
-    factory {
-        UserMapper()
-    }
     factory {
         Client()
     }
@@ -52,16 +40,13 @@ val mainModule = module {
 
     factory<UserRemoteDataSource> {
         UserRemoteDataSourceImpl(
-            service = get<Client>().getUserService(),
-            userMapper = get()
+            service = get<Client>().getUserService()
         )
     }
 
     factory<UserLocalDataSource> {
         UserLocalDataSourceImpl(
-            userDao = get(),
-            userRemoteMapper = get(),
-            dbUserMapper = get()
+            userDao = get()
         )
     }
 

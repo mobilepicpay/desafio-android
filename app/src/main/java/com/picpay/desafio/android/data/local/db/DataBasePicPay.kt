@@ -7,13 +7,12 @@ import androidx.room.RoomDatabase
 import com.picpay.desafio.android.data.local.entities.UserDb
 
 @Database(entities = [UserDb::class], version = 1, exportSchema = false)
-abstract class DatabasePicPay: RoomDatabase() {
+abstract class DatabasePicPay : RoomDatabase() {
     abstract fun userDao(): UserDao
 
-companion object {
-    fun createDatabase(context: Context): DatabasePicPay =
-        Room.
-        databaseBuilder(context, DatabasePicPay::class.java, "user.db")
-            .build()
+    companion object {
+        fun createDatabase(context: Context): DatabasePicPay =
+            Room.databaseBuilder(context, DatabasePicPay::class.java, "user.db")
+                .build()
     }
 }
