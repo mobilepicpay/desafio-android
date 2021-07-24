@@ -3,8 +3,9 @@ package com.picpay.desafio.android.domain.usecase
 import com.picpay.desafio.android.data.PicPayRepository
 import com.picpay.desafio.android.data.Resource
 import com.picpay.desafio.android.data.mapper.UserResponseMapper
+import javax.inject.Inject
 
-class PicPayUseCase(private val repository: PicPayRepository) {
+class PicPayUseCase @Inject constructor(private val repository: PicPayRepository) {
 
     suspend operator fun invoke() =
         try {
