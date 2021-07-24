@@ -1,6 +1,5 @@
 package com.picpay.desafio.android.ui
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,10 +21,12 @@ class MainViewModel @Inject constructor(private val useCase: PicPayUseCase) : Vi
         _users.postValue(Resource.Loading())
         when (val response = useCase.invoke()) {
             is Resource.Success -> {
-                Log.d("ALEDEV","Success")
+                response.data?.let {
+                    _users.postValue(Resource.Success(it))
+                }
             }
             else -> {
-                Log.d("ALEDEV","ERROR")
+                _users.postValue(Resource.Error("dsdsds"))
             }
         }
 
