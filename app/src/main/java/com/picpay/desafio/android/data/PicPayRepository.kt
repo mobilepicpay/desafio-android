@@ -1,8 +1,9 @@
 package com.picpay.desafio.android.data
 
-import com.picpay.desafio.android.data.dto.UserResponse
+import com.picpay.desafio.android.data.source.local.UserDb
+import kotlinx.coroutines.flow.Flow
 
 interface PicPayRepository {
 
-    suspend fun getUsers() : List<UserResponse>
+    fun getUsers(): Flow<Resource<List<UserDb>>>
 }
