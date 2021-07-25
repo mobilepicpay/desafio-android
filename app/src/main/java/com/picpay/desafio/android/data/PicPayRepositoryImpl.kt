@@ -1,6 +1,5 @@
 package com.picpay.desafio.android.data
 
-import android.util.Log
 import com.picpay.desafio.android.data.dto.toUsersDb
 import com.picpay.desafio.android.data.source.local.LocalDataSource
 import com.picpay.desafio.android.data.source.local.UserDb
@@ -16,15 +15,12 @@ class PicPayRepositoryImpl @Inject constructor(
     override fun getUsers(): Flow<Resource<List<UserDb>>> {
         return networkBoundResource(
             query = {
-                Log.d("ALEDEV", "query")
                 localData.getAllUsers()
             },
             fetch = {
-                Log.d("ALEDEV", "fetch")
                 remoteData.allUsers().toUsersDb()
             },
             saveFetchResult = {
-                Log.d("ALEDEV", "saveFetchResult $it")
                 localData.deleteUsers()
                 localData.insertUsers(it)
             }
