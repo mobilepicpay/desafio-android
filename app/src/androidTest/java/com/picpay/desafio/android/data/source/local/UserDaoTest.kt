@@ -7,7 +7,6 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,14 +24,11 @@ class UserDaoTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Inject
-    @Named("test_db")
-    lateinit var database: UsersDatabase
-    private lateinit var userDao: UserDao
+    lateinit var userDao: UserDao
 
     @Before
     fun setup() {
         hiltRule.inject()
-        userDao = database.userDao()
     }
 
 
@@ -55,14 +51,8 @@ class UserDaoTest {
         userDao.deleteAllUsers()
 
         val toList2 = userDao.getAllUsers().first()
-        Truth.assertThat(toList2).isNotEmpty()
+        Truth.assertThat(toList2).isEmpty()
 
     }
-
-    @After
-    fun tearDown() {
-        database.close()
-    }
-
 
 }
