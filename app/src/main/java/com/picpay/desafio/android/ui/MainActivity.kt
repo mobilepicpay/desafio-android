@@ -49,8 +49,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onResume() {
         super.onResume()
 
-        recyclerView = findViewById(R.id.recyclerView)
-        progressBar = findViewById(R.id.user_list_progress_bar)
+        recyclerView = findViewById(R.id.contact_recycler_view)
+        progressBar = findViewById(R.id.contact_loader)
 
         adapter = UserListAdapter()
         recyclerView.adapter = adapter
