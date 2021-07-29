@@ -14,33 +14,33 @@
             type="com.picpay.desafio.android.ui.UserListAdapter" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
-        tools:context=".ui.MainActivity">
+        android:background="@color/colorPrimaryDark">
 
-        <LinearLayout
+        <!-- Content list -->
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            tools:context=".ui.MainActivity"
+            tools:visibility="gone">
 
-            <TextView
-                android:id="@+id/title"
-                style="@style/ScreenTitleTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="48dp"
-                android:text="@string/title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/ScreenTitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="48dp"
+                    android:text="@string/title" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
@@ -50,30 +50,49 @@
                     app:adapter="@{adapter}"
                     app:items="@{viewmodel.users}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     tools:listitem="@layout/list_item_user" />
+            </LinearLayout>
 
-                <ProgressBar
-                    android:id="@+id/user_list_progress_bar"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/recyclerView"
-                    app:layout_constraintStart_toStartOf="@+id/recyclerView"
-                    app:layout_constraintTop_toTopOf="@+id/recyclerView"
-                    app:layout_constraintVertical_bias="0.3"
-                    app:loading="@{viewmodel.users}"
-                    android:visibility="visible" />
+        </androidx.core.widget.NestedScrollView>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Content Error -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:viewError="@{viewmodel.users}">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/contacts_view_error"
+                android:textColor="@android:color/white" />
+
+            <Button
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:onClick="@{() -> viewmodel.start()}"
+                android:text="@string/contacts_commons_try" />
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+        <!-- loading callback user -->
+        <ProgressBar
+            android:id="@+id/user_list_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            app:loading="@{viewmodel.users}"
+            tools:visibility="gone" />
+    </FrameLayout>
 
 </layout>

@@ -1,5 +1,6 @@
 package com.picpay.desafio.android.ui
 
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
@@ -29,6 +30,11 @@ fun setAdapter(view: RecyclerView, adapter: ListAdapter<User, UserListAdapter.Vi
 @BindingAdapter("app:loading")
 fun setProgress(pb: ProgressBar, resource: Resource<List<UserDb>>?) {
     pb.isVisible = resource is Resource.Loading || resource == null
+}
+
+@BindingAdapter("app:viewError")
+fun setViewError(container: LinearLayout, resource: Resource<List<UserDb>>?) {
+    container.isVisible = resource is Resource.Error && resource.data.isNullOrEmpty()
 }
 
 @BindingAdapter("app:imageUrl")

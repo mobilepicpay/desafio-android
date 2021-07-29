@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">PicPay</string>
     <string name="title">Contatos</string>
-    <string name="error">Ocorreu um erro. Tente novamente.</string>
+    <string name="contacts_view_error">aconteceu um erro, tente novamente ou mais tarde :/</string>
+    <string name="contacts_commons_try">tentar</string>
 
 </resources>
