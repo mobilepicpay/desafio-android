@@ -2,7 +2,7 @@ package com.picpay.desafio.android.data.repository
 
 import com.picpay.desafio.android.data.entity.User
 
-interface ContactRepository {
+interface UserRepository {
 
     suspend fun getAll(): List<User>
 }

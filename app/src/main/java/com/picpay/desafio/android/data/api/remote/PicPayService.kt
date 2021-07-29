@@ -1,10 +1,10 @@
-package com.picpay.desafio.android.data.repository
+package com.picpay.desafio.android.data.api.remote
 
 import com.picpay.desafio.android.data.entity.User
 import retrofit2.http.GET
 
 
-interface PicPayRepository {
+interface PicPayService {
 
     @GET("users")
     suspend fun getUsers(): List<User>
