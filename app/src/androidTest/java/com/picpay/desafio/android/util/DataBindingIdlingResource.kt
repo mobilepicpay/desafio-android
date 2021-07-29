@@ -88,7 +88,6 @@ class DataBindingIdlingResource : IdlingResource {
             val childsOfView = (childAt as ViewGroup).childCount
             for (j in 0 until childsOfView) {
                 val viewChild = childAt.getChildAt(j)
-                Log.d("COSTA", "viewChild ${viewChild.toString()}")
                 // Loop through all children to check if we have a RecyclerView
                 if (viewChild is RecyclerView) {
                     for (k in 0 until viewChild.childCount) {

@@ -1,5 +1,6 @@
 package com.picpay.desafio.android.di
 
+import com.jakewharton.espresso.OkHttp3IdlingResource
 import com.picpay.desafio.android.data.source.remote.PicPayApi
 import dagger.Module
 import dagger.Provides
@@ -36,6 +37,16 @@ object NetworkModuleTest {
             .Builder()
             .addInterceptor(httpLoggingInterceptor)
             .build()
+
+    // only test
+    @Provides
+    @Singleton
+    fun provideIdlingResource(okHttpClient: OkHttpClient) : OkHttp3IdlingResource {
+        return OkHttp3IdlingResource.create(
+            "okhttp",
+            okHttpClient
+        )
+    }
 
     @Singleton
     @Provides
