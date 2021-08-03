@@ -1,6 +1,6 @@
-package com.picpay.android.user.api
+package com.picpay.android.user.usedatasoucer.network
 
-import com.picpay.android.user.api.model.User
+import com.picpay.android.user.usedatasoucer.User
 import retrofit2.Response
 import retrofit2.http.GET
 

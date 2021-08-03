@@ -3,6 +3,7 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
       <module name="desafio-android.app" target="11" />
+      <module name="desafio-android.localdb" target="11" />
       <module name="desafio-android.user" target="11" />
       <module name="desafio-android.util" target="11" />
       <module name="network" target="1.7" />

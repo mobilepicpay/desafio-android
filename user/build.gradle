@@ -30,7 +30,9 @@ android {
 dependencies {
 
     implementation project(path: ':network')
+    implementation project(path: ':localdb')
     implementation project(path: ':util')
+
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -64,5 +66,9 @@ dependencies {
     implementation "org.koin:koin-core:$koin_version"
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
 
 }

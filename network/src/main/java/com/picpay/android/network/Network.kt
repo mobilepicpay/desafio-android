@@ -16,7 +16,6 @@ inline fun <reified T> createRetrofitEndPoint(url: String): T {
         .writeTimeout(30, TimeUnit.SECONDS)
         .build()
 
-
     return Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(url)

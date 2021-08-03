@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.picpay.android.user.R
 import com.picpay.android.user.databinding.UserFragmentBinding
+import com.picpay.android.user.presentation.adapter.UserListAdapter
 import com.picpay.android.util.BaseFragment
 import com.picpay.android.util.ViewModelResponse
 import com.picpay.android.util.viewBinding
@@ -15,6 +16,9 @@ class UserFragment : BaseFragment(R.layout.user_fragment) {
 
     private val userViewModel: UserViewModel by viewModel()
     private val binding by viewBinding(UserFragmentBinding::bind)
+    private val userAdapter by lazy {
+        UserListAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +31,7 @@ class UserFragment : BaseFragment(R.layout.user_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.userList.adapter = userAdapter
 
         configureLiveData()
     }
@@ -39,7 +44,7 @@ class UserFragment : BaseFragment(R.layout.user_fragment) {
                         statusLoad(viewModelResponse.load)
                     }
                     is ViewModelResponse.Success -> {
-//                        navigateTo(R.id.forgotPasswordCreateNewPasswordFragment)
+                        userAdapter.users = viewModelResponse.value
                     }
                     is ViewModelResponse.Error -> {
                         //hostActivity.showMessage(once)

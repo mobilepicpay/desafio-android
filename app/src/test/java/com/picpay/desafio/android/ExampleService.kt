@@ -1,9 +1,9 @@
 package com.picpay.desafio.android
 
-import com.picpay.android.user.api.model.User
+import com.picpay.android.user.usedatasoucer.model.User
 
 class ExampleService(
-    private val service: com.picpay.android.user.api.PicPayService
+    private val service: com.picpay.android.user.usedatasoucer.PicPayService
 ) {
 
     fun example(): List<User> {

@@ -11,16 +11,10 @@ import java.net.UnknownHostException
 
 class Error(
     val code: String = "",
-    val codeMessage: String = "",
-    @SerializedName("message")
     val errorMessage: String = "",
     val errorType: ErrorType = ErrorType.DEFAULT,
     val callback: (() -> Unit)? = null
 ) : Exception(errorMessage) {
-
-    fun parseToJson(): String {
-        return GsonBuilder().disableHtmlEscaping().create().toJson(this)
-    }
 
     companion object {
         fun parseException(errorType: Exception): Error {
@@ -62,7 +56,7 @@ class Error(
         }
 
         private fun getErrorModelJson(errorJson: String): Error {
-            val gson = GsonBuilder().disableHtmlEscaping().create()
+            val gson = GsonBuilder().create()
             return try {
                 gson.fromJson<List<Error>>(errorJson).first()
             } catch (e: Exception) {
