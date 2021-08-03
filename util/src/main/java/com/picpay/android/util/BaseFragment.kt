@@ -33,5 +33,4 @@ abstract class BaseFragment(layout: Int = 0) : Fragment(layout) {
         }
     }
 
-
 }

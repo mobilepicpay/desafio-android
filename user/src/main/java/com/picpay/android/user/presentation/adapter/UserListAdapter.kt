@@ -9,6 +9,8 @@ import com.picpay.android.user.usedatasoucer.User
 
 class UserListAdapter : RecyclerView.Adapter<UserListItemViewHolder>() {
 
+    var userItemClick: ((User) -> Unit)? = null
+
     var users = emptyList<User>()
         set(value) {
             val result = DiffUtil.calculateDiff(
@@ -22,8 +24,10 @@ class UserListAdapter : RecyclerView.Adapter<UserListItemViewHolder>() {
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListItemViewHolder {
-        val binding = ListItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return UserListItemViewHolder(binding)
+        return UserListItemViewHolder(
+            ListItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            userItemClick
+        )
     }
 
     override fun onBindViewHolder(holder: UserListItemViewHolder, position: Int) {

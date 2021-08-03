@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavDirections
 import com.picpay.android.user.R
 import com.picpay.android.user.databinding.UserFragmentBinding
 import com.picpay.android.user.presentation.adapter.UserListAdapter
@@ -16,8 +17,13 @@ class UserFragment : BaseFragment(R.layout.user_fragment) {
 
     private val userViewModel: UserViewModel by viewModel()
     private val binding by viewBinding(UserFragmentBinding::bind)
+
     private val userAdapter by lazy {
-        UserListAdapter()
+        UserListAdapter().apply {
+            userItemClick = {
+                navigateTo(UserFragmentDirections.actionUserFragmentToUserDetailFragment(it))
+            }
+        }
     }
 
     override fun onCreateView(
@@ -47,7 +53,7 @@ class UserFragment : BaseFragment(R.layout.user_fragment) {
                         userAdapter.users = viewModelResponse.value
                     }
                     is ViewModelResponse.Error -> {
-                        //hostActivity.showMessage(once)
+                        //hostActivity.showMessage(viewModelResponse)
                     }
                 }
             }

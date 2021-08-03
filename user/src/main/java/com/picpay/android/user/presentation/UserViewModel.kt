@@ -22,6 +22,8 @@ class UserViewModel(
             runCatching {
 
                 userLiveData.value = ViewModelResponse.Loading(true)
+
+
                 userRepository.getUsers()
 
             }.onSuccess {

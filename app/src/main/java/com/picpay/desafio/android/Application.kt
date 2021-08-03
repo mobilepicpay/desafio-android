@@ -7,14 +7,13 @@ import org.koin.core.context.startKoin
 
 class Application : Application() {
 
-
     override fun onCreate() {
         super.onCreate()
 
         startKoin {
             androidContext(this@Application)
             modules(
-                UserDi(BuildConfig.BASE_URL).getModule()
+                UserDi(BuildConfig.BASE_URL, true).getModule()
             )
         }
 

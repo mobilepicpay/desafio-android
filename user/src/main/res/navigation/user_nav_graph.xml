@@ -9,15 +9,25 @@
         android:id="@+id/userFragment"
         android:name="com.picpay.android.user.presentation.UserFragment"
         android:label="user_fragment"
-        tools:layout="@layout/user_fragment" >
+        tools:layout="@layout/user_fragment">
+
         <action
             android:id="@+id/action_userFragment_to_userDetailFragment"
             app:destination="@id/userDetailFragment" />
+
     </fragment>
 
     <fragment
         android:id="@+id/userDetailFragment"
         android:name="com.picpay.android.user.presentation.UserDetailFragment"
         android:label="fragment_user_detail"
-        tools:layout="@layout/fragment_user_detail" />
+        tools:layout="@layout/fragment_user_detail">
+
+        <argument
+            android:name="user"
+            app:argType="com.picpay.android.user.usedatasoucer.User" />
+
+
+    </fragment>
+
 </navigation>
