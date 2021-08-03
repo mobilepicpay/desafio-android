@@ -1,1 +1,4 @@
+include ':user'
+include ':network'
 include ':app'
+include ':util'
