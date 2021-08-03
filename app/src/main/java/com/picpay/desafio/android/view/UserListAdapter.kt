@@ -21,8 +21,8 @@ class UserListAdapter(private val usersList: List<User>): RecyclerView.Adapter<U
 
     override fun onBindViewHolder(holder: UserListItemViewHolder, position: Int) {
         holder.itemView.apply {
-            name.text = usersList[position].name
-            username.text = usersList[position].username
+            name.text = usersList[position].name ?: ""
+            username.text = usersList[position].username  ?: ""
             progressBar.visibility = View.VISIBLE
             Picasso.get()
                 .load(usersList[position].img)
