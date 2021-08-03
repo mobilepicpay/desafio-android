@@ -1,4 +1,4 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.users.views
 
 import android.os.Bundle
 import android.view.View
@@ -11,14 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.picpay.desafio.android.commom.LoadState
-import com.picpay.desafio.android.commom.LoadState.SUCCESS
-import com.picpay.desafio.android.viewmodels.UsersListViewModel
+import com.picpay.desafio.android.R
+import com.picpay.desafio.android.common.LoadState
+import com.picpay.desafio.android.common.LoadState.SUCCESS
+import com.picpay.desafio.android.users.UserListAdapter
+import com.picpay.desafio.android.users.repo.UserResponse
+import com.picpay.desafio.android.users.repo.UsersApi
+import com.picpay.desafio.android.users.viewmodels.UsersListViewModel
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity() {
+class UsersListActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
@@ -43,8 +47,8 @@ class MainActivity : AppCompatActivity() {
             .build()
     }
 
-    private val service: PicPayService by lazy {
-        retrofit.create(PicPayService::class.java)
+    private val service: UsersApi by lazy {
+        retrofit.create(UsersApi::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 is SUCCESS -> {
-                    populateUsers(it.data as List<User>)
+                    populateUsers(it.data as List<UserResponse>)
                 }
             }
         })
@@ -87,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
-    private fun populateUsers(users: List<User>) {
+    private fun populateUsers(users: List<UserResponse>) {
         progressBar.visibility = View.GONE
         adapter.users = users
     }

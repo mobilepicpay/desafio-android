@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.commom
+package com.picpay.desafio.android.common
 
 sealed class LoadState {
     object READY : LoadState()
