@@ -4,23 +4,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.common.LoadState
 import com.picpay.desafio.android.common.LoadState.SUCCESS
 import com.picpay.desafio.android.users.UserListAdapter
 import com.picpay.desafio.android.users.repo.UserResponse
-import com.picpay.desafio.android.users.repo.UsersApi
 import com.picpay.desafio.android.users.viewmodels.UsersListViewModel
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class UsersListActivity : AppCompatActivity() {
 
@@ -28,28 +22,7 @@ class UsersListActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var adapter: UserListAdapter
 
-    private val usersListViewModel: UsersListViewModel by viewModels()
-
-    private val url = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
-
-    private val gson: Gson by lazy { GsonBuilder().create() }
-
-    private val okHttp: OkHttpClient by lazy {
-        OkHttpClient.Builder()
-            .build()
-    }
-
-    private val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(url)
-            .client(okHttp)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-    }
-
-    private val service: UsersApi by lazy {
-        retrofit.create(UsersApi::class.java)
-    }
+    private val usersListViewModel: UsersListViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +38,7 @@ class UsersListActivity : AppCompatActivity() {
 
         registerObservers()
 
-        usersListViewModel.loadUsers(service)
+        usersListViewModel.loadUsers()
     }
 
     private fun registerObservers() {

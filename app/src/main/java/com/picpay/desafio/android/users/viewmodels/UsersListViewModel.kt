@@ -9,11 +9,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UsersListViewModel : ViewModel() {
+class UsersListViewModel(private val service: UsersApi) : ViewModel() {
 
     val usersListState = MutableLiveData<LoadState>(LoadState.READY)
 
-    fun loadUsers(service: UsersApi) {
+    fun loadUsers() {
         service.getUsers()
             .enqueue(object : Callback<List<UserResponse>> {
                 override fun onFailure(call: Call<List<UserResponse>>, t: Throwable) {
