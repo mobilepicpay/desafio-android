@@ -2,8 +2,6 @@ package com.picpay.desafio.android
 
 import android.app.Application
 import com.picpay.desafio.android.common.di.appModules
-import com.picpay.desafio.android.users.di.networkModule
-import com.picpay.desafio.android.users.di.usersListModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

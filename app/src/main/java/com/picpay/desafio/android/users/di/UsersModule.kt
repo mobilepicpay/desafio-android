@@ -8,9 +8,7 @@ import retrofit2.Retrofit
 
 val usersListModule = module {
 
-    factory { provideUsersApi(get()) }
+    factory { get<Retrofit>().create(UsersApi::class.java)}
 
     viewModel { UsersListViewModel(get()) }
 }
-
-fun provideUsersApi(retrofit: Retrofit): UsersApi = retrofit.create(UsersApi::class.java)
