@@ -2,27 +2,28 @@ package com.picpay.desafio.android.users.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.picpay.desafio.android.users.repo.UsersApi
-import com.picpay.desafio.android.users.repo.UserResponse
+import androidx.lifecycle.viewModelScope
 import com.picpay.desafio.android.common.LoadState
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.picpay.desafio.android.users.repo.UsersApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class UsersListViewModel(private val service: UsersApi) : ViewModel() {
 
     val usersListState = MutableLiveData<LoadState>(LoadState.READY)
 
     fun loadUsers() {
-        service.getUsers()
-            .enqueue(object : Callback<List<UserResponse>> {
-                override fun onFailure(call: Call<List<UserResponse>>, t: Throwable) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = service.getUsers()
+            if(response.isSuccessful) {
+                response.body()?.let {
+                    usersListState.postValue(LoadState.SUCCESS(it))
+                } ?: kotlin.run {
                     usersListState.postValue(LoadState.ERROR)
                 }
-
-                override fun onResponse(call: Call<List<UserResponse>>, response: Response<List<UserResponse>>) {
-                    usersListState.postValue(LoadState.SUCCESS(response.body()))
-                }
-            })
+            } else {
+                usersListState.postValue(LoadState.ERROR)
+            }
+        }
     }
 }
