@@ -2,11 +2,9 @@ package com.picpay.desafio.android.users
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.picpay.desafio.android.R
 import com.picpay.desafio.android.common.util.load
 import com.picpay.desafio.android.users.repo.UserResponse
 import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_user.view.*
 
 class UserListItemViewHolder(
