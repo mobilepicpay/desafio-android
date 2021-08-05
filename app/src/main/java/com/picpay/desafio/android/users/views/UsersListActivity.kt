@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,15 +15,16 @@ import com.picpay.desafio.android.common.LoadState.SUCCESS
 import com.picpay.desafio.android.users.UserListAdapter
 import com.picpay.desafio.android.users.repo.UserResponse
 import com.picpay.desafio.android.users.viewmodels.UsersListViewModel
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class UsersListActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
-    private lateinit var adapter: UserListAdapter
 
     private val usersListViewModel: UsersListViewModel by viewModel()
+    private val userListAdapter: UserListAdapter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +34,7 @@ class UsersListActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.user_list_progress_bar)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = UserListAdapter()
-        recyclerView.adapter = adapter
-        progressBar.visibility = View.VISIBLE
+        recyclerView.adapter = userListAdapter
 
         registerObservers()
 
@@ -42,7 +42,7 @@ class UsersListActivity : AppCompatActivity() {
     }
 
     private fun registerObservers() {
-        usersListViewModel.usersListState.observe(this, Observer {
+        usersListViewModel.usersListState.observe(this, {
             when (it) {
                 LoadState.ERROR -> {
                     handleError()
@@ -51,6 +51,10 @@ class UsersListActivity : AppCompatActivity() {
                 is SUCCESS -> {
                     populateUsers(it.data as List<UserResponse>)
                 }
+
+                else -> {
+                    progressBar.visibility = View.VISIBLE
+                }
             }
         })
     }
@@ -58,14 +62,14 @@ class UsersListActivity : AppCompatActivity() {
     private fun handleError() {
         val message = getString(R.string.error)
 
-        progressBar.visibility = View.GONE
-        recyclerView.visibility = View.GONE
+        progressBar.isVisible = false
+        recyclerView.isVisible = false
 
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     private fun populateUsers(users: List<UserResponse>) {
-        progressBar.visibility = View.GONE
-        adapter.users = users
+        progressBar.isVisible = false
+        userListAdapter.users = users
     }
 }
