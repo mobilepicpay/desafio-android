@@ -3,6 +3,7 @@ package com.picpay.desafio.android.users
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
+import com.picpay.desafio.android.common.util.load
 import com.picpay.desafio.android.users.repo.UserResponse
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -16,17 +17,14 @@ class UserListItemViewHolder(
         itemView.name.text = user.name
         itemView.username.text = user.username
         itemView.progressBar.visibility = View.VISIBLE
-        Picasso.get()
-            .load(user.img)
-            .error(R.drawable.ic_round_account_circle)
-            .into(itemView.picture, object : Callback {
-                override fun onSuccess() {
-                    itemView.progressBar.visibility = View.GONE
-                }
+        itemView.picture.load(user.img, object : Callback {
+            override fun onSuccess() {
+                itemView.progressBar.visibility = View.GONE
+            }
 
-                override fun onError(e: Exception?) {
-                    itemView.progressBar.visibility = View.GONE
-                }
-            })
+            override fun onError(e: Exception?) {
+                itemView.progressBar.visibility = View.GONE
+            }
+        })
     }
 }
