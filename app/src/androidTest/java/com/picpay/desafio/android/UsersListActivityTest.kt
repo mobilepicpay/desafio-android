@@ -48,7 +48,7 @@ class UsersListActivityTest {
 
         launchActivity<UsersListActivity>().apply {
             moveToState(Lifecycle.State.RESUMED)
-            sleep(400)
+            sleep(1500)
             RecyclerViewMatchers.checkRecyclerViewItem(R.id.recyclerView, 0 , isDisplayed())
         }
 
