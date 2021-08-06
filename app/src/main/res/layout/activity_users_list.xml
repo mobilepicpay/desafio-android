@@ -21,8 +21,8 @@
                 style="@style/ScreenTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginStart="@dimen/title_margin_start"
+                android:layout_marginTop="@dimen/title_margin_top"
                 android:text="@string/title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_margin_top">48dp</dimen>
+    <dimen name="title_margin_start">24dp</dimen>
+    <dimen name="image_viewholder_size">52dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="margin_between_elements">16dp</dimen>
+    <dimen name="image_viewholder_margin_start">24dp</dimen>
+    <dimen name="image_view_holder_margin">12dp</dimen>
+</resources>
