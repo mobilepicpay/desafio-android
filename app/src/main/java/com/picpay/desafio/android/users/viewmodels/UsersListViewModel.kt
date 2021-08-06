@@ -5,15 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.picpay.desafio.android.common.LoadState
 import com.picpay.desafio.android.users.repo.UsersApi
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
-class UsersListViewModel(private val service: UsersApi) : ViewModel() {
+class UsersListViewModel(private val service: UsersApi, private val dispatcher: CoroutineDispatcher) : ViewModel() {
 
     val usersListState = MutableLiveData<LoadState>(LoadState.READY)
 
     fun loadUsers() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             val response = service.getUsers()
             if(response.isSuccessful) {
                 response.body()?.let {

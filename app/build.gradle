@@ -38,6 +38,10 @@ android {
         targetCompatibility 1.8
     }
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
