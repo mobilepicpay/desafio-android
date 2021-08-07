@@ -19,14 +19,17 @@ class UserListItemViewHolder(
         Picasso.get()
             .load(user.img)
             .error(R.drawable.ic_round_account_circle)
-            .into(itemView.picture, object : Callback {
-                override fun onSuccess() {
-                    itemView.progressBar.visibility = View.GONE
-                }
+            .into(
+                itemView.picture,
+                object : Callback {
+                    override fun onSuccess() {
+                        itemView.progressBar.visibility = View.GONE
+                    }
 
-                override fun onError(e: Exception?) {
-                    itemView.progressBar.visibility = View.GONE
+                    override fun onError(e: Exception?) {
+                        itemView.progressBar.visibility = View.GONE
+                    }
                 }
-            })
+            )
     }
 }
