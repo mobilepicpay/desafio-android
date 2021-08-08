@@ -13,4 +13,7 @@ abstract class UserDao {
 
     @Query("SELECT * FROM UserDb")
     abstract suspend fun getUsers(): List<UserDb>
+
+    @Query("DELETE FROM UserDb")
+    abstract suspend fun deleteUsers()
 }

@@ -35,16 +35,10 @@ class PicPayUserServiceTest {
 
     @Test
     fun `when getUsers is called then it should call service getUsers`() {
-
-//        val sampleResponse = this::class.java.getResource("/users_mock").readText()
-
         coEvery { picPayUserService.getUsers() } returns Response.success(listOf())
-
         runBlockingTest {
             UserNetWorkRepository(picPayUserService, testDispatcher).getUsers()
         }
-
         coVerify { picPayUserService.getUsers() }
-
     }
 }

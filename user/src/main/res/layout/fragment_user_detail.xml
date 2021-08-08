@@ -19,8 +19,8 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/picture"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:scaleType="fitXY"
+                android:layout_height="350dp"
+                android:scaleType="centerCrop"
                 tools:src="@drawable/ic_round_account_circle" />
 
             <ProgressBar

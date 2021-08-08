@@ -10,7 +10,7 @@ import com.picpay.android.util.databinding.ActivityMainBinding
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    private lateinit var binding  : ActivityMainBinding
+    lateinit var binding  : ActivityMainBinding
     val navController by lazy { findNavController(R.id.nav_host_fragment) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +32,11 @@ abstract class BaseActivity : AppCompatActivity() {
 
     abstract fun getNavGraph() : Int
 
-    fun showWarningMessage(message : String){
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).setBackgroundTint(Color.RED).show()
+    fun showWarningMessage(message : String = "", messageRes : Int = 0){
+        if(messageRes != 0){
+            Snackbar.make(binding.root, messageRes, Snackbar.LENGTH_LONG)
+        }else{
+            Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
+        }.setBackgroundTint(Color.RED).show()
     }
-
 }

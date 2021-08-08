@@ -3,6 +3,42 @@
     "id": 1,
     "img": "",
     "name": "Bruno Baudel",
-    "username": "Bruno@Santana"
+    "username": "Bruno@Baudel"
+  },
+  {
+    "id": 2,
+    "img": "https://www.suno.com.br/wp-content/uploads/2021/06/Sergey-Brin-400x300.jpg",
+    "name": "Sergey Brin",
+    "username": "Sergey@Brin"
+  },
+  {
+    "id": 3,
+    "img": "http://s.glbimg.com/po/tt/f/original/2012/04/05/larry_page.jpg",
+    "name": "Larry Page",
+    "username": "Larry@Page"
+  },
+  {
+    "id": 4,
+    "img": "https://media.seudinheiro.com/uploads/2019/08/shutterstock_1070620838-628x353.jpg",
+    "name": "Bill Gates",
+    "username": "Bill@Gates"
+  },
+  {
+    "id": 5,
+    "img": "https://forbes.com.br/wp-content/uploads/2021/06/money_Jeff-Bezos_24jun21_reproducaoforbes-1536x1024.jpg",
+    "name": "Jeff Bezos",
+    "username": "Jeff@Bezos"
+  },
+  {
+    "id": 6,
+    "img": "https://www.infomoney.com.br/wp-content/uploads/2019/06/mark-zuckerberg-bloomberg-1.jpg?w=768&quality=70&strip=all",
+    "name": "Mark Zuckerberg",
+    "username": "Mark@Zuckerberg"
+  },
+  {
+    "id": 7,
+    "img": "https://www.projetopack.com.br/2020/wp-content/uploads/2020/05/Warren-Buffett-fundamentos-e-a-industria-de-embalagens-1536x1024.jpeg",
+    "name": "Warren Buffett",
+    "username": "Warren@Buffett"
   }
 ]

@@ -45,11 +45,11 @@ suspend fun <T> doRequest(
         val response = try {
             call.invoke()
         } catch (ex: Exception) {
-            throw Error.parseException(ex)
+            throw CustomError .parseException(ex)
         }
 
         if (!response.isSuccessful) {
-            throw Error.parseErrorBody(response.errorBody()?.string(), response.code())
+            throw CustomError.parseErrorBody(response.errorBody()?.string(), response.code())
         }
 
         when (selectReturnResponseType) {

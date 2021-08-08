@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('picpay_user_contacts')
+            storePassword 'picpay'
+            keyAlias 'picpay'
+            keyPassword 'picpay'
+        }
+    }
     compileSdk 30
 
     defaultConfig {

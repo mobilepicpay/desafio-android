@@ -2,4 +2,7 @@
     <string name="title">Contatos</string>
     <string name="error">Ocorreu um erro. Tente novamente.</string>
 
+    <string name="error_empty_list">Houve um erro no servidor e não temos a lista salva no dispositivo!.</string>
+    <string name="error_empty_list_type">list_empty</string>
+
 </resources>

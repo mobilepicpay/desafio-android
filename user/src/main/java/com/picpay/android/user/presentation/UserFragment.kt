@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.picpay.android.user.R
 import com.picpay.android.user.databinding.UserFragmentBinding
 import com.picpay.android.user.presentation.adapter.UserListAdapter
 import com.picpay.android.util.BaseFragment
-import com.picpay.android.util.ViewModelResponse
+import com.picpay.android.network.ViewModelResponse
 import com.picpay.android.util.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -40,7 +41,8 @@ class UserFragment : BaseFragment(R.layout.user_fragment) {
 
         configureLiveData()
 
-        val color = resources.getColor(R.color.colorTitleBar)
+        val color = ContextCompat.getColor(requireContext(), R.color.colorTitleBar)
+
         binding.collToolbar.apply {
             title = context.getString(R.string.title)
             setExpandedTitleColor(color)
@@ -59,11 +61,14 @@ class UserFragment : BaseFragment(R.layout.user_fragment) {
                         userAdapter.refreshAdapter(viewModelResponse.value)
                     }
                     is ViewModelResponse.Error -> {
-                        hostActivity.showWarningMessage(viewModelResponse.exception.message ?: "")
+                        if (viewModelResponse.customError.errorMessageRes > 0) {
+                            showWarningMessage(viewModelResponse.customError.errorMessageRes)
+                        } else {
+                            showWarningMessage(viewModelResponse.customError.errorMessage)
+                        }
                     }
                 }
             }
         }
     }
-
 }

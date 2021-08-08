@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.annotation.RawRes
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.picpay.android.network.Error
+import com.picpay.android.network.CustomError
 import com.picpay.android.network.MockResponseInterceptor
 import com.picpay.android.user.R
 import okhttp3.Request
@@ -22,23 +22,16 @@ class UserMockResponseInterceptor(
             "/picpay/api/users"
         ),
         responseMessage = readRawResource(R.raw.users_mock) ?: "",
-        responseCode = 200,
-        isMock = false,
+        responseCode = 400,
+        isMock = true,
         delay = 0,
-        error = Error(errorMessage = "Erro ao acessar o endPoint")
+        customError = CustomError(errorMessage = "Erro ao acessar o endPoint")
     ) {
         override fun managerResponseMessage(request: Request?): String {
-
             return if (responseCode < 299) {
-
-//                val dto = Gson().fromJson<GetFormResponseDTO>(responseJson, TypeToken.get(GetFormResponseDTO::class.java).type)
-//                dto.currentScreen = screenType.screenName
-//                Gson().toJson(dto)
-
                 responseMessage
-
             } else {
-                Gson().toJson(error)
+                Gson().toJson(customError)
             }
         }
     })
@@ -49,9 +42,7 @@ private fun readRawResource(@RawRes res: Int): String? {
 }
 
 private fun readStream(stream: InputStream?): String? {
-
     if(stream == null ) return ""
-
     val s: Scanner = Scanner(stream).useDelimiter("\\A")
     return if (s.hasNext()) s.next() else ""
 }

@@ -17,6 +17,7 @@ class UserDi(private val baseUrl: String, private val isMock: Boolean = false) {
 
     fun getModule(): Module = module {
 
+        //region Inicia o repositorio de Network
         single<PicPayUserService> {
 
             val listInterceptors = if (isMock)
@@ -29,7 +30,9 @@ class UserDi(private val baseUrl: String, private val isMock: Boolean = false) {
         single {
             UserNetWorkRepository(get())
         }
+        //endregion
 
+        //region Inicia o repositorio local
         single {
             AppDatabase.getDatabase(androidApplication()).userDao()
         }
@@ -37,6 +40,7 @@ class UserDi(private val baseUrl: String, private val isMock: Boolean = false) {
         single {
             UserLocalRepository(get())
         }
+        //endregion
 
         viewModel {
             UserViewModel(get(), get())

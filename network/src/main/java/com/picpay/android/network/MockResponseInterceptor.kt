@@ -52,7 +52,7 @@ abstract class MockResponseInterceptor : Interceptor {
     open class ConfigureResponseEndPoint(
         var endPointName: String = "",
         var urlPath: List<String> = emptyList(),
-        var error: Error = Error(),
+        var customError: CustomError = CustomError(),
         var responseMessage: String = "",
         var responseCode: Int = 200,
         var delay: Long = 0,

@@ -7,15 +7,21 @@ import org.koin.core.context.startKoin
 
 class Application : Application() {
 
+    private val runNetworkMockState = true
+
     override fun onCreate() {
         super.onCreate()
 
         startKoin {
             androidContext(this@Application)
             modules(
-                UserDi(BuildConfig.BASE_URL, true).getModule()
+                UserDi(BuildConfig.BASE_URL, isCanDoMockState()).getModule()
             )
         }
-
     }
+
+    private fun isCanDoMockState() : Boolean {
+        return BuildConfig.DEBUG || runNetworkMockState
+    }
+
 }

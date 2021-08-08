@@ -1,4 +1,4 @@
-package com.picpay.android.util
+package com.picpay.android.network
 
 
 sealed class ViewModelResponse<out T> {
@@ -7,5 +7,5 @@ sealed class ViewModelResponse<out T> {
 
     data class Success<T>(val value: T) : ViewModelResponse<T>()
 
-    data class Error<T>(val exception: Throwable) : ViewModelResponse<T>()
+    data class Error(val customError: com.picpay.android.network.CustomError) : ViewModelResponse<Nothing>()
 }
