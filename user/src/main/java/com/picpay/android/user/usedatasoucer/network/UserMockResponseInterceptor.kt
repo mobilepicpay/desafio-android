@@ -11,7 +11,9 @@ import okhttp3.Request
 import java.io.InputStream
 import java.util.*
 
-class UserMockResponseInterceptor(private val context: Context) : MockResponseInterceptor() {
+class UserMockResponseInterceptor(
+    private val context: Context? = null
+) : MockResponseInterceptor() {
 
     init {
     addEndPoint(object : MockResponseInterceptor.ConfigureResponseEndPoint(
@@ -23,30 +25,33 @@ class UserMockResponseInterceptor(private val context: Context) : MockResponseIn
         responseCode = 200,
         isMock = false,
         delay = 0,
-        error = Error()
+        error = Error(errorMessage = "Erro ao acessar o endPoint")
     ) {
         override fun managerResponseMessage(request: Request?): String {
 
             return if (responseCode < 299) {
 
-                request?.header("userDocument")
-
 //                val dto = Gson().fromJson<GetFormResponseDTO>(responseJson, TypeToken.get(GetFormResponseDTO::class.java).type)
 //                dto.currentScreen = screenType.screenName
 //                Gson().toJson(dto)
-                ""
+
+                responseMessage
+
             } else {
-               " error.parseToJson()"
+                Gson().toJson(error)
             }
         }
     })
 }
 
 private fun readRawResource(@RawRes res: Int): String? {
-    return readStream(context.resources.openRawResource(res))
+    return readStream(context?.resources?.openRawResource(res))
 }
 
-private fun readStream(stream: InputStream): String? {
+private fun readStream(stream: InputStream?): String? {
+
+    if(stream == null ) return ""
+
     val s: Scanner = Scanner(stream).useDelimiter("\\A")
     return if (s.hasNext()) s.next() else ""
 }

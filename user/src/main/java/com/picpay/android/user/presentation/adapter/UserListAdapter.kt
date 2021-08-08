@@ -11,17 +11,14 @@ class UserListAdapter : RecyclerView.Adapter<UserListItemViewHolder>() {
 
     var userItemClick: ((User) -> Unit)? = null
 
-    var users = emptyList<User>()
-        set(value) {
-            val result = DiffUtil.calculateDiff(
-                UserListDiffCallback(
-                    field,
-                    value
-                )
-            )
-            result.dispatchUpdatesTo(this)
-            field = value
-        }
+    private var users = mutableListOf<User>()
+
+
+    fun refreshAdapter(users : List<User>){
+        this.users.clear()
+        this.users.addAll(users)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListItemViewHolder {
         return UserListItemViewHolder(

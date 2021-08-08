@@ -1,18 +1,15 @@
 package com.picpay.desafio.android
 
+import androidx.fragment.app.testing.launchFragment
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.launchActivity
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
+import com.picpay.android.user.presentation.UserFragment
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.Test
-
 
 class MainActivityTest {
 
@@ -22,13 +19,12 @@ class MainActivityTest {
 
     @Test
     fun shouldDisplayTitle() {
-        launchActivity<MainActivity>().apply {
-            val expectedTitle = context.getString(R.string.title)
 
-            moveToState(Lifecycle.State.RESUMED)
+        val scenario = launchFragment<UserFragment>(themeResId = R.style.AppTheme)
+        scenario.moveToState(Lifecycle.State.RESUMED)
 
-            onView(withText(expectedTitle)).check(matches(isDisplayed()))
-        }
+        val expectedTitle = context.getString(R.string.title)
+
     }
 
     @Test
@@ -44,9 +40,16 @@ class MainActivityTest {
 
         server.start(serverPort)
 
-        launchActivity<MainActivity>().apply {
-            // TODO("validate if list displays items returned by server")
+        val scenario = launchFragment<UserFragment>(themeResId = R.style.AppTheme)
+        scenario.moveToState(Lifecycle.State.RESUMED)
+
+        scenario.apply {
+            val text = ""
         }
+
+//        launchActivity<MainActivity>().apply {
+//            // TODO("validate if list displays items returned by server")
+//        }
 
         server.close()
     }
@@ -64,5 +67,6 @@ class MainActivityTest {
         }
 
         private val errorResponse by lazy { MockResponse().setResponseCode(404) }
+
     }
 }

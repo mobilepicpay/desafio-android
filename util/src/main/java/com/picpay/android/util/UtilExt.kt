@@ -1,11 +1,14 @@
 package com.picpay.android.util
 
 import android.view.View
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.viewbinding.ViewBinding
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
@@ -28,3 +31,26 @@ fun <T : ViewBinding> Fragment.viewBinding(factory: (View) -> T): ReadOnlyProper
             binding = null
         }
     }
+
+fun ImageView.loadImage(url: String, viewLoader: View? = null) {
+
+    if (url.isNullOrEmpty()) {
+        viewLoader?.visibility = View.GONE
+        this.setImageResource(R.drawable.ic_round_account_circle)
+        return
+    }
+
+    Picasso
+        .get()
+        .load(url)
+        .error(R.drawable.ic_round_account_circle)
+        .into(this, object : Callback {
+            override fun onSuccess() {
+                viewLoader?.visibility = View.GONE
+            }
+
+            override fun onError(e: Exception?) {
+                viewLoader?.visibility = View.GONE
+            }
+        })
+}

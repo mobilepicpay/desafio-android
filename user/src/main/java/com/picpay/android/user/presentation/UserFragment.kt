@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavDirections
 import com.picpay.android.user.R
 import com.picpay.android.user.databinding.UserFragmentBinding
 import com.picpay.android.user.presentation.adapter.UserListAdapter
@@ -40,6 +39,13 @@ class UserFragment : BaseFragment(R.layout.user_fragment) {
         binding.userList.adapter = userAdapter
 
         configureLiveData()
+
+        val color = resources.getColor(R.color.colorTitleBar)
+        binding.collToolbar.apply {
+            title = context.getString(R.string.title)
+            setExpandedTitleColor(color)
+            setCollapsedTitleTextColor(color)
+        }
     }
 
     private fun configureLiveData() {
@@ -50,10 +56,10 @@ class UserFragment : BaseFragment(R.layout.user_fragment) {
                         statusLoad(viewModelResponse.load)
                     }
                     is ViewModelResponse.Success -> {
-                        userAdapter.users = viewModelResponse.value
+                        userAdapter.refreshAdapter(viewModelResponse.value)
                     }
                     is ViewModelResponse.Error -> {
-                        //hostActivity.showMessage(viewModelResponse)
+                        hostActivity.showWarningMessage(viewModelResponse.exception.message ?: "")
                     }
                 }
             }

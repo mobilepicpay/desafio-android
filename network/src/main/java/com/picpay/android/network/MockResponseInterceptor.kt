@@ -9,6 +9,7 @@ abstract class MockResponseInterceptor : Interceptor {
     private val listEndPoints = mutableListOf<ConfigureResponseEndPoint>()
 
     override fun intercept(chain: Interceptor.Chain): Response {
+
         val urlPath = chain.request().url.encodedPath
 
         val selectedEndPoint = findEndPoint(urlPath)
@@ -17,12 +18,12 @@ abstract class MockResponseInterceptor : Interceptor {
             throw IllegalArgumentException("End point não encontrado! Verifique o parametro urlPath do seu objeto de configuração.")
         }
 
-        val message = selectedEndPoint.managerResponseMessage(chain.request())
+        return if (selectedEndPoint.isMock) {
 
-        if (selectedEndPoint.delay > 0)
-            Thread.sleep(selectedEndPoint.delay)
+            val message = selectedEndPoint.managerResponseMessage(chain.request())
 
-        return if (selectedEndPoint.isMock)
+            if (selectedEndPoint.delay > 0)
+                Thread.sleep(selectedEndPoint.delay)
 
             Response.Builder()
                 .code(selectedEndPoint.responseCode)
@@ -32,7 +33,7 @@ abstract class MockResponseInterceptor : Interceptor {
                 .body(selectedEndPoint.getMessageByte(message))
                 .addHeader("content-type", "application/json")
                 .build()
-        else
+        } else
             chain.proceed(chain.request())
     }
 

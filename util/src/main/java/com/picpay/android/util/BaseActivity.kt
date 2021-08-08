@@ -1,9 +1,11 @@
 package com.picpay.android.util
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.picpay.android.util.databinding.ActivityMainBinding
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -29,5 +31,9 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     abstract fun getNavGraph() : Int
+
+    fun showWarningMessage(message : String){
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).setBackgroundTint(Color.RED).show()
+    }
 
 }

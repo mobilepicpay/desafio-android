@@ -1,5 +1,6 @@
 package com.picpay.android.network
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
@@ -33,11 +34,13 @@ inline fun <reified T> createRetrofitEndPoint(
 }
 
 suspend fun <T> doRequest(
+    dispatcher: CoroutineDispatcher = Dispatchers.IO,
     selectReturnResponseType: SelectReturnDoRequestType = SelectReturnDoRequestType.BODY,
     call: suspend () -> Response<T>
 ): T {
 
-    return withContext(Dispatchers.IO) {
+
+    return withContext(dispatcher) {
 
         val response = try {
             call.invoke()

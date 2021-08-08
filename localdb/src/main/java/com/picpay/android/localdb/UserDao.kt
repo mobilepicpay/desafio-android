@@ -9,8 +9,8 @@ import androidx.room.Query
 abstract class UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertUsers(list: List<UserDb>)
+    abstract suspend fun insertUsers(list: List<UserDb>)
 
     @Query("SELECT * FROM UserDb")
-    abstract fun getUsers(): List<UserDb>
+    abstract suspend fun getUsers(): List<UserDb>
 }
