@@ -75,6 +75,7 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
     testImplementation "io.insert-koin:koin-test:$koin_version"
+    testImplementation "io.mockk:mockk:$mockk_version"
 
     androidTestImplementation "androidx.test:runner:$test_runner_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
