@@ -7,14 +7,16 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
+import com.picpay.desafio.android.users.views.UsersListActivity
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.Test
+import java.lang.Thread.sleep
 
 
-class MainActivityTest {
+class UsersListActivityTest {
 
     private val server = MockWebServer()
 
@@ -22,7 +24,7 @@ class MainActivityTest {
 
     @Test
     fun shouldDisplayTitle() {
-        launchActivity<MainActivity>().apply {
+        launchActivity<UsersListActivity>().apply {
             val expectedTitle = context.getString(R.string.title)
 
             moveToState(Lifecycle.State.RESUMED)
@@ -44,8 +46,10 @@ class MainActivityTest {
 
         server.start(serverPort)
 
-        launchActivity<MainActivity>().apply {
-            // TODO("validate if list displays items returned by server")
+        launchActivity<UsersListActivity>().apply {
+            moveToState(Lifecycle.State.RESUMED)
+            sleep(1500)
+            RecyclerViewMatchers.checkRecyclerViewItem(R.id.recyclerView, 0 , isDisplayed())
         }
 
         server.close()
