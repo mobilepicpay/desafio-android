@@ -4,7 +4,7 @@ import com.picpay.desafio.android.user.domain.UserDomain
 
 data class UserViewState(
     val users: List<UserDomain>? = null,
-    val isLoading: Boolean = false
+    val isLoading: Boolean = true
 ) {
 
     fun postSuccess(newUsers: List<UserDomain>) = copy(

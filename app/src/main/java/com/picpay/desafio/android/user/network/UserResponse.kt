@@ -2,6 +2,7 @@ package com.picpay.desafio.android.user.network
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.picpay.desafio.android.user.database.UserEntity
 import com.picpay.desafio.android.user.domain.UserDomain
 import kotlinx.parcelize.Parcelize
 
@@ -16,6 +17,17 @@ data class UserResponse(
 fun List<UserResponse>.toDomain(): List<UserDomain> {
     return map {
         UserDomain(
+            id = it.id,
+            name = it.name,
+            userName = it.username,
+            imageUrl = it.img
+        )
+    }
+}
+
+fun List<UserResponse>.toEntity(): List<UserEntity> {
+    return map {
+        UserEntity(
             id = it.id,
             name = it.name,
             userName = it.username,

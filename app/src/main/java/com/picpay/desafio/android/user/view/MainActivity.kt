@@ -1,33 +1,28 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.user.view
 
-import android.view.View
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.picpay.desafio.android.user.network.UserResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.picpay.desafio.android.R
+import com.picpay.desafio.android.user.viewmodel.UserViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var progressBar: ProgressBar
-    private lateinit var adapter: UserListAdapter
+    private val viewModel: UserViewModel by viewModel()
 
-    override fun onResume() {
-        super.onResume()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        recyclerView = findViewById(R.id.recyclerView)
-        progressBar = findViewById(R.id.user_list_progress_bar)
+        setupObservers()
+        viewModel.getUsers()
+    }
 
-        adapter = UserListAdapter()
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+    private fun setupObservers() {
+        viewModel.state.observe(this) {
+            //TODO handle view
+        }
+    }
 
-        progressBar.visibility = View.VISIBLE
 //        service.getUsers()
 //            .enqueue(object : Callback<List<UserResponse>> {
 //                override fun onFailure(call: Call<List<UserResponse>>, t: Throwable) {
@@ -46,5 +41,4 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 //                    adapter.users = response.body()!!
 //                }
 //            })
-    }
 }

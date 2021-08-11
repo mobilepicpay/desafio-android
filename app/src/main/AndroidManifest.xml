@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         android:name=".PicPayApplication"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity android:name=".user.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

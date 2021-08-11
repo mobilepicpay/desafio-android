@@ -11,6 +11,7 @@ buildscript {
         koin_version = "3.1.2"
         picasso_version = '2.8'
         circleimageview_version = '3.1.0'
+        room_version = "2.3.0"
 
         junit_version = '4.13.2'
         test_runner_version = '1.4.0'
