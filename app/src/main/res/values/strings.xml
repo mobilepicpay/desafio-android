@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">PicPay</string>
     <string name="title">Contatos</string>
-    <string name="error">Ocorreu um erro. Tente novamente.</string>
-
+    <string name="generic_error">Ocorreu um erro. Tente novamente.</string>
+    <string name="network_error">Problema na sua conexão. Verifique e tente novamente.</string>
+    <string name="service_unavailable_error">O serviço está indisponível, tente mais tarde.</string>
+    <string name="forbidden_error">Você está sem autorização para acessar esse serviço.</string>
+    <string name="database_error">Não foi possível ter acesso aos dados. Tente novamente.</string>
+    <string name="retry">Tente novamente</string>
+    <string name="loading_content_description">Imagem de carregamento</string>
 </resources>
