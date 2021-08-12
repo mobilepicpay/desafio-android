@@ -18,3 +18,29 @@ Com o passar do tempo identificamos alguns problemas que impedem esse aplicativo
   - Por outro lado, testes unitários rodam em um ambiente de execução diferenciado e são menos fiéis ao dia-a-dia de nossos usuários, então testes instrumentados também são importantes.
 
 Boa sorte! =)
+
+##
+
+## Modificações
+
+- Uso do padrão de arquitetura MVVM utilizando os architecture components (ViewModel e LiveData)
+- Uso de injeção de dependência com Hilt
+- Uso do Repository Pattern tendo o banco de dados como única fonte de verdade
+- Uso do Room para o banco de dados
+- Uso de Coroutines para as chamadas assíncronas
+- Uso de Flow para o streaming de status do consumo de dados
+- Uso de ViewBinding para ter acesso às views
+- Uso do swipe to refresh para que o usuário possa forçar um update
+- Uso do MockK para testes unitários
+- Uso de um linter
+
+## Possíveis melhorias futuras
+
+- Modularização
+- Paginação
+- Navigation component
+- Colocar regra de negócio para que não seja feita a request de usuários toda vez que a tela de contatos é aberta
+- Github actions para CI e CD
+- Mover as dependências para um arquivo gradle separado e organizá-las em grupos
+- Suporte Dark mode
+- Async DiffUtil
