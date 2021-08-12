@@ -32,6 +32,7 @@ class DataRequestManager @Inject constructor() {
                 if (exception is R) {
                     emit(DataConsumptionStatus.Error(exception))
                 }
+                emit(DataConsumptionStatus.Loading(false))
             }
         }.flowOn(Dispatchers.IO)
     }
