@@ -1,79 +1,71 @@
 package com.picpay.desafio.android.modules.main
 
-import android.view.View
-import android.widget.ProgressBar
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.picpay.desafio.android.R
-import com.picpay.desafio.android.data.api.apiservices.PicPayService
-import com.picpay.desafio.android.data.api.responses.User
-import com.picpay.desafio.android.uicomponents.adapters.UserListAdapter
-import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import android.os.Bundle
+import androidx.activity.viewModels
+import com.picpay.desafio.android.databinding.ActivityMainBinding
+import com.picpay.desafio.android.modules.base.BaseActivity
+import com.picpay.desafio.android.uicomponents.adapters.UserAdapter
+import com.picpay.desafio.android.utils.extensions.setupObserver
+import com.picpay.desafio.android.utils.pokos.ErrorMessageViewObject
+import com.picpay.desafio.android.utils.pokos.UserViewItem
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+@AndroidEntryPoint
+class MainActivity : BaseActivity() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var progressBar: ProgressBar
-    private lateinit var adapter: UserListAdapter
+    private val viewModel: MainViewModel by viewModels()
 
-    private val url = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter: UserAdapter
 
-    private val gson: Gson by lazy { GsonBuilder().create() }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    private val okHttp: OkHttpClient by lazy {
-        OkHttpClient.Builder()
-            .build()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setupView()
+        setupObservers()
     }
 
-    private val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(url)
-            .client(okHttp)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
+    private fun setupView() {
+        setupRecyclerView()
+
+        binding.swipeToRefreshLayout.setOnRefreshListener {
+            viewModel.onRefreshUsers()
+        }
     }
 
-    private val service: PicPayService by lazy {
-        retrofit.create(PicPayService::class.java)
+    private fun setupRecyclerView() {
+        adapter = UserAdapter()
+        binding.recyclerView.adapter = adapter
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun setupObservers() {
+        setupObserver(viewModel.userViewItemsLiveData to ::userViewItemsObserver)
+        setupObserver(viewModel.showLoadingLiveData to ::showLoadingObserver)
+        setupObserver(viewModel.showSwipeToRefreshLoadingLiveData to ::showSwipeToRefreshLoadingObserver)
+        setupObserver(viewModel.requestErrorLiveData to ::requestErrorObserver)
+    }
 
-        recyclerView = findViewById(R.id.recyclerView)
-        progressBar = findViewById(R.id.user_list_progress_bar)
+    private fun userViewItemsObserver(userViewItems: List<UserViewItem>) {
+        adapter.userViewItems = userViewItems
+    }
 
-        adapter = UserListAdapter()
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+    private fun showLoadingObserver(isLoading: Boolean) {
+        showLoading(isLoading, binding.loadingImageView)
+    }
 
-        progressBar.visibility = View.VISIBLE
-        service.getUsers()
-            .enqueue(object : Callback<List<User>> {
-                override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                    val message = getString(R.string.error)
+    private fun showSwipeToRefreshLoadingObserver(isLoading: Boolean) {
+        binding.swipeToRefreshLayout.isRefreshing = isLoading
+    }
 
-                    progressBar.visibility = View.GONE
-                    recyclerView.visibility = View.GONE
-
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
-                        .show()
-                }
-
-                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                    progressBar.visibility = View.GONE
-
-                    adapter.users = response.body()!!
-                }
-            })
+    private fun requestErrorObserver(errorMessageViewObject: ErrorMessageViewObject) {
+        showShortErrorMessage(
+            errorMessageViewObject,
+            binding.root
+        ) {
+            errorMessageViewObject.actionResId?.let { viewModel.onRetryGetUsers() }
+        }
     }
 }
