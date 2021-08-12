@@ -46,7 +46,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:visibility="gone"
-            android:src="@drawable/ic_loading"
+            android:src="@drawable/ic_picpay_logo"
             android:contentDescription="@string/loading_content_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/swipeToRefreshLayout"
