@@ -21,70 +21,6 @@
 #-renamesourcefileattribute SourceFile
 
 #######################
-# MOSHI
-#######################
-
-# JSR 305 annotations are for embedding nullability information.
--dontwarn javax.annotation.**
-
--keepclasseswithmembers class * {
-    @com.squareup.moshi.* <methods>;
-}
-
--keep @com.squareup.moshi.JsonQualifier interface *
-
-# Enum field names are used by the integrated EnumJsonAdapter.
-# Annotate enums with @JsonClass(generateAdapter = false) to use them with Moshi.
--keepclassmembers @com.squareup.moshi.JsonClass class * extends java.lang.Enum {
-    <fields>;
-}
-
-# The name of @JsonClass types is used to look up the generated adapter.
--keepnames @com.squareup.moshi.JsonClass class *
-
-# Retain generated JsonAdapters if annotated type is retained.
--if @com.squareup.moshi.JsonClass class *
--keep class <1>JsonAdapter {
-    <init>(...);
-    <fields>;
-}
--if @com.squareup.moshi.JsonClass class **$*
--keep class <1>_<2>JsonAdapter {
-    <init>(...);
-    <fields>;
-}
--if @com.squareup.moshi.JsonClass class **$*$*
--keep class <1>_<2>_<3>JsonAdapter {
-    <init>(...);
-    <fields>;
-}
--if @com.squareup.moshi.JsonClass class **$*$*$*
--keep class <1>_<2>_<3>_<4>JsonAdapter {
-    <init>(...);
-    <fields>;
-}
--if @com.squareup.moshi.JsonClass class **$*$*$*$*
--keep class <1>_<2>_<3>_<4>_<5>JsonAdapter {
-    <init>(...);
-    <fields>;
-}
--if @com.squareup.moshi.JsonClass class **$*$*$*$*$*
--keep class <1>_<2>_<3>_<4>_<5>_<6>JsonAdapter {
-    <init>(...);
-    <fields>;
-}
-
-#######################
-# MOSHI KOTLIN
-#######################
-
--keep class kotlin.reflect.jvm.internal.impl.builtins.BuiltInsLoaderImpl
-
--keepclassmembers class kotlin.Metadata {
-    public <methods>;
-}
-
-#######################
 # OKHTTP
 #######################
 
@@ -99,6 +35,7 @@
 
 # OkHttp platform used only on JVM and when Conscrypt dependency is available.
 -dontwarn okhttp3.internal.platform.ConscryptPlatform
+-dontwarn org.conscrypt.ConscryptHostnameVerifier
 
 #######################
 # RETROFIT
@@ -110,6 +47,9 @@
 
 # Retrofit does reflection on method and parameter annotations.
 -keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
+
+# Keep annotation default values (e.g., retrofit2.http.Field.encoded).
+-keepattributes AnnotationDefault
 
 # Retain service method parameters when optimizing.
 -keepclassmembers,allowshrinking,allowobfuscation interface * {
@@ -132,3 +72,19 @@
 # and replaces all potential values with null. Explicitly keeping the interfaces prevents this.
 -if interface * { @retrofit2.http.* <methods>; }
 -keep,allowobfuscation interface <1>
+
+# Keep generic signature of Call, Response (R8 full mode strips signatures from non-kept items).
+-keep,allowobfuscation,allowshrinking interface retrofit2.Call
+-keep,allowobfuscation,allowshrinking class retrofit2.Response
+
+# With R8 full mode generic signatures are stripped for classes that are not
+# kept. Suspend functions are wrapped in continuations where the type argument
+# is used.
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+
+#######################
+# HILT
+#######################
+
+# Keep class names of Hilt injected ViewModels since their name are used as a multibinding map key.
+-keepnames @dagger.hilt.android.lifecycle.HiltViewModel class * extends androidx.lifecycle.ViewModel
