@@ -1,6 +1,5 @@
 package com.picpay.desafio.android
 
-import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -25,8 +24,6 @@ class MainActivityTest {
         launchActivity<MainActivity>().apply {
             val expectedTitle = context.getString(R.string.title)
 
-            moveToState(Lifecycle.State.RESUMED)
-
             onView(withText(expectedTitle)).check(matches(isDisplayed()))
         }
     }
@@ -45,7 +42,12 @@ class MainActivityTest {
         server.start(serverPort)
 
         launchActivity<MainActivity>().apply {
-            // TODO("validate if list displays items returned by server")
+            // TODO make the MockResponse work
+            /*RecyclerViewMatchers.checkRecyclerViewItem(
+                R.id.recyclerView,
+                0,
+                withText("Sandrine Spinka")
+            )*/
         }
 
         server.close()
