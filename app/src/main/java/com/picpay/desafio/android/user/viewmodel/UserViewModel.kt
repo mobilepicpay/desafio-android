@@ -19,7 +19,7 @@ class UserViewModel(private val repository: UserRepository): ViewModel() {
     fun getUsers() {
         viewModelScope.launch {
             repository.getUsers()
-                .catch { cause -> println("teste capturou erro ${cause.message}") }
+                .catch { cause -> _state.updateAsync { postError(cause.message) } }
                 .collect { _state.updateAsync { postSuccess(it) } }
         }
     }
