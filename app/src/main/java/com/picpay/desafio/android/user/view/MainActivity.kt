@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun setupObservers() {
         viewModel.state.observe(this) {
-            //TODO handle view
+            println("teste capturou items ${it.users?.size}")
         }
     }
 

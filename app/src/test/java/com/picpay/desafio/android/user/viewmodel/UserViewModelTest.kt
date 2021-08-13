@@ -7,6 +7,7 @@ import com.picpay.desafio.android.user.repository.UserRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -23,7 +24,7 @@ class UserViewModelTest: CoroutineViewModelTest() {
         val users = listOf(
             UserDomain(imageUrl = "img", name = "name", id = 1, userName = "username")
         )
-        coEvery { repository.getUsers() } returns ResultWrapper.Success(users)
+        coEvery { repository.getUsers() } returns flowOf(users)
 
         viewModel.getUsers()
 
@@ -35,7 +36,7 @@ class UserViewModelTest: CoroutineViewModelTest() {
 
     @Test
     fun `Should post loading as true when get users is called`() {
-        coEvery { repository.getUsers() } returns ResultWrapper.Success(emptyList())
+        coEvery { repository.getUsers() } returns flowOf(emptyList())
 
         mainTestDispatcher.pauseDispatcher()
 

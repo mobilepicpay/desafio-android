@@ -9,16 +9,16 @@ import com.picpay.desafio.android.user.domain.UserDomain
 data class UserEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var id: Int,
+    val id: Int,
 
     @ColumnInfo(name = "name")
-    var name: String,
+    val name: String,
 
     @ColumnInfo(name = "username")
-    var userName: String,
+    val userName: String,
 
     @ColumnInfo(name = "image_url")
-    var imageUrl: String
+    val imageUrl: String
 )
 
 fun List<UserEntity>.toDomain(): List<UserDomain> {
