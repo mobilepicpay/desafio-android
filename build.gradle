@@ -9,7 +9,7 @@ buildscript {
         retrofit_version = '2.9.0'
         okhttp_version = '4.9.1'
         koin_version = "3.1.2"
-        picasso_version = '2.8'
+        glide_version = '4.12.0'
         circleimageview_version = '3.1.0'
         room_version = "2.3.0"
 
@@ -18,6 +18,7 @@ buildscript {
         test_runner_version = '1.4.0'
         espresso_version = '3.4.0'
         mockk_version = '1.12.0'
+        robolectric_version = '4.5.1'
 
         lifecycle_version = "2.3.1"
         coroutines_version = "1.5.1"
@@ -28,8 +29,8 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21"

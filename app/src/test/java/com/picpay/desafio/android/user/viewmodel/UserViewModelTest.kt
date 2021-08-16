@@ -1,20 +1,22 @@
 package com.picpay.desafio.android.user.viewmodel
 
-import com.picpay.desafio.android.helper.CoroutineViewModelTest
-import com.picpay.desafio.android.network.ResultWrapper
+import com.picpay.desafio.android.helper.rule.CoroutineViewModelTest
 import com.picpay.desafio.android.user.domain.UserDomain
 import com.picpay.desafio.android.user.repository.UserRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @ExperimentalCoroutinesApi
-class UserViewModelTest: CoroutineViewModelTest() {
+class UserViewModelTest : CoroutineViewModelTest() {
 
     private val repository = mockk<UserRepository>()
     private val viewModel = UserViewModel(repository)
@@ -31,6 +33,7 @@ class UserViewModelTest: CoroutineViewModelTest() {
         viewModel.state.observeForever {
             assertEquals(it.users, users)
             assertFalse(it.isLoading)
+            assertNull(it.error)
         }
     }
 
@@ -47,5 +50,22 @@ class UserViewModelTest: CoroutineViewModelTest() {
         }
 
         mainTestDispatcher.resumeDispatcher()
+    }
+
+    @Test
+    fun `Should post error with correct message when get users throws exception`() = runBlocking {
+        val errorFlow = flow<List<UserDomain>> {
+            throw Throwable("error")
+        }
+
+        coEvery { repository.getUsers() } returns errorFlow
+
+        viewModel.getUsers()
+
+        viewModel.state.observeForever {
+            assertEquals("error", it.error)
+            assertFalse(it.isLoading)
+            assertNull(it.users)
+        }
     }
 }

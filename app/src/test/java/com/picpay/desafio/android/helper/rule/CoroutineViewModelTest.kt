@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.helper
+package com.picpay.desafio.android.helper.rule
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.Dispatchers

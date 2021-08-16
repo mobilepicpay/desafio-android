@@ -1,5 +1,6 @@
 package com.picpay.desafio.android.user.network
 
+import com.picpay.desafio.android.user.database.UserEntity
 import com.picpay.desafio.android.user.domain.UserDomain
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -17,5 +18,18 @@ class UserResponseKtTest {
         )
 
         assertEquals(expected, actual.toDomain())
+    }
+
+    @Test
+    fun `Should map user response to user entity correctly`() {
+        val actual = listOf(
+            UserResponse(img = "img", name = "name", id = 1, username = "username")
+        )
+
+        val expected = listOf(
+            UserEntity(imageUrl = "img", name = "name", id = 1, userName = "username")
+        )
+
+        assertEquals(expected, actual.toEntity())
     }
 }
