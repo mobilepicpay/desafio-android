@@ -16,13 +16,15 @@ android {
 
         vectorDrawables.useSupportLibrary = true
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.picpay.desafio.android.application.PicPayTestRunner"
 
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+
+        testInstrumentationRunnerArguments clearPackageData: 'true'
     }
 
     buildTypes {
@@ -48,6 +50,7 @@ android {
     }
 
     testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
         unitTests.includeAndroidResources = true
         unitTests.returnDefaultValues = true
         animationsDisabled = true
@@ -55,6 +58,21 @@ android {
 
     viewBinding {
         enabled = true
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+
+        androidTest {
+            java.srcDirs += "src/sharedTest/java"
+            java.srcDirs += "src/androidTest/kotlin"
+            resources.srcDirs += "src/sharedTest/resources"
+        }
+        test {
+            java.srcDirs += "src/sharedTest/java"
+            java.srcDirs += "src/test/kotlin"
+            resources.srcDirs += "src/sharedTest/resources"
+        }
     }
 }
 
@@ -112,4 +130,5 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
     androidTestImplementation "androidx.test:runner:$test_runner_version"
+    androidTestUtil "androidx.test:orchestrator:$test_runner_version"
 }

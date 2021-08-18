@@ -18,5 +18,8 @@ val appModule = module {
         .fallbackToDestructiveMigration()
         .build() }
     factory { get<AppDatabase>().userDao() }
-    factory { RetrofitFactory.build(UserService::class.java) }
+}
+
+fun getApisModule(baseUrl: String) = module {
+    factory { RetrofitFactory.build(baseUrl, UserService::class.java) }
 }

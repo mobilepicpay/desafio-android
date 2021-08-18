@@ -6,8 +6,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.application.NonInstrumentedTestApplication
 import com.picpay.desafio.android.helper.MockKoinTest
-import com.picpay.desafio.android.helper.checkRecyclerViewHasItems
-import com.picpay.desafio.android.helper.matchIsVisible
+import com.picpay.desafio.android.shared.extensions.checkIsDisplayedByText
+import com.picpay.desafio.android.shared.extensions.checkRecyclerViewHasItems
+import com.picpay.desafio.android.shared.extensions.matchIsVisible
+import com.picpay.desafio.android.shared.extensions.matchesTextAtPosition
 import com.picpay.desafio.android.user.domain.UserDomain
 import com.picpay.desafio.android.user.repository.UserRepository
 import io.mockk.coEvery
@@ -46,7 +48,14 @@ class MainActivityTest : MockKoinTest() {
     }
 
     @Test
-    fun `Should show users list when repository succeeds`() {
+    fun `Should display list title when screen opens`() {
+        launchActivity<MainActivity>().onActivity {
+            checkIsDisplayedByText("Contatos")
+        }
+    }
+
+    @Test
+    fun `Should show correctly users list size when repository succeeds`() {
         val users = listOf(
             UserDomain(imageUrl = "img", name = "name", id = 1, userName = "username")
         )
@@ -54,6 +63,19 @@ class MainActivityTest : MockKoinTest() {
 
         launchActivity<MainActivity>().onActivity {
             checkRecyclerViewHasItems(R.id.recyclerView, 1)
+        }
+    }
+
+    @Test
+    fun `Should show correctly name and username in user list when repository succeeds`() {
+        val users = listOf(
+            UserDomain(imageUrl = "img", name = "name", id = 1, userName = "username")
+        )
+        coEvery { repository.getUsers() } returns flowOf(users)
+
+        launchActivity<MainActivity>().onActivity {
+            matchesTextAtPosition(R.id.recyclerView, R.id.username, 0, "username")
+            matchesTextAtPosition(R.id.recyclerView, R.id.name, 0, "name")
         }
     }
 
