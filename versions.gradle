@@ -1,0 +1,157 @@
+ext.deps = [:]
+def versions = [:]
+versions.android_gradle_plugin = "4.2.2"
+versions.kotlin = "1.5.21"
+versions.appcompat = "1.3.1"
+versions.core_ktx = "1.6.0"
+versions.arch_core = "2.1.0"
+versions.constraintlayout = "2.1.0"
+versions.material = "1.4.0"
+versions.moshi = "1.8.0"
+versions.retrofit = "2.9.0"
+versions.okhttp = "4.9.0"
+versions.circleimageview = "3.0.0"
+versions.junit = "4.13.2"
+versions.mockito = "2.27.0"
+versions.mockito_kotlin = "2.1.0"
+versions.test_runner = "1.4.0"
+versions.espresso = "3.4.0"
+versions.dimens = "1.0.6"
+versions.shimer = "0.5.0"
+versions.koin = "2.2.2"
+versions.lifecycle = "2.3.1"
+versions.coroutines= "1.4.3"
+versions.core_ktx_test = "1.4.0"
+versions.glide = "4.8.0"
+versions.multidex = "1.0.3"
+versions.gson = "2.8.6"
+versions.navigation = "2.3.0"
+versions.room = "2.3.0"
+ext.versions = versions
+
+def build_versions = [:]
+build_versions.min_sdk = 21
+build_versions.compile_sdk = 30
+build_versions.target_sdk = 30
+build_versions.build_tools = "30.0.3"
+ext.build_versions = build_versions
+
+def deps = [:]
+
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+
+deps.appcompat = "androidx.appcompat:appcompat:$versions.appcompat"
+
+deps.material = "com.google.android.material:material:$versions.material"
+
+deps.cardview = "androidx.cardview:cardview:$versions.cardview"
+
+deps.recyclerview = "androidx.recyclerview:recyclerview:$versions.recyclerview"
+
+deps.constraint_layout = "androidx.constraintlayout:constraintlayout:$versions.constraint_layout"
+
+deps.circleimageview = "de.hdodenhof:circleimageview:$versions.circleimageview"
+
+deps.multidex = "com.android.support:multidex:$versions.multidex"
+
+deps.core_ktx = "androidx.core:core-ktx:$versions.core_ktx"
+
+deps.gson = "com.google.code.gson:gson:$versions.gson"
+
+deps.okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_logging_interceptor"
+
+deps.junit = "junit:junit:$versions.junit"
+
+deps.test_runner = "androidx.test:runner:$deps.runner_version"
+
+deps.espresso_core = "androidx.test.espresso:espresso-core:$versions.espresso"
+
+deps.core_ktx_test = "androidx.test:core-ktx:$versions.core_ktx_test"
+
+deps.shimer = "com.facebook.shimmer:shimmer:$versions.shimer"
+
+def kotlin = [:]
+kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+kotlin.test = "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin"
+kotlin.kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+deps.kotlin = kotlin
+
+def koin = [:]
+koin.koin_android = "org.koin:koin-android:$versions.koin"
+koin.scope = "org.koin:koin-androidx-scope:$versions.koin"
+koin.viewmodel = "org.koin:koin-androidx-viewmodel:$versions.koin"
+koin.core = "org.koin:koin-core:$versions.koin"
+koin.test = "org.koin:koin-test:$versions.koin"
+deps.koin = koin
+
+def navigation = [:]
+navigation.runtime_ktx = "androidx.navigation:navigation-runtime-ktx:$versions.navigation"
+navigation.fragment_ktx = "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
+navigation.testing = "androidx.navigation:navigation-testing:$versions.navigation"
+navigation.ui_ktx = "androidx.navigation:navigation-ui-ktx:$versions.navigation"
+navigation.safe_args_plugin = "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
+deps.navigation = navigation
+
+def room = [:]
+room.runtime = "androidx.room:room-runtime:$versions.room"
+room.compiler = "androidx.room:room-compiler:$versions.room"
+room.ktx = "androidx.room:room-ktx:$versions.room"
+room.testing = "androidx.room:room-testing:$versions.room"
+deps.room = room
+
+def lifecycle = [:]
+lifecycle.runtime = "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle"
+lifecycle.viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+lifecycle.livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
+deps.lifecycle = lifecycle
+
+def coroutines = [:]
+coroutines.core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
+coroutines.android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+coroutines.test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutines"
+deps.coroutines = coroutines
+
+def retrofit = [:]
+retrofit.runtime = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+retrofit.gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+deps.retrofit = retrofit
+
+def okhttp = [:]
+okhttp.okhttp = "com.squareup.okhttp3:okhttp:$versions.okhttp"
+okhttp.mockwebserver = "com.squareup.okhttp3:mockwebserver:$versions.okhttp"
+deps.okhttp = okhttp
+
+def mockito = [:]
+mockito.core = "org.mockito:mockito-core:$versions.mockito"
+mockito.mockito_kotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockito_kotlin"
+deps.mockito = mockito
+
+def arch_core = [:]
+arch_core.runtime = "androidx.arch.core:core-runtime:$versions.arch_core"
+arch_core.testing = "androidx.arch.core:core-testing:$versions.arch_core"
+deps.arch_core = arch_core
+
+def dimens = [:]
+dimens.sdp = "com.intuit.sdp:sdp-android:$versions.dimens"
+dimens.ssp = "com.intuit.ssp:ssp-android:$versions.dimens"
+deps.dimens = dimens
+
+def glide = [:]
+glide.runtime = "com.github.bumptech.glide:glide:$versions.glide"
+glide.compiler = "com.github.bumptech.glide:compiler:$versions.glide"
+deps.glide = glide
+
+ext.deps = deps
+
+static def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+    handler.mavenCentral()
+    handler.maven { url 'https://maven.google.com' }
+    handler.maven { url 'https://jitpack.io' }
+}
+ext.addRepos = this.&addRepos
+
+
+
+
