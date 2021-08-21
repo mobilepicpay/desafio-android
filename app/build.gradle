@@ -46,13 +46,16 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
-    viewBinding {
-        enabled = true
+    buildFeatures{
+        viewBinding true
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(path: ':network')
+    implementation project(path: ':model')
 
     implementation deps.kotlin.stdlib
 
@@ -91,6 +94,7 @@ dependencies {
     implementation deps.retrofit.gson
     implementation deps.okhttp.okhttp
     implementation deps.okhttp.mockwebserver
+    implementation deps.okhttp_logging_interceptor
 
     implementation deps.circleimageview
 
@@ -108,7 +112,7 @@ dependencies {
     implementation deps.dimens.ssp
 
     implementation deps.glide.runtime
-    annotationProcessor deps.glide.compiler
+    kapt deps.glide.compiler
 
     implementation deps.shimer
 }
