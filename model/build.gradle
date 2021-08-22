@@ -33,8 +33,6 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':model')
-
     implementation deps.core_ktx
     implementation deps.appcompat
     implementation deps.material

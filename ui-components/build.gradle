@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -27,7 +28,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = '1.8'
+    }
+    buildFeatures{
+        viewBinding true
     }
 }
 
@@ -35,23 +39,18 @@ dependencies {
     implementation project(':model')
 
     implementation deps.core_ktx
-    implementation deps.appcompat
-    implementation deps.material
     testImplementation deps.junit
     androidTestImplementation deps.test_runner
     androidTestImplementation deps.espresso_core
     androidTestImplementation deps.core_ktx_test
 
-    implementation deps.koin.core
-    implementation deps.koin.scope
-    implementation deps.koin.koin_android
-    implementation deps.koin.viewmodel
-    implementation deps.koin.test
-
-    implementation deps.gson
-    implementation deps.retrofit.runtime
-    implementation deps.retrofit.gson
-    implementation deps.okhttp.okhttp
-    implementation deps.okhttp.mockwebserver
-    implementation deps.okhttp_logging_interceptor
+    implementation deps.appcompat
+    implementation deps.constraint_layout
+    implementation deps.material
+    implementation deps.circleimageview
+    implementation deps.dimens.sdp
+    implementation deps.dimens.ssp
+    implementation deps.glide.runtime
+    kapt deps.glide.compiler
+    implementation deps.shimer
 }

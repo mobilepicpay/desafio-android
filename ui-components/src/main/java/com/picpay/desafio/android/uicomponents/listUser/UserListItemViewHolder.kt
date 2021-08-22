@@ -1,17 +1,18 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.uicomponents.listUser
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.picpay.desafio.android.model.User
+import com.picpay.desafio.android.model.UserDTO
+import com.picpay.desafio.android.uicomponents.databinding.ListItemUserBinding
 
 class UserListItemViewHolder(
-    itemView: View
-) : RecyclerView.ViewHolder(itemView) {
+    private val binding: ListItemUserBinding
+) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(user: User) {
-//        itemView.name.text = user.name
-//        itemView.username.text = user.username
-//        itemView.progressBar.visibility = View.VISIBLE
+    fun bind(user: UserDTO) {
+        binding.name.text = user.name
+        binding.username.text = user.username
+        //binding.progressBar.visibility = View.VISIBLE
+
 //        Picasso.get()
 //            .load(user.img)
 //            .error(R.drawable.ic_round_account_circle)

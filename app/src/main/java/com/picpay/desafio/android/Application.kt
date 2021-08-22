@@ -3,6 +3,7 @@ package com.picpay.desafio.android
 import android.app.Application
 import com.picpay.desafio.android.di.networkModule
 import com.picpay.desafio.android.di.repositoryModule
+import com.picpay.desafio.android.di.serviceModule
 import com.picpay.desafio.android.di.viewModelModule
 import com.picpay.desafio.android.network.NetworkDI
 import org.koin.android.ext.koin.androidContext
@@ -19,7 +20,7 @@ class Application :  Application() {
             androidLogger(Level.ERROR)
             androidContext(this@Application)
             modules(
-                networkModule, repositoryModule, viewModelModule
+                networkModule, serviceModule, repositoryModule, viewModelModule
             )
         }
     }

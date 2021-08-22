@@ -2,7 +2,6 @@ package com.picpay.desafio.android.network
 
 import com.picpay.desafio.android.network.config.NetworkConfig
 import com.picpay.desafio.android.network.config.RetrofitConfig
-import com.picpay.desafio.android.network.service.UserService
 import com.picpay.desafio.android.network.util.ConnectivityInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

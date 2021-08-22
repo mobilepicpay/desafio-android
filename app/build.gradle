@@ -54,8 +54,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(path: ':network')
-    implementation project(path: ':model')
+    implementation project(':network')
+    implementation project(':model')
+    implementation project(':ui-components')
 
     implementation deps.kotlin.stdlib
 
