@@ -17,7 +17,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
             android:screenOrientation="fullSensor"
-            android:name=".MainActivity">
+            android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

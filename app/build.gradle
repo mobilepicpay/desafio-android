@@ -78,6 +78,7 @@ dependencies {
 
     implementation deps.room.runtime
     implementation deps.room.ktx
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor deps.room.compiler
     kapt deps.room.compiler
 
