@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'kotlin-parcelize'
     id 'kotlin-kapt'
 }
 
@@ -29,11 +28,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = '1.8'
     }
 }
 
 dependencies {
+    implementation project(':model')
+
     implementation deps.core_ktx
     implementation deps.appcompat
     implementation deps.material
@@ -42,9 +43,13 @@ dependencies {
     androidTestImplementation deps.espresso_core
     androidTestImplementation deps.core_ktx_test
 
-    implementation deps.gson
-
     implementation deps.room.runtime
     implementation deps.room.ktx
     kapt deps.room.compiler
+
+    implementation deps.koin.core
+    implementation deps.koin.scope
+    implementation deps.koin.koin_android
+    implementation deps.koin.viewmodel
+    implementation deps.koin.test
 }
