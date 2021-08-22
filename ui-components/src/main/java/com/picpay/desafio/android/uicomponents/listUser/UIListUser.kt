@@ -39,7 +39,7 @@ class UIListUser @JvmOverloads constructor(
         loading.visibility = View.VISIBLE
     }
 
-    private fun stopLoading() {
+    fun stopLoading() {
         loading.stopShimmer()
         recyclerView.visibility = View.VISIBLE
         loading.visibility = View.GONE

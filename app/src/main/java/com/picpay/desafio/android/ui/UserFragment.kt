@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.picpay.desafio.android.databinding.FragmentUserBinding
+import com.picpay.desafio.android.model.ErrorResponse
+import com.picpay.desafio.android.util.errorView
 import com.picpay.desafio.android.viewmodel.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,12 +30,20 @@ class UserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.uiListUsers.starLoading()
-        viewModel.getLIstUsers()
+        viewModel.listUsers.observe(viewLifecycleOwner, {
+            binding.uiListUsers.setData(it.data.orEmpty())
 
-        viewModel.listUsers.observe(this, {
-            binding.uiListUsers.setData(it)
+            if (it is com.picpay.desafio.android.util.Resource.Loading && it.data.isNullOrEmpty()) binding.uiListUsers.starLoading()
+            if (it is com.picpay.desafio.android.util.Resource.Error && it.data.isNullOrEmpty()) {
+                binding.uiListUsers.stopLoading()
+                errorHandler(it.error)
+            }
         })
+    }
+
+    private fun errorHandler(error: Throwable?) {
+        val msgError = if (error is ErrorResponse) error.massage else error?.message
+        errorView(binding.root, msgError.orEmpty())
     }
 
     override fun onDestroy() {

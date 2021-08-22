@@ -58,6 +58,7 @@ dependencies {
     implementation project(':model')
     implementation project(':ui-components')
     implementation project(':local')
+    implementation project(':util')
 
     implementation deps.kotlin.stdlib
 
