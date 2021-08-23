@@ -12,8 +12,8 @@ interface GenericDAO<Entity> {
     suspend fun saveAll(values : List<Entity>)
 
     @Update
-    fun update(value: Entity)
+    suspend fun update(value: Entity)
 
     @Delete
-    fun delete(value: Entity)
+    suspend fun delete(value: Entity)
 }

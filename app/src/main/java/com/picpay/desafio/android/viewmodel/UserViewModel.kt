@@ -7,5 +7,5 @@ import com.picpay.desafio.android.repository.UserRepository
 class UserViewModel(
     private val repository: UserRepository
 ) : ViewModel() {
-    val listUsers = repository.getUsers().asLiveData()
+    fun loadList() = repository.getUsers().asLiveData()
 }

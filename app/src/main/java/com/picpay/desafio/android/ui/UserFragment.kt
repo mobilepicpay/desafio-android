@@ -30,7 +30,7 @@ class UserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.listUsers.observe(viewLifecycleOwner, {
+        viewModel.loadList().observe(viewLifecycleOwner, {
             binding.uiListUsers.setData(it.data.orEmpty())
 
             if (it is com.picpay.desafio.android.util.Resource.Loading && it.data.isNullOrEmpty()) binding.uiListUsers.starLoading()

@@ -18,7 +18,7 @@ class NetworkDI(private val baseUrl: String) {
             single { loggingInterceptor() }
             single { ConnectivityInterceptor(context = get()) }
             single { GsonConverterFactory.create() }
-            single { okHttpClient(interceptors = listOf(get<ConnectivityInterceptor>(), get<HttpLoggingInterceptor>())) }
+            single { okHttpClient(interceptors = listOf( get<HttpLoggingInterceptor>())) }
             single {
                 RetrofitConfig(
                     baseUrl = baseUrl,

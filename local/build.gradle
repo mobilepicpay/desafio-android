@@ -40,16 +40,34 @@ dependencies {
     implementation deps.material
     testImplementation deps.junit
     androidTestImplementation deps.test_runner
-    androidTestImplementation deps.espresso_core
     androidTestImplementation deps.core_ktx_test
 
     implementation deps.room.runtime
     implementation deps.room.ktx
     kapt deps.room.compiler
+    androidTestImplementation deps.room.testing
 
     implementation deps.koin.core
     implementation deps.koin.scope
     implementation deps.koin.koin_android
     implementation deps.koin.viewmodel
     implementation deps.koin.test
+
+    implementation deps.coroutines.core
+    implementation deps.coroutines.android
+    testImplementation deps.coroutines.test
+
+    testImplementation deps.hamcrest
+    testImplementation deps.arch_core.testing
+    testImplementation deps.robolectric
+    testImplementation deps.truth
+    testImplementation deps.mockito.core
+
+    androidTestImplementation deps.arch_core.testing
+    androidTestImplementation deps.koin.test
+    androidTestImplementation deps.truth
+    androidTestImplementation deps.ext_junit
+    androidTestImplementation deps.espresso_core
+    androidTestImplementation deps.mockito.core
+    androidTestImplementation deps.tests_rule
 }

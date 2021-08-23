@@ -15,4 +15,7 @@ interface UserDAO : GenericDAO<UserEntity> {
     @Query("DELETE FROM UserEntity")
     suspend fun deleteAll()
 
+    @Query("SELECT * FROM UserEntity WHERE name like :name")
+    suspend fun findUsersByName(name: String): UserEntity
+
 }

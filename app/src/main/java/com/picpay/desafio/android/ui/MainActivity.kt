@@ -1,16 +1,12 @@
 package com.picpay.desafio.android.ui
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.ActivityMainBinding
-import com.picpay.desafio.android.uicomponents.listUser.UIListUser
-import com.picpay.desafio.android.viewmodel.UserViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
