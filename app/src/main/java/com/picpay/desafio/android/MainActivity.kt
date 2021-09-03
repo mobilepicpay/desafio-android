@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.picpay.desafio.android.databinding.ActivityMainBinding
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,7 +16,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var viewBinding: ActivityMainBinding
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
@@ -45,8 +48,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onResume() {
         super.onResume()
 
-        recyclerView = findViewById(R.id.recyclerView)
-        progressBar = findViewById(R.id.user_list_progress_bar)
+        viewBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
+
+        recyclerView = viewBinding.recyclerView
+        progressBar = viewBinding.userListProgressBar
 
         adapter = UserListAdapter()
         recyclerView.adapter = adapter
