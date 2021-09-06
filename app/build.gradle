@@ -20,12 +20,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        debug {}
+        debug {
+            buildConfigField 'String', 'BASE_URL', '"https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"'
+        }
 
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'BASE_URL', '"https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"'
         }
     }
 
