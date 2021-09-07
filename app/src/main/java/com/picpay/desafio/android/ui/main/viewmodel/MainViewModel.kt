@@ -14,13 +14,10 @@ import retrofit2.Response
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
-    private val _users = MutableLiveData<List<User>>()
-    val users: LiveData<List<User>>
-        get() = _users
-
-    private val _getUserError = MutableLiveData<String?>()
-    val getUserError: LiveData<String?>
-        get() = _getUserError
+    private val mainViewState = MainViewState()
+    private val _state = MutableLiveData(mainViewState)
+    val state: LiveData<MainViewState>
+        get() = _state
 
     init {
         getUsers()
@@ -31,12 +28,11 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
             repository.getUsers()
                 .enqueue(object : Callback<List<User>> {
                     override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                        _getUserError.postValue(t.message)
+                        _state.postValue(mainViewState.postError(t.message))
                     }
 
                     override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                        _users.postValue(response.body()!!)
-                        _getUserError.postValue(null)
+                        _state.postValue(mainViewState.postSuccess(response.body()))
                         Log.d("Viewmodel", response.body().toString())
                     }
                 })

@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,49 +23,50 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
-    private lateinit var adapter: UserListAdapter
+    private lateinit var userAdapter: UserListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         recyclerView = findViewById(R.id.recyclerView)
         progressBar = findViewById(R.id.user_list_progress_bar)
-        adapter = UserListAdapter()
+        userAdapter = UserListAdapter()
 
-        setupLoadingView()
+        setLoadingView()
         setupRecyclerView()
         setupObservers()
     }
 
     private fun setupRecyclerView() {
         recyclerView.apply {
-            adapter = adapter
+            adapter = userAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
     }
 
-    private fun setupLoadingView() {
-        progressBar.visible()
+    private fun setLoadingView(isLoading: Boolean = true) {
+        recyclerView.gone()
+        progressBar.isVisible = isLoading
     }
 
     private fun setupObservers() {
         Log.d("Viewmodel", vm.toString())
-        vm.users.observe(this) { users ->
-            adapter.users = users
-            setListViewState()
-        }
 
-        vm.getUserError.observe(this) { error ->
-            if (!error.isNullOrBlank()) {
+        vm.state.observe(this) {
+            setLoadingView(it.isLoading)
+            it.users?.let { users ->
+                userAdapter.users = users
+                setListViewState()
+            }
+            it.error?.let {
                 setErrorState()
-                showToastError(R.string.error.print())
             }
         }
     }
 
     private fun setErrorState() {
-        progressBar.gone()
         recyclerView.gone()
+        showToastError(R.string.error.print())
     }
 
     private fun showToastError(error: String) {
@@ -73,7 +75,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun setListViewState() {
-        progressBar.gone()
         recyclerView.visible()
     }
 }
