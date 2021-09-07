@@ -5,5 +5,5 @@ import com.picpay.desafio.android.data.api.PicPayService
 class Repository {
     private val api = PicPayService.instance
 
-    suspend fun getUsers() = api.getUsers()
+    fun getUsers() = api.getUsers()
 }
