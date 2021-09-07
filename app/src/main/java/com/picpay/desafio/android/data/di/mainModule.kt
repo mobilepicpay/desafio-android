@@ -1,7 +1,7 @@
 package com.picpay.desafio.android.data.di
 
 import com.picpay.desafio.android.data.repository.Repository
-import com.picpay.desafio.android.ui.main.MainViewModel
+import com.picpay.desafio.android.ui.main.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

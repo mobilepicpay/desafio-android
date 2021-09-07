@@ -1,11 +1,11 @@
-package com.picpay.desafio.android.ui.main
+package com.picpay.desafio.android.ui.main.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.picpay.desafio.android.User
+import com.picpay.desafio.android.data.model.User
 import com.picpay.desafio.android.data.repository.Repository
 import kotlinx.coroutines.launch
 import retrofit2.Call

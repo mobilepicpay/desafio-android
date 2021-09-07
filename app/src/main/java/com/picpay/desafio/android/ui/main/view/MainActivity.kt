@@ -1,4 +1,4 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.ui.main.view
 
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.picpay.desafio.android.R
 import com.picpay.desafio.android.app.gone
 import com.picpay.desafio.android.app.print
 import com.picpay.desafio.android.app.visible
-import com.picpay.desafio.android.ui.main.MainViewModel
+import com.picpay.desafio.android.ui.main.view.adapter.UserListAdapter
+import com.picpay.desafio.android.ui.main.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -35,8 +37,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun setupRecyclerView() {
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.apply {
+            adapter = adapter
+            layoutManager = LinearLayoutManager(this@MainActivity)
+        }
     }
 
     private fun setupLoadingView() {
@@ -53,6 +57,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         vm.getUserError.observe(this) { error ->
             if (!error.isNullOrBlank()) {
                 setErrorState()
+                showToastError(R.string.error.print())
             }
         }
     }
@@ -60,7 +65,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun setErrorState() {
         progressBar.gone()
         recyclerView.gone()
-        Toast.makeText(this@MainActivity, R.string.error.print(), Toast.LENGTH_SHORT)
+    }
+
+    private fun showToastError(error: String) {
+        Toast.makeText(this@MainActivity, error, Toast.LENGTH_SHORT)
             .show()
     }
 
