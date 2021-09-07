@@ -6,10 +6,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.application.NonInstrumentedTestApplication
 import com.picpay.desafio.android.helper.MockKoinTest
-import com.picpay.desafio.android.shared.extensions.checkIsDisplayedByText
-import com.picpay.desafio.android.shared.extensions.checkRecyclerViewHasItems
-import com.picpay.desafio.android.shared.extensions.matchIsVisible
-import com.picpay.desafio.android.shared.extensions.matchesTextAtPosition
+import com.picpay.desafio.android.shared.extensions.*
+import com.picpay.desafio.android.shared.user.view.startMainActivity
 import com.picpay.desafio.android.user.domain.UserDomain
 import com.picpay.desafio.android.user.repository.UserRepository
 import io.mockk.coEvery
@@ -42,8 +40,9 @@ class MainActivityTest : MockKoinTest() {
 
     @Test
     fun `Should show progress bar when screen opens`() {
-        launchActivity<MainActivity>().onActivity {
-            matchIsVisible(R.id.progressBar)
+        startMainActivity {
+        } assert {
+            matchProgressBarIsVisible()
         }
     }
 

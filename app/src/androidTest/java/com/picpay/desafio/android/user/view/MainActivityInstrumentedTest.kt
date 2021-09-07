@@ -3,7 +3,6 @@ package com.picpay.desafio.android.user.view
 import androidx.test.core.app.launchActivity
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.shared.extensions.checkIsDisplayedByText
 import com.picpay.desafio.android.shared.extensions.checkRecyclerViewHasItems
 import com.picpay.desafio.android.shared.extensions.click
 import com.picpay.desafio.android.shared.extensions.matchesTextAtPosition
