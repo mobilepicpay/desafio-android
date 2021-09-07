@@ -14,5 +14,9 @@ class PicPayApplication : Application() {
             androidContext(this@PicPayApplication)
             modules(mainModule)
         }
+        instance = this
+    }
+    companion object {
+        lateinit var instance: PicPayApplication
     }
 }

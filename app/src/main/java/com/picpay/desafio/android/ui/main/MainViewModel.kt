@@ -18,8 +18,8 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     val users: LiveData<List<User>>
         get() = _users
 
-    private val _getUserError = MutableLiveData<String>()
-    val getUserError: LiveData<String>
+    private val _getUserError = MutableLiveData<String?>()
+    val getUserError: LiveData<String?>
         get() = _getUserError
 
     init {
@@ -36,7 +36,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
 
                     override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                         _users.postValue(response.body()!!)
-                        _getUserError.postValue("")
+                        _getUserError.postValue(null)
                         Log.d("Viewmodel", response.body().toString())
                     }
                 })
