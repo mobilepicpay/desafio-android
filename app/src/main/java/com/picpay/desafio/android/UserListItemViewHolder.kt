@@ -2,6 +2,7 @@ package com.picpay.desafio.android
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.picpay.desafio.android.data.model.UserResponse
 import com.picpay.desafio.android.databinding.ListItemUserBinding
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -10,7 +11,7 @@ class UserListItemViewHolder(
     private val viewBinding: ListItemUserBinding
 ) : RecyclerView.ViewHolder(viewBinding.root) {
 
-    fun bind(user: User) {
+    fun bind(user: UserResponse) {
         viewBinding.name.text = user.name
         viewBinding.username.text = user.username
         viewBinding.progressBar.visibility = View.VISIBLE

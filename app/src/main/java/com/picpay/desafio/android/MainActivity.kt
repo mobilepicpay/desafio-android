@@ -1,20 +1,19 @@
 package com.picpay.desafio.android
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.picpay.desafio.android.data.api.UserService
+import com.picpay.desafio.android.data.model.UserResponse
 import com.picpay.desafio.android.databinding.ActivityMainBinding
 import okhttp3.OkHttpClient
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var adapter: UserListAdapter
 
-    private val url = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
+    private val url = "https://609a908e0f5a13001721b74e.mockapi.io/"
 
     private val gson: Gson by lazy { GsonBuilder().create() }
 
@@ -46,8 +45,8 @@ class MainActivity : AppCompatActivity() {
             .build()
     }
 
-    private val service: PicPayService by lazy {
-        retrofit.create(PicPayService::class.java)
+    private val service: UserService by lazy {
+        retrofit.create(UserService::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,8 +77,8 @@ class MainActivity : AppCompatActivity() {
 
         progressBar.visibility = View.VISIBLE
         service.getUsers()
-            .enqueue(object : Callback<List<User>> {
-                override fun onFailure(call: Call<List<User>>, t: Throwable) {
+            .enqueue(object : Callback<List<UserResponse>> {
+                override fun onFailure(call: Call<List<UserResponse>>, t: Throwable) {
                     val message = getString(R.string.error)
 
                     progressBar.visibility = View.GONE
@@ -89,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                         .show()
                 }
 
-                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                override fun onResponse(call: Call<List<UserResponse>>, response: Response<List<UserResponse>>) {
                     progressBar.visibility = View.GONE
 
                     adapter.submitList(response.body()!!)
