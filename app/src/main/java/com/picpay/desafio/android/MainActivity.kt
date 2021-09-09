@@ -1,15 +1,20 @@
 package com.picpay.desafio.android
 
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.databinding.ActivityMainBinding
 import okhttp3.OkHttpClient
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,9 +50,22 @@ class MainActivity : AppCompatActivity() {
         retrofit.create(PicPayService::class.java)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
+        loadViewModel()
+        loadViewBinding()
+    }
+
+
+    private fun loadViewModel() {
+        val model: UserViewModel by viewModels()
+        model.getUsers().observe(this, { users ->
+
+        })
+    }
+
+    private fun loadViewBinding() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
