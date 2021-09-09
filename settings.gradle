@@ -1,1 +1,3 @@
 include ':app'
+include ':libraries:data'
+include ':libraries:domain'
