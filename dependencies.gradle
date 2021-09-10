@@ -11,6 +11,7 @@ ext {
     okhttp_version = '4.9.1'
     picasso_version = '2.71828'
     circleimageview_version = '3.0.0'
+    room_version = "2.3.0"
 
     junit_version = '4.13.2'
     mockito_version = '3.2.4'
@@ -89,13 +90,19 @@ ext {
             "de.hdodenhof:circleimageview:$circleimageview_version"
     ]
 
+    roomLibraries = [
+            "androidx.room:room-runtime:$room_version",
+            "androidx.room:room-ktx:$room_version",
+    ]
+
     testImplementationLibraries = [
             "junit:junit:$junit_version",
             "org.mockito:mockito-core:$mockito_version",
             "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version",
             "androidx.arch.core:core-testing:$core_testing_version",
             "io.insert-koin:koin-test:$koin_version",
-            "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+            "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version",
+            "androidx.room:room-testing:$room_version"
     ]
 
     androidTestImplementationLibraries = [

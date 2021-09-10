@@ -3,6 +3,11 @@ apply from: rootProject.file('base-build.gradle')
 
 dependencies {
 
+    api project(':libraries:data')
+
+    implementation coroutinesLibraries + networkLibraries + roomLibraries
+    kapt "androidx.room:room-compiler:$room_version"
+
     androidTestImplementation androidTestImplementationLibraries
     testImplementation testImplementationLibraries
 }

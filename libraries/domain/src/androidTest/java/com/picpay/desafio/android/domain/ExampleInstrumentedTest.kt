@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.network
+package com.picpay.desafio.android.domain
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

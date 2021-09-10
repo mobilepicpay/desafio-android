@@ -14,7 +14,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BASE_URL_API", "\"https://609a908e0f5a13001721b74e.mockapi.io/\"")
+        buildConfigField("String", "BASE_URL_API", "\"https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/\"")
     }
     buildTypes {
         debug {}

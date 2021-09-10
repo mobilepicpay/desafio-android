@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply from: rootProject.file('base-build.gradle')
 
 dependencies {
+
     implementation networkLibraries
 
     androidTestImplementation androidTestImplementationLibraries

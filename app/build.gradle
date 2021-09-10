@@ -9,7 +9,7 @@ android {
 
 dependencies {
 
-    implementation project(':libraries:data')
+    implementation project(':libraries:domain')
 
     implementation androidLibraries + koinLibraries + lifecycleLibraries +
             gsonLibrary + networkLibraries + imageLibraries
