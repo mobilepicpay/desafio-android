@@ -1,6 +1,8 @@
 package com.picpay.desafio.android.domain.database
 
 import androidx.room.*
+import com.picpay.desafio.android.data.model.UserResponse
+import com.picpay.desafio.android.domain.model.User
 
 @Entity(tableName = "user")
 data class UserEntity(
@@ -29,4 +31,26 @@ interface UserDao {
         add(user)
     }
 
+}
+
+fun List<UserResponse>.toEntity(): List<UserEntity> {
+    return map {
+        UserEntity(
+            id = it.id,
+            name = it.name,
+            username = it.username,
+            img = it.img
+        )
+    }
+}
+
+fun List<UserEntity>.toUser(): List<User> {
+    return map {
+        User(
+            id = it.id,
+            name = it.name,
+            username = it.username,
+            img = it.img
+        )
+    }
 }

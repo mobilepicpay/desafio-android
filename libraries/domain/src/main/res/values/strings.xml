@@ -1,0 +1,7 @@
+<resources>
+    <string name="generic_error">Ocorreu um erro. Tente novamente.</string>
+    <string name="network_error">Sem conexão com a internet. Verifique e tente novamente.</string>
+    <string name="unavailable_error">O recurso está indisponível, tente novamente mais tarde.</string>
+    <string name="forbidden_error">Você não possui autorização para acessar esse recurso.</string>
+    <string name="timeout_error">Instabilidade nos servidores, tente novamente em instantes.</string>
+</resources>

@@ -3,15 +3,17 @@ package com.picpay.desafio.android.domain.repository
 import com.picpay.desafio.android.data.api.UserService
 import com.picpay.desafio.android.data.utils.Operation
 import com.picpay.desafio.android.domain.database.UserDao
-import com.picpay.desafio.android.domain.database.UserEntity
-import com.picpay.desafio.android.domain.model.User
+import com.picpay.desafio.android.domain.database.toEntity
+import com.picpay.desafio.android.domain.database.toUser
+import kotlinx.coroutines.flow.flow
 
 class UserServiceRepositoryImpl(
     private val userService: UserService,
     private val userDao: UserDao
 ) : UserServiceRepository {
 
-    override suspend fun getUsers(): List<User> {
+    override suspend fun getUsers() = flow {
+        emit(userDao.getAll().toUser())
 
         val response = try {
             Operation.Success(userService.getUsers())
@@ -19,29 +21,15 @@ class UserServiceRepositoryImpl(
             Operation.Error(throwable)
         }
 
-        return when (response) {
+        when (response) {
             is Operation.Success -> {
-                val userEntity = response.dataType.map {
-                    UserEntity(
-                        id = it.id,
-                        name = it.name,
-                        username = it.username,
-                        img = it.img
-                    )
-                }
-
+                val userEntity = response.dataType.toEntity()
                 userDao.update(userEntity)
-
-                userEntity.map {
-                    User(
-                        id = it.id,
-                        name = it.name,
-                        username = it.username,
-                        img = it.img
-                    )
-                }
+                emit(userEntity.toUser())
             }
-            is Operation.Error -> throw response.throwable
+            is Operation.Error -> {
+               throw response.throwable
+            }
         }
     }
 

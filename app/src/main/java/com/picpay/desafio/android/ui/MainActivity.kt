@@ -1,51 +1,50 @@
 package com.picpay.desafio.android.ui
 
 import android.os.Bundle
-import android.view.View
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.picpay.desafio.android.databinding.ActivityMainBinding
 import com.picpay.desafio.android.presetation.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
+    private val userViewModel: UserViewModel by viewModel()
     private lateinit var viewBinding: ActivityMainBinding
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var progressBar: ProgressBar
     private lateinit var adapter: UserListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        loadViewModel()
-        loadViewBinding()
+        setupViewBinding()
+        setupAdapter()
+        setupObservers()
+        userViewModel.getUsers()
     }
 
-
-    private fun loadViewModel() {
-        val model: UserViewModel by viewModel()
-
-        model.getUsers()
-
+    private fun setupObservers() {
+        userViewModel.users.observe(this, { listUsers ->
+            viewBinding.userListProgressBar.isVisible = listUsers.isLoading
+            listUsers.error?.let { error -> setupError(error) }
+            adapter.submitList(listUsers.listUsers)
+        })
     }
 
-    private fun loadViewBinding() {
+    private fun setupError(error: Int) {
+        Snackbar.make(viewBinding.root, getString(error), Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun setupViewBinding() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+    }
 
-        recyclerView = viewBinding.recyclerView
-        progressBar = viewBinding.userListProgressBar
-
+    private fun setupAdapter() {
         adapter = UserListAdapter()
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        progressBar.visibility = View.VISIBLE
-
-
+        viewBinding.recyclerView.adapter = adapter
+        viewBinding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 }
