@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private val retrofit: Retrofit by lazy {
+        val url = (application as App).getConfig().getBaseUrl()
         Retrofit.Builder()
             .baseUrl(url)
             .client(okHttp)
