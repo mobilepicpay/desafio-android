@@ -8,6 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.google.gson.Gson
 import com.picpay.desafio.android.uitest.base.BaseActivityTest
 import com.picpay.desafio.android.uitest.matchers.RecyclerViewMatchers
+import com.picpay.desafio.android.uitest.matchers.ToastMatcher
 import com.picpay.desafio.android.uitest.utils.GenericIdlingResource
 import org.junit.Test
 
@@ -42,6 +43,17 @@ class MainActivityTest : BaseActivityTest() {
                     withText(it)
                 )
             }
+        }
+    }
+
+    // Given that application is launched
+    // When a network error occurs (like Http Status 404 : Page Not Found)
+    // Then It should display a toast with an error message
+    @Test
+    fun shouldDisplayError() {
+        setMockErrorResponse(path, 404)
+        launchActivity().apply {
+            ToastMatcher.isToastMessageDisplayed(R.string.error)
         }
     }
 
