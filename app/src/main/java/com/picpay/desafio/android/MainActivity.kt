@@ -3,6 +3,7 @@ package com.picpay.desafio.android
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,8 +22,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private lateinit var progressBar: ProgressBar
     private lateinit var adapter: UserListAdapter
 
-    private val url = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
-
     private val gson: Gson by lazy { GsonBuilder().create() }
 
     private val okHttp: OkHttpClient by lazy {
@@ -31,6 +30,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private val retrofit: Retrofit by lazy {
+        val url = (application as App).getConfig().getBaseUrl()
         Retrofit.Builder()
             .baseUrl(url)
             .client(okHttp)
@@ -71,5 +71,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     adapter.users = response.body()!!
                 }
             })
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun isLoaded(): Boolean {
+        return progressBar.visibility == View.GONE || adapter.users.isNotEmpty()
     }
 }

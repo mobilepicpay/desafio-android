@@ -16,7 +16,7 @@ android {
 
         vectorDrawables.useSupportLibrary = true
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.picpay.desafio.android.uitest.TestAppRunner"
     }
     buildTypes {
         debug {}

@@ -1,68 +1,67 @@
 package com.picpay.desafio.android
 
-import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.platform.app.InstrumentationRegistry
-import okhttp3.mockwebserver.Dispatcher
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
-import okhttp3.mockwebserver.RecordedRequest
+import com.google.gson.Gson
+import com.picpay.desafio.android.uitest.base.BaseActivityTest
+import com.picpay.desafio.android.uitest.matchers.RecyclerViewMatchers
+import com.picpay.desafio.android.uitest.utils.GenericIdlingResource
 import org.junit.Test
 
+class MainActivityTest : BaseActivityTest() {
 
-class MainActivityTest {
-
-    private val server = MockWebServer()
-
-    private val context = InstrumentationRegistry.getInstrumentation().targetContext
-
+    // Given that application is launched
+    // When the screen appears
+    // Then It should display the correct screen title
     @Test
     fun shouldDisplayTitle() {
-        launchActivity<MainActivity>().apply {
+        setMockSuccessResponse(path, successResponseBody)
+        this.launchActivity().apply {
             val expectedTitle = context.getString(R.string.title)
-
-            moveToState(Lifecycle.State.RESUMED)
-
             onView(withText(expectedTitle)).check(matches(isDisplayed()))
         }
     }
 
+    // Given that application is launched and the screen is loaded
+    // When the contact list appears
+    // Then It should display the list item with the contact information
     @Test
     fun shouldDisplayListItem() {
-        server.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse {
-                return when (request.path) {
-                    "/users" -> successResponse
-                    else -> errorResponse
-                }
+        setMockSuccessResponse(path, successResponseBody)
+        this.launchActivityWithIdling().apply {
+            val user = mockedUser()
+            val expectedListItemTexts = arrayOf(user.name, user.username)
+
+            expectedListItemTexts.forEach {
+                RecyclerViewMatchers.checkRecyclerViewItem(
+                    R.id.recyclerView,
+                    0,
+                    withText(it)
+                )
+            }
+        }
+    }
+
+    private fun launchActivityWithIdling() =
+        launchActivity().apply {
+            onActivity { mainActivity ->
+                super.idlingResource = GenericIdlingResource { mainActivity.isLoaded() }
             }
         }
 
-        server.start(serverPort)
-
-        launchActivity<MainActivity>().apply {
-            // TODO("validate if list displays items returned by server")
-        }
-
-        server.close()
-    }
+    private fun launchActivity() =
+        launchActivity<MainActivity>()
 
     companion object {
-        private const val serverPort = 8080
+        private const val path = "/users"
 
-        private val successResponse by lazy {
-            val body =
-                "[{\"id\":1001,\"name\":\"Eduardo Santos\",\"img\":\"https://randomuser.me/api/portraits/men/9.jpg\",\"username\":\"@eduardo.santos\"}]"
+        private const val successResponseBody =
+            "[{\"id\":1001,\"name\":\"Eduardo Santos\",\"img\":\"https://randomuser.me/api/portraits/men/9.jpg\",\"username\":\"@eduardo.santos\"}]"
 
-            MockResponse()
-                .setResponseCode(200)
-                .setBody(body)
-        }
-
-        private val errorResponse by lazy { MockResponse().setResponseCode(404) }
+        private fun mockedUser(): User =
+            Gson().fromJson(successResponseBody, Array<User>::class.java).first()
     }
 }
