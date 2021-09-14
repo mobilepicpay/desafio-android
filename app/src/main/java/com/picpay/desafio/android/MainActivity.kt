@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun isIdleNow(): Boolean {
+    fun isLoaded(): Boolean {
         return progressBar.visibility == View.GONE || adapter.users.isNotEmpty()
     }
 }

@@ -48,7 +48,7 @@ class MainActivityTest : BaseActivityTest() {
     private fun launchActivityWithIdling() =
         launchActivity().apply {
             onActivity { mainActivity ->
-                super.idlingResource = GenericIdlingResource { mainActivity.isIdleNow() }
+                super.idlingResource = GenericIdlingResource { mainActivity.isLoaded() }
             }
         }
 
