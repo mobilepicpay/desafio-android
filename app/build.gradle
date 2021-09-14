@@ -80,6 +80,9 @@ dependencies {
     implementation "com.squareup.picasso:picasso:$picasso_version"
     implementation "de.hdodenhof:circleimageview:$circleimageview_version"
 
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
