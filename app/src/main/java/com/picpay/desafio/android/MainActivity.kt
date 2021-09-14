@@ -1,5 +1,6 @@
 package com.picpay.desafio.android
 
+import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -42,8 +43,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         retrofit.create(PicPayService::class.java)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         recyclerView = findViewById(R.id.recyclerView)
         progressBar = findViewById(R.id.user_list_progress_bar)
