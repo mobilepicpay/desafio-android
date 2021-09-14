@@ -2,33 +2,104 @@
 
 buildscript {
     ext {
-        kotlin_version = '1.3.61'
+        kotlin_version = '1.5.21'
 
-        appcompat_version = '1.1.0'
-        core_ktx_version = '1.2.0'
-        core_testing_version = '2.1.0'
-        constraintlayout_version = '1.1.3'
-        material_version = "1.1.0"
-        moshi_version = '1.8.0'
-        retrofit_version = '2.7.1'
-        okhttp_version = '4.3.1'
-        picasso_version = '2.71828'
-        circleimageview_version = '3.0.0'
+        android_minSdkVersion = 21
+        android_targetSdkVersion = 29
+        android_compileSdkVersion = 29
 
-        junit_version = '4.12'
-        mockito_version = '2.27.0'
-        mockito_kotlin_version = '2.1.0'
+        def appcompat_version = '1.3.1'
+        def circleimageview_version = '3.0.0'
+        def coroutines_version = "1.4.2"
+        def core_ktx_test_version = '1.4.0'
+        def core_ktx_version = '1.6.0'
+        def core_testing_version = '2.1.0'
+        def constraint_layout_version = '2.1.0'
+        def dagger_version = "2.23.2"
+        def espresso_version = '3.4.0'
+        def gson_version = "2.8.6"
+        def junit_version = '4.12'
+        def koin_version = "2.0.1"
+        def lifecycle_version = '2.3.1'
+        def okhttp_version = '4.3.1'
+        def picasso_version = '2.71828'
+        def material_version = '1.4.0'
+        def moshi_version = '1.8.0'
+        def mockito_version = '2.27.0'
+        def mockito_kotlin_version = '2.1.0'
+        def retrofit_version = '2.7.1'
+        def rxjava_version = "2.2.17"
+        def rxandroid_version = "2.1.1"
+        def test_runner_version = '1.4.0'
 
-        test_runner_version = '1.1.1'
-        espresso_version = '3.1.1'
+        libraries = [
+                // Kotlin standard library
+                "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
 
-        koin_version = "2.0.1"
-        dagger_version = "2.23.2"
-        lifecycle_version = "2.2.0"
-        coroutines_version = "1.3.3"
-        rxjava_version = "2.2.17"
-        rxandroid_version = "2.1.1"
-        core_ktx_test_version = "1.2.0"
+                // Coroutines
+                "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version",
+                "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version",
+
+                // Android UI and appcompat
+                "androidx.core:core-ktx:$core_ktx_version",
+                "androidx.appcompat:appcompat:$appcompat_version",
+                "com.google.android.material:material:$material_version",
+                "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
+
+                // ViewModel and LiveData
+                "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version",
+                "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version",
+                "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version",
+
+                // Network & Serialization
+                "com.google.code.gson:gson:$gson_version",
+
+                "com.squareup.retrofit2:retrofit:$retrofit_version",
+                "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version",
+                "com.squareup.retrofit2:converter-gson:$retrofit_version",
+
+                "com.squareup.okhttp3:okhttp:$okhttp_version",
+                "com.squareup.okhttp3:mockwebserver:$okhttp_version",
+
+                // Dependency Injection - Koin
+                "org.koin:koin-core:$koin_version",
+                "org.koin:koin-android:$koin_version",
+                "org.koin:koin-androidx-viewmodel:$koin_version",
+                "org.koin:koin-test:$koin_version",
+
+                // Dependency Injection - Dagger
+                "com.google.dagger:dagger:$dagger_version",
+
+                // Reactive RxJava
+                "io.reactivex.rxjava2:rxjava:$rxjava_version",
+                "io.reactivex.rxjava2:rxandroid:$rxandroid_version",
+
+                // Image processing
+                "com.squareup.picasso:picasso:$picasso_version",
+                "de.hdodenhof:circleimageview:$circleimageview_version",
+        ]
+
+        librariesKapt = [
+                // Dependency Injection - Dagger
+                "com.google.dagger:dagger-compiler:$dagger_version",
+        ]
+
+        testLibraries = [
+                "junit:junit:$junit_version",
+                // Mocks
+                "org.mockito:mockito-core:$mockito_version",
+                "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version",
+                "org.mockito:mockito-inline:$mockito_version",
+                //  Architecture Components testing libraries
+                "androidx.arch.core:core-testing:$core_testing_version",
+        ]
+
+        androidTestLibraries = [
+                // Android Tests
+                "androidx.test:runner:$test_runner_version",
+                "androidx.test.espresso:espresso-core:$espresso_version",
+                "androidx.test:core-ktx:$core_ktx_test_version",
+        ]
     }
 
     repositories {
@@ -37,7 +108,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:4.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
