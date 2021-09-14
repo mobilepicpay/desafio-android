@@ -39,7 +39,7 @@ First, I improved the project to make easier:
 - Update the Gradle version to 6.7.1.
 - Create gradle variables to handle the android versions: minSdkVersion, targetSdkVersion e compileSdkVersion
 
-## 2.2. [UI Tests] Make UI Tests passed. Ensure the new changes don't break the existing user experience.  _[(see more...)](https://github.com/lucasferreiramachado/desafio-android/pull/1)_
+## 2.2. [UI Tests] Make UI Tests passed. Ensure the new changes don't break the existing user experience.  _[(see more...)](https://github.com/lucasferreiramachado/desafio-android/pull/2)_
 
 **Ensure the new changes don't break the existing user experience.**
 
