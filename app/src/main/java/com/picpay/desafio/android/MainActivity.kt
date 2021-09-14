@@ -68,7 +68,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                     progressBar.visibility = View.GONE
 
-                    adapter.users = response.body()!!
+                    when (val responseCode: Int? = response?.code()) {
+                        null -> onFailure(call, Exception("HTTP Error"))
+                        200 -> {
+                            val body = response.body()
+                            if (response.isSuccessful && body != null) {
+                                adapter.users = body
+                            } else onFailure(call, Exception("HTTP Invalid Response Error"))
+                        }
+                        else -> onFailure(call, Exception("HTTP Error $responseCode"))
+                    }
                 }
             })
     }
