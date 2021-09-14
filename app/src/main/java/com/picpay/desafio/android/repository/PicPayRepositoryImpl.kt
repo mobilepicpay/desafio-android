@@ -1,12 +1,13 @@
 package com.picpay.desafio.android.repository
 
+import com.picpay.desafio.android.data.User
 import com.picpay.desafio.android.data.UserEntity
 import com.picpay.desafio.android.data.UserResponse
+import com.picpay.desafio.android.mapper.UserMapper
 import com.picpay.desafio.android.repository.local.PicPayDatabase
 import com.picpay.desafio.android.repository.remote.PicPayService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.await
 
 class PicPayRepositoryImpl(
     private val api: PicPayService,
@@ -23,5 +24,23 @@ class PicPayRepositoryImpl(
 
     override suspend fun getUsersFromRemote(): List<UserResponse> {
         return withContext(Dispatchers.IO) { api.getUsers() }
+    }
+
+    override fun mapperUserEntityToUser(entityList: List<UserEntity>): List<User> {
+        return entityList.map { userEntity ->
+            UserMapper.toUser(userEntity)
+        }
+    }
+
+    override fun mapperUserResponseToUser(responseList: List<UserResponse>): List<User> {
+        return responseList.map { userResponse ->
+            UserMapper.toUser(userResponse)
+        }
+    }
+
+    override fun mapperUserResponseToUserEntity(responseList: List<UserResponse>): List<UserEntity> {
+        return responseList.map { userResponse ->
+            UserMapper.toUserEntity(userResponse)
+        }
     }
 }

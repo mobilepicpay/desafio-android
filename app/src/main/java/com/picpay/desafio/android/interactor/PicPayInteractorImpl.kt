@@ -15,15 +15,13 @@ class PicPayInteractorImpl(
             val users = if (local.isEmpty()) {
                 val remote = repository.getUsersFromRemote()
 
-                saveOnCache(remote)
+                if (remote.isNotEmpty()) {
+                    saveOnCache(remote)
+                }
 
-                remote.map { userResponse ->
-                    UserMapper.toUser(userResponse)
-                }
+                repository.mapperUserResponseToUser(remote)
             } else {
-                local.map { userEntity ->
-                    UserMapper.toUser(userEntity)
-                }
+                repository.mapperUserEntityToUser(local)
             }
             if (users.isEmpty()) {
                 PicPayState.GetUsers.Empty
@@ -36,9 +34,7 @@ class PicPayInteractorImpl(
     }
 
     private suspend fun saveOnCache(remote: List<UserResponse>) {
-        val userEntityList = remote.map { userResponse ->
-            UserMapper.toUserEntity(userResponse)
-        }
+        val userEntityList = repository.mapperUserResponseToUserEntity(remote)
         repository.insertUsersToLocal(userEntityList)
     }
 }
