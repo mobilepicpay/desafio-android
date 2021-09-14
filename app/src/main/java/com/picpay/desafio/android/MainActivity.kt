@@ -3,6 +3,7 @@ package com.picpay.desafio.android
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -70,5 +71,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     adapter.users = response.body()!!
                 }
             })
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun isIdleNow(): Boolean {
+        return progressBar.visibility == View.GONE || adapter.users.isNotEmpty()
     }
 }
