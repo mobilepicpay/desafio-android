@@ -1,20 +1,40 @@
-# PicPay - Desafio Android
+## Interview Android Project
+#### It is an Android app project used in the Android Developer technical interview at PicPay .
 
-<img src="https://github.com/mobilepicpay/desafio-android/blob/master/desafio-picpay.gif" width="300"/>
+<p/>
+   - Here is my linkedin profile: [lucas-ferreira-machado](https://www.linkedin.com/in/lucas-ferreira-machado) .  <p/>
+<p/>
 
-Um dos desafios de qualquer time de desenvolvimento é lidar com código legado e no PicPay isso não é diferente. Um dos objetivos de trazer os melhores desenvolvedores do Brasil é atacar o problema. Para isso, essa etapa do processo consiste numa proposta de solução para o desafio abaixo e você pode escolher a melhor forma de resolvê-lo, de acordo com sua comodidade e disponibilidade de tempo:
-- Resolver o desafio previamente, e explicar sua abordagem no momento da entrevista.
-- Resolver o desafio durante a entrevista, fazendo um pair programming interativo com os nossos devs, guiando o desenvolvimento.
 
-Com o passar do tempo identificamos alguns problemas que impedem esse aplicativo de escalar e acarretam problemas de experiência do usuário. A partir disso elaboramos a seguinte lista de requisitos que devem ser cumpridos ao melhorar nossa arquitetura:
+## 1. Challenge
 
-- Em mudanças de configuração o aplicativo perde o estado da tela. Gostaríamos que o mesmo fosse mantido.
-- Nossos relatórios de crash têm mostrado alguns crashes relacionados a campos que não deveriam ser nulos sendo nulos e gerenciamento de lifecycle. Gostaríamos que fossem corrigidos.
-- Gostaríamos de cachear os dados retornados pelo servidor.
-- Haverá mudanças na lógica de negócios e gostaríamos que a arquitetura reaja bem a isso.
-- Haverá mudanças na lógica de apresentação. Gostaríamos que a arquitetura reaja bem a isso.
-- Com um grande número de desenvolvedores e uma quantidade grande de mudanças ocorrendo testes automatizados são essenciais.
-  - Gostaríamos de ter testes unitários testando nossa lógica de apresentação, negócios e dados independentemente, visto que tanto a escrita quanto execução dos mesmos são rápidas.
-  - Por outro lado, testes unitários rodam em um ambiente de execução diferenciado e são menos fiéis ao dia-a-dia de nossos usuários, então testes instrumentados também são importantes.
+This challenge is about issues that impacts on the user experience and prevents the project to scale. _[(see more...)](https://github.com/mobilepicpay/desafio-android)_
 
-Boa sorte! =)
+#### 1.1 Requirements
+1. Keep UI screen state on configurations changes.
+2. Identify and fix the lifecycle management issues and null instance issues.
+3. Cache the data sent by the server.
+4. Improve architecture to handle business logic changes.
+5. Improve architecture to handle presentation logic changes.
+6. Improve test strategy with automated tests creating unit and instrumented tests.
+
+## 2. My resolution steps
+I am passionate about learning mobile development. <p/>
+I would really appreciate any suggestions or recommendations. Feel free to contact me. <p/>
+I followed this steps to improve the project: <p></p>
+
+#### 1. [Project] Project improvements.  _[(more...)](https://github.com/lucasferreiramachado/desafio-android/pull/1)_
+First, I improved the project to make easier:
+- to manage external dependency versions and use the latest stable versions.
+- to scale the project in a cleaner and more efficient way.
+- the project modularization process later.
+
+**Main changes:**
+  - Update dependency versions.
+  - Sort dependency libraries by name to make easier to search for a specific one.
+  - Improve plugin declarations
+  - Separate external dependencies in Libraries, Kapt Libraries, Test Libraries and Android Test Libraries.
+  - Update the Kotlin version to 1.5.21.
+  - Update the Android Tools Gradle plugin version to 4.2.2.
+  - Update the Gradle version to 6.7.1.
+  - Create gradle variables to handle the android versions: minSdkVersion, targetSdkVersion e compileSdkVersion
