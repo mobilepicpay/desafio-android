@@ -1,13 +1,16 @@
 package com.picpay.desafio.android
 
+import androidx.room.Room
 import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.interactor.PicPayInteractor
 import com.picpay.desafio.android.interactor.PicPayInteractorImpl
 import com.picpay.desafio.android.repository.PicPayRepository
 import com.picpay.desafio.android.repository.PicPayRepositoryImpl
+import com.picpay.desafio.android.repository.local.PicPayDatabase
 import com.picpay.desafio.android.repository.remote.PicPayService
 import com.picpay.desafio.android.view.MainViewModel
 import okhttp3.OkHttpClient
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -32,8 +35,18 @@ object KoinModules {
         single { get<Retrofit>().create(PicPayService::class.java) }
     }
 
+    private val databases = module {
+        single {
+            Room.databaseBuilder(
+                androidContext(),
+                PicPayDatabase::class.java,
+                PicPayDatabase.NAME
+            ).build()
+        }
+    }
+
     private val repositories = module {
-        single { PicPayRepositoryImpl(get()) as PicPayRepository }
+        single { PicPayRepositoryImpl(get(), get()) as PicPayRepository }
     }
 
     private val interactors = module {
@@ -44,5 +57,5 @@ object KoinModules {
         viewModel { MainViewModel(get()) }
     }
 
-    val all = apis + repositories + interactors + viewModels
+    val all = apis + databases + repositories + interactors + viewModels
 }
