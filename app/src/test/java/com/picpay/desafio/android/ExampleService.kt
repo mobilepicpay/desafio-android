@@ -1,7 +1,7 @@
 package com.picpay.desafio.android
 
 import com.picpay.desafio.android.data.UserResponse
-import com.picpay.desafio.android.repository.PicPayService
+import com.picpay.desafio.android.repository.remote.PicPayService
 
 class ExampleService(
     private val service: PicPayService

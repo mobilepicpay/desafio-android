@@ -1,6 +1,7 @@
 package com.picpay.desafio.android.repository
 
 import com.picpay.desafio.android.data.UserResponse
+import com.picpay.desafio.android.repository.remote.PicPayService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.await

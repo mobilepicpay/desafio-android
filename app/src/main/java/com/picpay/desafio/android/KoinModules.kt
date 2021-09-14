@@ -5,7 +5,7 @@ import com.picpay.desafio.android.interactor.PicPayInteractor
 import com.picpay.desafio.android.interactor.PicPayInteractorImpl
 import com.picpay.desafio.android.repository.PicPayRepository
 import com.picpay.desafio.android.repository.PicPayRepositoryImpl
-import com.picpay.desafio.android.repository.PicPayService
+import com.picpay.desafio.android.repository.remote.PicPayService
 import com.picpay.desafio.android.view.MainViewModel
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
