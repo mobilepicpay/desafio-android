@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion android_targetSdkVersion
     defaultConfig {
         applicationId "com.picpay.desafio.android"
-        minSdkVersion 21
-        targetSdkVersion 29
+        minSdkVersion android_minSdkVersion
+        targetSdkVersion android_targetSdkVersion
         versionCode 1
         versionName "1.0"
 
