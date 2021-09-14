@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey
 data class UserEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
-    val img: String,
     val name: String,
-    val username: String
+    val username: String,
+    val img: String
 ) {
 
     companion object {
