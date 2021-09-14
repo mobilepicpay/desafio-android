@@ -13,7 +13,7 @@ class PicPayRepositoryImpl(
     private val database: PicPayDatabase
 ) : PicPayRepository {
 
-    override suspend fun insertUsersToLocal(users: List<UserEntity>) {
+    override suspend fun insertUsersToLocal(users: List<UserEntity>): List<Long> {
         return withContext(Dispatchers.IO) { database.userDao().insert(*users.toTypedArray()) }
     }
 
@@ -22,6 +22,6 @@ class PicPayRepositoryImpl(
     }
 
     override suspend fun getUsersFromRemote(): List<UserResponse> {
-        return withContext(Dispatchers.IO) { api.getUsers().await() }
+        return withContext(Dispatchers.IO) { api.getUsers() }
     }
 }
