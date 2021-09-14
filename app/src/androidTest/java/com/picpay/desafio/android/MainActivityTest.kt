@@ -3,8 +3,7 @@ package com.picpay.desafio.android
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.gson.Gson
 import com.picpay.desafio.android.uitest.base.BaseActivityTest
 import com.picpay.desafio.android.uitest.matchers.RecyclerViewMatchers
@@ -55,6 +54,22 @@ class MainActivityTest : BaseActivityTest() {
         launchActivity().apply {
             ToastMatcher.isToastMessageDisplayed(R.string.error)
         }
+    }
+
+
+    // If a device is low on resources, the system might destroy an activity,
+    // requiring your app to recreate that activity when the user returns to your app.
+    // To simulate these conditions, call recreate():
+    // See more at: https://developer.android.com/guide/components/activities/testing#recreate
+
+    // Given that application is launched
+    // When the system requires your app to recreate the activity
+    // Then It should recreate correctly and display the correct screen title
+    @Test
+    fun testShouldRecreateActivity() {
+        val scenario = launchActivity()
+        scenario.recreate()
+        onView(withId(R.id.title)).check(matches(isDisplayed()))
     }
 
     private fun launchActivityWithIdling() =
