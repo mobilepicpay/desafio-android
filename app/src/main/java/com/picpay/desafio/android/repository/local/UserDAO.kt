@@ -9,7 +9,7 @@ import com.picpay.desafio.android.data.UserEntity
 interface UserDAO {
 
     @Insert
-    fun insert(vararg userEntity: UserEntity)
+    fun insert(vararg userEntity: UserEntity): List<Long>
 
     @Query("select * from ${UserEntity.TABLE_NAME}")
     fun getUsers(): List<UserEntity>

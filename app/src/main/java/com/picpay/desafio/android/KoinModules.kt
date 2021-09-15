@@ -4,6 +4,8 @@ import androidx.room.Room
 import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.interactor.PicPayInteractor
 import com.picpay.desafio.android.interactor.PicPayInteractorImpl
+import com.picpay.desafio.android.mapper.PicPayMapper
+import com.picpay.desafio.android.mapper.PicPayMapperImpl
 import com.picpay.desafio.android.repository.PicPayRepository
 import com.picpay.desafio.android.repository.PicPayRepositoryImpl
 import com.picpay.desafio.android.repository.local.PicPayDatabase
@@ -45,8 +47,12 @@ object KoinModules {
         }
     }
 
+    private val mappers = module {
+        single { PicPayMapperImpl() as PicPayMapper }
+    }
+
     private val repositories = module {
-        single { PicPayRepositoryImpl(get(), get()) as PicPayRepository }
+        single { PicPayRepositoryImpl(get(), get(), get()) as PicPayRepository }
     }
 
     private val interactors = module {
@@ -57,5 +63,5 @@ object KoinModules {
         viewModel { MainViewModel(get()) }
     }
 
-    val all = apis + databases + repositories + interactors + viewModels
+    val all = apis + databases + mappers + repositories + interactors + viewModels
 }
