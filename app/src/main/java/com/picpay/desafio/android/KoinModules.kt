@@ -2,14 +2,14 @@ package com.picpay.desafio.android
 
 import androidx.room.Room
 import com.google.gson.GsonBuilder
-import com.picpay.desafio.android.interactor.PicPayInteractor
-import com.picpay.desafio.android.interactor.PicPayInteractorImpl
-import com.picpay.desafio.android.mapper.PicPayMapper
-import com.picpay.desafio.android.mapper.PicPayMapperImpl
-import com.picpay.desafio.android.repository.PicPayRepository
-import com.picpay.desafio.android.repository.PicPayRepositoryImpl
-import com.picpay.desafio.android.repository.local.PicPayDatabase
-import com.picpay.desafio.android.repository.remote.PicPayService
+import com.picpay.desafio.android.domain.interactor.PicPayInteractor
+import com.picpay.desafio.android.domain.interactor.PicPayInteractorImpl
+import com.picpay.desafio.android.data.mapper.PicPayMapper
+import com.picpay.desafio.android.data.mapper.PicPayMapperImpl
+import com.picpay.desafio.android.domain.repository.PicPayRepository
+import com.picpay.desafio.android.data.PicPayRepositoryImpl
+import com.picpay.desafio.android.data.database.PicPayDatabase
+import com.picpay.desafio.android.data.api.PicPayService
 import com.picpay.desafio.android.view.MainViewModel
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext

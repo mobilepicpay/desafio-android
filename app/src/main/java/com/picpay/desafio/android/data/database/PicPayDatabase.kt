@@ -1,8 +1,8 @@
-package com.picpay.desafio.android.repository.local
+package com.picpay.desafio.android.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.picpay.desafio.android.data.UserEntity
+import com.picpay.desafio.android.data.model.UserEntity
 
 @Database(entities = [UserEntity::class], version = PicPayDatabase.VERSION)
 abstract class PicPayDatabase : RoomDatabase() {

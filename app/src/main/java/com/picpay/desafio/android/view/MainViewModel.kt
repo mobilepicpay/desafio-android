@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.picpay.desafio.android.interactor.PicPayInteractor
-import com.picpay.desafio.android.interactor.PicPayState
+import com.picpay.desafio.android.domain.interactor.PicPayInteractor
+import com.picpay.desafio.android.domain.interactor.PicPayState
 import kotlinx.coroutines.launch
 
 class MainViewModel(

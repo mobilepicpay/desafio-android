@@ -1,5 +1,6 @@
 package com.picpay.desafio.android.data
 
+import com.picpay.desafio.android.data.model.User
 import org.junit.Test
 
 class UserTest {

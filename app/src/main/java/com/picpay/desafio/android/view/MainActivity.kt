@@ -5,10 +5,10 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.interactor.PicPayState
+import com.picpay.desafio.android.domain.interactor.PicPayState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun observeGetUsersState() {
-        mainViewModel.getUsersState.observe(this) { state ->
+        mainViewModel.getUsersState.observe(this, Observer { state ->
             when (state) {
                 is PicPayState.GetUsers.Empty -> {
                     adapter.users = emptyList()
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }
             }
             hideProgress()
-        }
+        })
     }
 
     private fun getUsers() {

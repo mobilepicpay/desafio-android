@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.interactor
+package com.picpay.desafio.android.domain.interactor
 
 interface PicPayInteractor {
 

@@ -1,6 +1,6 @@
-package com.picpay.desafio.android.interactor
+package com.picpay.desafio.android.domain.interactor
 
-import com.picpay.desafio.android.data.User
+import com.picpay.desafio.android.data.model.User
 
 object PicPayState {
 

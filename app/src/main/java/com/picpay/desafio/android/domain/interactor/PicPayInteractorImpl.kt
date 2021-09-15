@@ -1,6 +1,6 @@
-package com.picpay.desafio.android.interactor
+package com.picpay.desafio.android.domain.interactor
 
-import com.picpay.desafio.android.repository.PicPayRepository
+import com.picpay.desafio.android.domain.repository.PicPayRepository
 
 class PicPayInteractorImpl(
     private val repository: PicPayRepository

@@ -1,8 +1,6 @@
-package com.picpay.desafio.android.repository
+package com.picpay.desafio.android.domain.repository
 
-import com.picpay.desafio.android.data.User
-import com.picpay.desafio.android.data.UserEntity
-import com.picpay.desafio.android.data.UserResponse
+import com.picpay.desafio.android.data.model.User
 
 interface PicPayRepository {
 

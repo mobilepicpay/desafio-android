@@ -1,13 +1,11 @@
-package com.picpay.desafio.android.interactor
+package com.picpay.desafio.android.domain.interactor
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.picpay.desafio.android.data.User
-import com.picpay.desafio.android.data.UserEntity
-import com.picpay.desafio.android.data.UserResponse
-import com.picpay.desafio.android.repository.PicPayRepository
+import com.picpay.desafio.android.data.model.User
+import com.picpay.desafio.android.domain.repository.PicPayRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 

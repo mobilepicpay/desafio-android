@@ -1,8 +1,8 @@
-package com.picpay.desafio.android.mapper
+package com.picpay.desafio.android.data.mapper
 
-import com.picpay.desafio.android.data.User
-import com.picpay.desafio.android.data.UserEntity
-import com.picpay.desafio.android.data.UserResponse
+import com.picpay.desafio.android.data.model.User
+import com.picpay.desafio.android.data.model.UserEntity
+import com.picpay.desafio.android.data.model.UserResponse
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 

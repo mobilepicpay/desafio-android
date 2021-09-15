@@ -1,11 +1,10 @@
-package com.picpay.desafio.android.repository
+package com.picpay.desafio.android.data
 
-import com.picpay.desafio.android.data.User
-import com.picpay.desafio.android.data.UserEntity
-import com.picpay.desafio.android.data.UserResponse
-import com.picpay.desafio.android.mapper.PicPayMapper
-import com.picpay.desafio.android.repository.local.PicPayDatabase
-import com.picpay.desafio.android.repository.remote.PicPayService
+import com.picpay.desafio.android.data.model.User
+import com.picpay.desafio.android.data.mapper.PicPayMapper
+import com.picpay.desafio.android.data.database.PicPayDatabase
+import com.picpay.desafio.android.data.api.PicPayService
+import com.picpay.desafio.android.domain.repository.PicPayRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

@@ -1,14 +1,15 @@
-package com.picpay.desafio.android.repository
+package com.picpay.desafio.android.domain.repository
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.picpay.desafio.android.data.User
-import com.picpay.desafio.android.mapper.PicPayMapper
-import com.picpay.desafio.android.repository.local.PicPayDatabase
-import com.picpay.desafio.android.repository.local.UserDAO
-import com.picpay.desafio.android.repository.remote.PicPayService
+import com.picpay.desafio.android.data.PicPayRepositoryImpl
+import com.picpay.desafio.android.data.model.User
+import com.picpay.desafio.android.data.mapper.PicPayMapper
+import com.picpay.desafio.android.data.database.PicPayDatabase
+import com.picpay.desafio.android.data.database.UserDAO
+import com.picpay.desafio.android.data.api.PicPayService
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 

@@ -1,6 +1,7 @@
 package com.picpay.desafio.android.data
 
 import com.google.gson.Gson
+import com.picpay.desafio.android.data.model.UserResponse
 import org.junit.Test
 
 class UserResponseTest {
