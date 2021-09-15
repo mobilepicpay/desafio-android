@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.domain.interactor.PicPayState
@@ -36,7 +35,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun observeGetUsersState() {
-        mainViewModel.getUsersState.observe(this, Observer { state ->
+        mainViewModel.getUsersState.observe(this, { state ->
             when (state) {
                 is PicPayState.GetUsers.Empty -> {
                     adapter.users = emptyList()
