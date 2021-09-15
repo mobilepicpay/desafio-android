@@ -59,5 +59,30 @@ class PicPayRepositoryTest {
     @Test
     fun mapperUserEntityToUser_Test() {
         val expectedResult = mock<List<User>>()
+
+        runBlocking { whenever(mapper.userEntityToUser(any())) doReturn expectedResult }
+
+        val result = runBlocking { repository.mapperUserEntityToUser(mock()) }
+        assert(result == expectedResult)
+    }
+
+    @Test
+    fun mapperUserResponseToUser_Test() {
+        val expectedResult = mock<List<User>>()
+
+        runBlocking { whenever(mapper.userResponseToUser(any())) doReturn expectedResult }
+
+        val result = runBlocking { repository.mapperUserResponseToUser(mock()) }
+        assert(result == expectedResult)
+    }
+
+    @Test
+    fun mapperUserResponseToUserEntity_Test() {
+        val expectedResult = mock<List<UserEntity>>()
+
+        runBlocking { whenever(mapper.userResponseToUserEntity(any())) doReturn expectedResult }
+
+        val result = runBlocking { repository.mapperUserResponseToUserEntity(mock()) }
+        assert(result == expectedResult)
     }
 }

@@ -25,7 +25,7 @@ class PicPayInteractorTest {
         runBlocking { whenever(repository.getUsersFromLocal()) doReturn local }
         whenever(local.isEmpty()) doReturn false
 
-        whenever(repository.mapperUserEntityToUser(any())) doReturn users
+        runBlocking { whenever(repository.mapperUserEntityToUser(any())) doReturn users }
         whenever(users.isEmpty()) doReturn false
 
         val result = runBlocking { interactor.getUsers() }
@@ -45,10 +45,10 @@ class PicPayInteractorTest {
         runBlocking { whenever(repository.getUsersFromRemote()) doReturn remote }
         whenever(remote.isNotEmpty()) doReturn true
 
-        whenever(repository.mapperUserResponseToUserEntity(any())) doReturn local
+        runBlocking { whenever(repository.mapperUserResponseToUserEntity(any())) doReturn local }
         runBlocking { whenever(repository.insertUsersToLocal(any())) doReturn usersIds }
 
-        whenever(repository.mapperUserResponseToUser(any())) doReturn users
+        runBlocking { whenever(repository.mapperUserResponseToUser(any())) doReturn users }
         whenever(users.isEmpty()) doReturn false
 
         val result = runBlocking { interactor.getUsers() }
@@ -67,7 +67,7 @@ class PicPayInteractorTest {
         runBlocking { whenever(repository.getUsersFromRemote()) doReturn remote }
         whenever(remote.isNotEmpty()) doReturn false
 
-        whenever(repository.mapperUserResponseToUser(any())) doReturn users
+        runBlocking { whenever(repository.mapperUserResponseToUser(any())) doReturn users }
         whenever(users.isEmpty()) doReturn true
 
         val result = runBlocking { interactor.getUsers() }
