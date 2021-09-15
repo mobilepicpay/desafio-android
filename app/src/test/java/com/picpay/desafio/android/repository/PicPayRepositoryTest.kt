@@ -4,8 +4,10 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
+import com.picpay.desafio.android.data.User
 import com.picpay.desafio.android.data.UserEntity
 import com.picpay.desafio.android.data.UserResponse
+import com.picpay.desafio.android.mapper.PicPayMapper
 import com.picpay.desafio.android.repository.local.PicPayDatabase
 import com.picpay.desafio.android.repository.local.UserDAO
 import com.picpay.desafio.android.repository.remote.PicPayService
@@ -18,8 +20,9 @@ class PicPayRepositoryTest {
 
     private val api = mock<PicPayService>()
     private val database = mock<PicPayDatabase>()
+    private val mapper = mock<PicPayMapper>()
 
-    private val repository = PicPayRepositoryImpl(api, database)
+    private val repository = PicPayRepositoryImpl(api, database, mapper)
 
     @Test
     fun insertUsersToLocal_Test() {
@@ -51,5 +54,10 @@ class PicPayRepositoryTest {
 
         val result = runBlocking { repository.getUsersFromRemote() }
         assert(result == expectedResult)
+    }
+
+    @Test
+    fun mapperUserEntityToUser_Test() {
+        val expectedResult = mock<List<User>>()
     }
 }

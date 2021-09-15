@@ -12,9 +12,9 @@ interface PicPayRepository {
 
     suspend fun getUsersFromRemote(): List<UserResponse>
 
-    fun mapperUserEntityToUser(entityList: List<UserEntity>): List<User>
+    suspend fun mapperUserEntityToUser(entityList: List<UserEntity>): List<User>
 
-    fun mapperUserResponseToUser(responseList: List<UserResponse>): List<User>
+    suspend fun mapperUserResponseToUser(responseList: List<UserResponse>): List<User>
 
-    fun mapperUserResponseToUserEntity(responseList: List<UserResponse>): List<UserEntity>
+    suspend fun mapperUserResponseToUserEntity(responseList: List<UserResponse>): List<UserEntity>
 }

@@ -3,7 +3,7 @@ package com.picpay.desafio.android.repository
 import com.picpay.desafio.android.data.User
 import com.picpay.desafio.android.data.UserEntity
 import com.picpay.desafio.android.data.UserResponse
-import com.picpay.desafio.android.mapper.UserMapper
+import com.picpay.desafio.android.mapper.PicPayMapper
 import com.picpay.desafio.android.repository.local.PicPayDatabase
 import com.picpay.desafio.android.repository.remote.PicPayService
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +11,8 @@ import kotlinx.coroutines.withContext
 
 class PicPayRepositoryImpl(
     private val api: PicPayService,
-    private val database: PicPayDatabase
+    private val database: PicPayDatabase,
+    private val mapper: PicPayMapper
 ) : PicPayRepository {
 
     override suspend fun insertUsersToLocal(users: List<UserEntity>): List<Long> {
@@ -26,21 +27,15 @@ class PicPayRepositoryImpl(
         return withContext(Dispatchers.IO) { api.getUsers() }
     }
 
-    override fun mapperUserEntityToUser(entityList: List<UserEntity>): List<User> {
-        return entityList.map { userEntity ->
-            UserMapper.toUser(userEntity)
-        }
+    override suspend fun mapperUserEntityToUser(entityList: List<UserEntity>): List<User> {
+        return withContext(Dispatchers.Default) { mapper.userEntityToUser(entityList) }
     }
 
-    override fun mapperUserResponseToUser(responseList: List<UserResponse>): List<User> {
-        return responseList.map { userResponse ->
-            UserMapper.toUser(userResponse)
-        }
+    override suspend fun mapperUserResponseToUser(responseList: List<UserResponse>): List<User> {
+        return withContext(Dispatchers.Default) { mapper.userResponseToUser(responseList) }
     }
 
-    override fun mapperUserResponseToUserEntity(responseList: List<UserResponse>): List<UserEntity> {
-        return responseList.map { userResponse ->
-            UserMapper.toUserEntity(userResponse)
-        }
+    override suspend fun mapperUserResponseToUserEntity(responseList: List<UserResponse>): List<UserEntity> {
+        return withContext(Dispatchers.Default) { mapper.userResponseToUserEntity(responseList) }
     }
 }

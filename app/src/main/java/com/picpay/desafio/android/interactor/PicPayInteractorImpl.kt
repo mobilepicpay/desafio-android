@@ -1,7 +1,6 @@
 package com.picpay.desafio.android.interactor
 
 import com.picpay.desafio.android.data.UserResponse
-import com.picpay.desafio.android.mapper.UserMapper
 import com.picpay.desafio.android.repository.PicPayRepository
 
 class PicPayInteractorImpl(
