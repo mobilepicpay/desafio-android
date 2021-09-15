@@ -5,8 +5,6 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.picpay.desafio.android.data.User
-import com.picpay.desafio.android.data.UserEntity
-import com.picpay.desafio.android.data.UserResponse
 import com.picpay.desafio.android.mapper.PicPayMapper
 import com.picpay.desafio.android.repository.local.PicPayDatabase
 import com.picpay.desafio.android.repository.local.UserDAO
@@ -28,6 +26,7 @@ class PicPayRepositoryTest {
     fun insertUsersToLocal_Test() {
         val expectedResult = mock<List<Long>>()
 
+        runBlocking { whenever(mapper.userToUserEntity(any())) doReturn emptyList() }
         whenever(database.userDao()) doReturn dao
         whenever(database.userDao().insert(any())) doReturn expectedResult
 
@@ -37,10 +36,11 @@ class PicPayRepositoryTest {
 
     @Test
     fun getUsersFromLocal_Test() {
-        val expectedResult = mock<List<UserEntity>>()
+        val expectedResult = mock<List<User>>()
 
         whenever(database.userDao()) doReturn dao
-        whenever(database.userDao().getUsers()) doReturn expectedResult
+        whenever(database.userDao().getUsers()) doReturn mock()
+        runBlocking { whenever(mapper.userEntityToUser(any())) doReturn expectedResult }
 
         val result = runBlocking { repository.getUsersFromLocal() }
         assert(result == expectedResult)
@@ -48,41 +48,12 @@ class PicPayRepositoryTest {
 
     @Test
     fun getUsersFromRemote_Test() {
-        val expectedResult = mock<List<UserResponse>>()
-
-        runBlocking { whenever(api.getUsers()) doReturn expectedResult }
-
-        val result = runBlocking { repository.getUsersFromRemote() }
-        assert(result == expectedResult)
-    }
-
-    @Test
-    fun mapperUserEntityToUser_Test() {
         val expectedResult = mock<List<User>>()
 
-        runBlocking { whenever(mapper.userEntityToUser(any())) doReturn expectedResult }
-
-        val result = runBlocking { repository.mapperUserEntityToUser(mock()) }
-        assert(result == expectedResult)
-    }
-
-    @Test
-    fun mapperUserResponseToUser_Test() {
-        val expectedResult = mock<List<User>>()
-
+        runBlocking { whenever(api.getUsers()) doReturn mock() }
         runBlocking { whenever(mapper.userResponseToUser(any())) doReturn expectedResult }
 
-        val result = runBlocking { repository.mapperUserResponseToUser(mock()) }
-        assert(result == expectedResult)
-    }
-
-    @Test
-    fun mapperUserResponseToUserEntity_Test() {
-        val expectedResult = mock<List<UserEntity>>()
-
-        runBlocking { whenever(mapper.userResponseToUserEntity(any())) doReturn expectedResult }
-
-        val result = runBlocking { repository.mapperUserResponseToUserEntity(mock()) }
+        val result = runBlocking { repository.getUsersFromRemote() }
         assert(result == expectedResult)
     }
 }

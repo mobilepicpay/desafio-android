@@ -6,15 +6,9 @@ import com.picpay.desafio.android.data.UserResponse
 
 interface PicPayRepository {
 
-    suspend fun insertUsersToLocal(users: List<UserEntity>): List<Long>
+    suspend fun insertUsersToLocal(users: List<User>): List<Long>
 
-    suspend fun getUsersFromLocal(): List<UserEntity>
+    suspend fun getUsersFromLocal(): List<User>
 
-    suspend fun getUsersFromRemote(): List<UserResponse>
-
-    suspend fun mapperUserEntityToUser(entityList: List<UserEntity>): List<User>
-
-    suspend fun mapperUserResponseToUser(responseList: List<UserResponse>): List<User>
-
-    suspend fun mapperUserResponseToUserEntity(responseList: List<UserResponse>): List<UserEntity>
+    suspend fun getUsersFromRemote(): List<User>
 }

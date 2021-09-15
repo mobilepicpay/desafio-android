@@ -6,10 +6,11 @@ class UserTest {
 
     @Test
     fun createUser_Test() {
-        val user = User(name ="Pic Pay", username = "picpay", img = "picPay.jpg")
+        val user = User(id = 1, name ="Pic Pay", username = "picpay", img = "picPay.jpg")
 
-        assert(user.component1() == user.name)
-        assert(user.component2() == user.username)
-        assert(user.component3() == user.img)
+        assert(user.component1() == user.id)
+        assert(user.component2() == user.name)
+        assert(user.component3() == user.username)
+        assert(user.component4() == user.img)
     }
 }

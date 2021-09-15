@@ -15,27 +15,30 @@ class PicPayRepositoryImpl(
     private val mapper: PicPayMapper
 ) : PicPayRepository {
 
-    override suspend fun insertUsersToLocal(users: List<UserEntity>): List<Long> {
-        return withContext(Dispatchers.IO) { database.userDao().insert(*users.toTypedArray()) }
+    override suspend fun insertUsersToLocal(users: List<User>): List<Long> {
+        val userEntityList = withContext(Dispatchers.Default) {
+            mapper.userToUserEntity(users)
+        }
+        return withContext(Dispatchers.IO) {
+            database.userDao().insert(*userEntityList.toTypedArray())
+        }
     }
 
-    override suspend fun getUsersFromLocal(): List<UserEntity> {
-        return withContext(Dispatchers.IO) { database.userDao().getUsers() }
+    override suspend fun getUsersFromLocal(): List<User> {
+        val local = withContext(Dispatchers.IO) {
+            database.userDao().getUsers()
+        }
+        return withContext(Dispatchers.Default) {
+            mapper.userEntityToUser(local)
+        }
     }
 
-    override suspend fun getUsersFromRemote(): List<UserResponse> {
-        return withContext(Dispatchers.IO) { api.getUsers() }
-    }
-
-    override suspend fun mapperUserEntityToUser(entityList: List<UserEntity>): List<User> {
-        return withContext(Dispatchers.Default) { mapper.userEntityToUser(entityList) }
-    }
-
-    override suspend fun mapperUserResponseToUser(responseList: List<UserResponse>): List<User> {
-        return withContext(Dispatchers.Default) { mapper.userResponseToUser(responseList) }
-    }
-
-    override suspend fun mapperUserResponseToUserEntity(responseList: List<UserResponse>): List<UserEntity> {
-        return withContext(Dispatchers.Default) { mapper.userResponseToUserEntity(responseList) }
+    override suspend fun getUsersFromRemote(): List<User> {
+        val remote = withContext(Dispatchers.IO) {
+            api.getUsers()
+        }
+        return withContext(Dispatchers.Default) {
+            mapper.userResponseToUser(remote)
+        }
     }
 }

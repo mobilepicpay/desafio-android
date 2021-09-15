@@ -10,5 +10,5 @@ interface PicPayMapper {
 
     suspend fun userEntityToUser(users: List<UserEntity>): List<User>
 
-    suspend fun userResponseToUserEntity(users: List<UserResponse>): List<UserEntity>
+    suspend fun userToUserEntity(users: List<User>): List<UserEntity>
 }

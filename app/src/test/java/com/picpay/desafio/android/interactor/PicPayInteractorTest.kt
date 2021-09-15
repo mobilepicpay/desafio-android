@@ -19,13 +19,9 @@ class PicPayInteractorTest {
 
     @Test
     fun getUsers_WithLocal_Test() {
-        val local = mock<List<UserEntity>>()
         val users = mock<List<User>>()
 
-        runBlocking { whenever(repository.getUsersFromLocal()) doReturn local }
-        whenever(local.isEmpty()) doReturn false
-
-        runBlocking { whenever(repository.mapperUserEntityToUser(any())) doReturn users }
+        runBlocking { whenever(repository.getUsersFromLocal()) doReturn users }
         whenever(users.isEmpty()) doReturn false
 
         val result = runBlocking { interactor.getUsers() }
@@ -34,21 +30,17 @@ class PicPayInteractorTest {
 
     @Test
     fun getUsers_WithoutLocal_WithRemote_Test() {
-        val local = mock<List<UserEntity>>()
-        val remote = mock<List<UserResponse>>()
         val users = mock<List<User>>()
         val usersIds = mock<List<Long>>()
 
-        runBlocking { whenever(repository.getUsersFromLocal()) doReturn local }
-        whenever(local.isEmpty()) doReturn true
+        runBlocking { whenever(repository.getUsersFromLocal()) doReturn users }
+        whenever(users.isEmpty()) doReturn true
 
-        runBlocking { whenever(repository.getUsersFromRemote()) doReturn remote }
-        whenever(remote.isNotEmpty()) doReturn true
+        runBlocking { whenever(repository.getUsersFromRemote()) doReturn users }
+        whenever(users.isNotEmpty()) doReturn true
 
-        runBlocking { whenever(repository.mapperUserResponseToUserEntity(any())) doReturn local }
         runBlocking { whenever(repository.insertUsersToLocal(any())) doReturn usersIds }
 
-        runBlocking { whenever(repository.mapperUserResponseToUser(any())) doReturn users }
         whenever(users.isEmpty()) doReturn false
 
         val result = runBlocking { interactor.getUsers() }
@@ -57,17 +49,14 @@ class PicPayInteractorTest {
 
     @Test
     fun getUsers_WithoutLocal_WithoutRemote_Test() {
-        val local = mock<List<UserEntity>>()
-        val remote = mock<List<UserResponse>>()
         val users = mock<List<User>>()
 
-        runBlocking { whenever(repository.getUsersFromLocal()) doReturn local }
-        whenever(local.isEmpty()) doReturn true
+        runBlocking { whenever(repository.getUsersFromLocal()) doReturn users }
+        whenever(users.isEmpty()) doReturn true
 
-        runBlocking { whenever(repository.getUsersFromRemote()) doReturn remote }
-        whenever(remote.isNotEmpty()) doReturn false
+        runBlocking { whenever(repository.getUsersFromRemote()) doReturn users }
+        whenever(users.isNotEmpty()) doReturn false
 
-        runBlocking { whenever(repository.mapperUserResponseToUser(any())) doReturn users }
         whenever(users.isEmpty()) doReturn true
 
         val result = runBlocking { interactor.getUsers() }

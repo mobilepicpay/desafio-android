@@ -1,6 +1,5 @@
 package com.picpay.desafio.android.interactor
 
-import com.picpay.desafio.android.data.UserResponse
 import com.picpay.desafio.android.repository.PicPayRepository
 
 class PicPayInteractorImpl(
@@ -15,12 +14,12 @@ class PicPayInteractorImpl(
                 val remote = repository.getUsersFromRemote()
 
                 if (remote.isNotEmpty()) {
-                    saveOnCache(remote)
+                    repository.insertUsersToLocal(remote)
                 }
 
-                repository.mapperUserResponseToUser(remote)
+                remote
             } else {
-                repository.mapperUserEntityToUser(local)
+                local
             }
             if (users.isEmpty()) {
                 PicPayState.GetUsers.Empty
@@ -30,10 +29,5 @@ class PicPayInteractorImpl(
         } catch (e: Exception) {
             PicPayState.GetUsers.Error(e)
         }
-    }
-
-    private suspend fun saveOnCache(remote: List<UserResponse>) {
-        val userEntityList = repository.mapperUserResponseToUserEntity(remote)
-        repository.insertUsersToLocal(userEntityList)
     }
 }

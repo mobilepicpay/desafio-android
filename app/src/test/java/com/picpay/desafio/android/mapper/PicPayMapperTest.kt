@@ -20,7 +20,8 @@ class PicPayMapperTest {
         val response = UserResponse(img, name, id, username)
         val users = listOf(response)
 
-        val expectedResult = listOf(User(response.name, response.username, response.img))
+        val expectedResult =
+            listOf(User(response.id, response.name, response.username, response.img))
 
         val result = runBlocking { mapper.userResponseToUser(users) }
         assert(result == expectedResult)
@@ -31,7 +32,7 @@ class PicPayMapperTest {
         val entity = UserEntity(id, name, username, img)
         val users = listOf(entity)
 
-        val expectedResult = listOf(User(entity.name, entity.username, entity.img))
+        val expectedResult = listOf(User(entity.id, entity.name, entity.username, entity.img))
 
         val result = runBlocking { mapper.userEntityToUser(users) }
         assert(result == expectedResult)
@@ -39,13 +40,12 @@ class PicPayMapperTest {
 
     @Test
     fun userResponseToUserEntity_Test() {
-        val response = UserResponse(img, name, id, username)
-        val users = listOf(response)
+        val user = User(id, name, username, img)
+        val users = listOf(user)
 
-        val expectedResult =
-            listOf(UserEntity(response.id, response.name, response.username, response.img))
+        val expectedResult = listOf(UserEntity(user.id, user.name, user.username, user.img))
 
-        val result = runBlocking { mapper.userResponseToUserEntity(users) }
+        val result = runBlocking { mapper.userToUserEntity(users) }
         assert(result == expectedResult)
     }
 }
