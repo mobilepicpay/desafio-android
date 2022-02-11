@@ -7,7 +7,7 @@ class Resource<T> private constructor(
 ) {
 
     enum class Status {
-        SUCCESS, ERROR, EMPTY
+        SUCCESS, ERROR, LOADING
     }
 
     companion object {
@@ -23,8 +23,8 @@ class Resource<T> private constructor(
             )
         }
 
-        fun <T> empty(): Resource<T> {
-            return Resource(Status.EMPTY)
+        fun <T> loading(): Resource<T> {
+            return Resource(Status.LOADING)
         }
     }
 

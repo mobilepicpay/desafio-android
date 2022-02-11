@@ -64,7 +64,10 @@ ext {
             multidex            : "com.android.support:multidex:${versions.multidex}",
             activityKtx         : "androidx.activity:activity-ktx:${versions.activityKtx}",
             picasso             : "com.squareup.picasso:picasso:${versions.picasso}",
-            circleImageView     : "de.hdodenhof:circleimageview:${versions.circleimageview}"
+            circleImageView     : "de.hdodenhof:circleimageview:${versions.circleimageview}",
+            room                : "androidx.room:room-runtime:${versions.androidx.room}",
+            roomCompiler        : "androidx.room:room-compiler:${versions.androidx.room}",
+            roomCoroutines      : "androidx.room:room-ktx:${versions.androidx.room}"
 
     ]
 
