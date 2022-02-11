@@ -1,6 +1,9 @@
+apply plugin: 'com.android.application'
 apply from: "base-build.gradle"
 apply from: "$rootDir/app/environment.gradle"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation modulesDependencies.values()
 }

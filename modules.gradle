@@ -1,5 +1,6 @@
 ext {
     modulesDependencies = [
-//            common       : project(":common"),
+            common  : project(":common"),
+            userlist: project(":userlist"),
     ]
 }
