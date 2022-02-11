@@ -1,3 +1,4 @@
 apply plugin: 'com.android.library'
 apply from: "$rootDir/app/base-build.gradle"
 apply plugin: 'kotlin-android'
+apply from: "$rootDir/app/environment.gradle"
