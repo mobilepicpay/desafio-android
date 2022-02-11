@@ -1,0 +1,16 @@
+android {
+    buildTypes {
+        release {
+            buildConfigField "String", "API_URL", "\"https://hos-api.azure-api.net/main/v3/api/\""
+            buildConfigField "Boolean", "IS_MOCK", "false"
+        }
+        debug {
+            buildConfigField "String", "API_URL", "\"https://hos-api-dev.azure-api.net/main/v3/api/\""
+            buildConfigField "Boolean", "IS_MOCK", "false"
+        }
+        mock {
+            buildConfigField "String", "API_URL", "\"https://hos-api-dev.azure-api.net/main/v3/api/\""
+            buildConfigField "Boolean", "IS_MOCK", "true"
+        }
+    }
+}

@@ -1,0 +1,102 @@
+ext {
+    def versions = [
+            kotlin            : "1.6.10",
+            googlePlayServices: "4.3.8",
+            retrofit          : "2.7.1",
+            retrofitConverter : "2.9.0",
+            koin              : "2.0.1",
+            picasso           : "2.71828",
+            retrofitLogging   : "4.9.0",
+            circleimageview   : "3.0.0",
+            multidex          : "1.0.3",
+            activityKtx       : "1.2.0-alpha03",
+            android           :
+                    [
+                            material: "1.1.0"
+                    ],
+            androidx          :
+                    [
+                            coordinatorlayout: "1.1.0",
+                            lifecycle        : "2.2.0",
+                            appcompat        : "1.3.0",
+                            coreKTX          : "1.2.0",
+                            constrainLayout  : "1.1.3",
+                            room             : "2.4.0"
+                    ],
+            test              :
+                    [
+                            junit           : "4.12",
+                            androidxRunner  : "1.1.1",
+                            androidxRules   : "1.1.0",
+                            androidxEspresso: "3.3.0",
+                            androidxCore    : "1.2.0",
+                            mockitoKotlin   : "2.27.0",
+                            coreTesting     : "2.0.1",
+                            junitExt        : "1.1.2",
+                            espresso        : "3.2.0",
+                            mockk           : "1.9.3",
+                            espressoIntents : "3.3.0",
+                            mockwebserver   : "4.9.0",
+                            fragmentTest    : "1.2.5"
+                    ],
+            kotlinX           :
+                    [
+                            coroutines: "1.4.2"
+                    ]
+    ]
+
+    libDependencies = [
+            material            : "com.google.android.material:material:${versions.android.material}",
+            lifecycleViewModel  : "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.androidx.lifecycle}",
+            appcompat           : "androidx.appcompat:appcompat:${versions.androidx.appcompat}",
+            coreKTX             : "androidx.core:core-ktx:${versions.androidx.coreKTX}",
+            constrainLayout     : "androidx.constraintlayout:constraintlayout:${versions.androidx.constrainLayout}",
+            kotlin              : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
+            retrofit            : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+            retrofitConverter   : "com.squareup.retrofit2:converter-gson:${versions.retrofitConverter}",
+            coroutinesCore      : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.kotlinX.coroutines}",
+            coroutinesAndroid   : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.kotlinX.coroutines}",
+            koinAndroid         : "org.koin:koin-android:${versions.koin}",
+            koinAndroidScope    : "org.koin:koin-androidx-scope:${versions.koin}",
+            koinAndroidViewModel: "org.koin:koin-androidx-viewmodel:${versions.koin}",
+            retrofitLogging     : "com.squareup.okhttp3:logging-interceptor:${versions.retrofitLogging}",
+            coordinatorLayout   : "androidx.coordinatorlayout:coordinatorlayout:${versions.androidx.coordinatorlayout}",
+            multidex            : "com.android.support:multidex:${versions.multidex}",
+            activityKtx         : "androidx.activity:activity-ktx:${versions.activityKtx}",
+            picasso             : "com.squareup.picasso:picasso:${versions.picasso}",
+            circleImageView     : "de.hdodenhof:circleimageview:${versions.circleimageview}"
+
+    ]
+
+    annotationProcessors = [
+            room             : "androidx.room:room-compiler:${versions.androidx.room}",
+            lifecycleCompiler: "androidx.lifecycle:lifecycle-compiler:${versions.androidx.lifecycleCompiler}"
+    ]
+
+    testDependencies = [
+            koinTest    : "org.koin:koin-test:${versions.koin}",
+            coreTesting : "androidx.arch.core:core-testing:${versions.test.coreTesting}",
+            mockk       : "io.mockk:mockk:${versions.test.mockk}",
+            androidxCore: "androidx.test:core:${versions.test.androidxCore}",
+            junit       : "junit:junit:${versions.test.junit}",
+            kotlinX     : "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.kotlinX.coroutines}"
+    ]
+
+    androidTestDependencies = [
+            coreTesting   : "androidx.arch.core:core-testing:${versions.test.coreTesting}",
+            espresso      : "com.android.support.test.espresso:espresso-intents:${versions.test.espressoIntents}",
+            navigationTest: "androidx.navigation:navigation-testing:${versions.androidx.navigation}",
+            mockito       : "org.mockito:mockito-android:${versions.test.mockitoKotlin}"
+    ]
+
+
+    debugTestImplementation = [
+            androidxRunner  : "androidx.test:runner:${versions.test.androidxRunner}",
+            androidxRules   : "androidx.test:rules:${versions.test.androidxRunner}",
+            androidxEspresso: "androidx.test.espresso:espresso-core:${versions.test.androidxEspresso}",
+            extKtx          : "androidx.test.ext:junit:${versions.test.junitExt}",
+            espressoContrib : "androidx.test.espresso:espresso-contrib:${versions.test.espresso}",
+            mockwebserver   : "com.squareup.okhttp3:mockwebserver:${versions.test.mockwebserver}",
+            fragmentTest    : "androidx.fragment:fragment-testing:${versions.test.fragmentTest}"
+    ]
+}
