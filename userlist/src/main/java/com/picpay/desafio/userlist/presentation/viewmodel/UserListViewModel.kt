@@ -20,10 +20,10 @@ class UserListViewModel(
         get() = _userListResponse
 
     init {
-//        getList()
+        getList()
     }
 
-     fun getList() {
+    fun getList() {
         viewModelScope.launch {
             useCase.execute(Unit)
                 .collect {
