@@ -5,9 +5,11 @@ import com.picpay.desafio.userlist.data.dao.UserListDao
 import com.picpay.desafio.userlist.data.service.PicPayService
 import com.picpay.desafio.userlist.domain.model.User
 import com.picpay.desafio.userlist.domain.repository.UserListRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import retrofit2.awaitResponse
 import java.security.InvalidParameterException
 
@@ -23,10 +25,8 @@ class UserListRepositoryImpl(
                 val response = service.getUsers()
                 if(response.isSuccessful){
                     response.body()?.let { newList ->
-                        if(dao.needUpdate(newList)){
-                            dao.saveList(newList)
-                            emit(Resource.success(newList))
-                        }
+                        dao.saveList(newList)
+                        emit(Resource.success(newList))
                     } ?: emit(Resource.error<List<User>>(InvalidParameterException()))
                 } else {
                     emit(Resource.error<List<User>>(Exception(response.errorBody().toString())))
@@ -35,5 +35,5 @@ class UserListRepositoryImpl(
                 emit(Resource.success(it))
             }
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }

@@ -1,16 +1,20 @@
 android {
-    buildTypes {
-        release {
-            buildConfigField "String", "API_URL", "\"https://hos-api.azure-api.net/main/v3/api/\""
+    flavorDimensions "api"
+    productFlavors {
+        prod {
+            buildConfigField "String", "API_URL", "\"https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/\""
             buildConfigField "Boolean", "IS_MOCK", "false"
+            dimension "api"
         }
-        debug {
-            buildConfigField "String", "API_URL", "\"https://hos-api-dev.azure-api.net/main/v3/api/\""
+        homolog {
+            buildConfigField "String", "API_URL", "\"https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/\""
             buildConfigField "Boolean", "IS_MOCK", "false"
+            dimension "api"
         }
         mock {
-            buildConfigField "String", "API_URL", "\"https://hos-api-dev.azure-api.net/main/v3/api/\""
+            buildConfigField "String", "API_URL", "\"https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/\""
             buildConfigField "Boolean", "IS_MOCK", "true"
+            dimension "api"
         }
     }
 }

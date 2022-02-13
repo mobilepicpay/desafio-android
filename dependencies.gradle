@@ -21,7 +21,8 @@ ext {
                             appcompat        : "1.3.0",
                             coreKTX          : "1.2.0",
                             constrainLayout  : "1.1.3",
-                            room             : "2.4.0"
+                            room             : "2.4.0",
+                            lifecycleCompiler: "2.2.0-alpha03"
                     ],
             test              :
                     [
@@ -66,9 +67,7 @@ ext {
             picasso             : "com.squareup.picasso:picasso:${versions.picasso}",
             circleImageView     : "de.hdodenhof:circleimageview:${versions.circleimageview}",
             room                : "androidx.room:room-runtime:${versions.androidx.room}",
-            roomCompiler        : "androidx.room:room-compiler:${versions.androidx.room}",
             roomCoroutines      : "androidx.room:room-ktx:${versions.androidx.room}"
-
     ]
 
     annotationProcessors = [
