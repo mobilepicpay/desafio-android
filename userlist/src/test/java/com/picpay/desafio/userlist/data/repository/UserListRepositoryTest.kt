@@ -75,6 +75,12 @@ class UserListRepositoryTest : AutoCloseKoinTest() {
                 false,
                 data.last().value.isNullOrEmpty()
             )
+
+            Assert.assertEquals(
+                "Assert list is correctly",
+                true,
+                DataHelper.listOfUsers == data.last().value
+            )
         }
     }
 
@@ -93,6 +99,11 @@ class UserListRepositoryTest : AutoCloseKoinTest() {
                 "Assert list is not empty",
                 false,
                 data.last().value?.isNullOrEmpty()
+            )
+            Assert.assertEquals(
+                "Assert list is correctly",
+                true,
+                DataHelper.listOfUsers == data.last().value
             )
         }
     }

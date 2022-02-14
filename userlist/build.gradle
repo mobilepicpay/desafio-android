@@ -3,8 +3,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply from: "$rootDir/app/base-build.gradle"
 
+android{
+    defaultConfig {
+        testInstrumentationRunner "com.picpay.desafio.userlist.utils.rules.AppRunner"
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+    }
+}
 
 dependencies {
     implementation modulesDependencies.common
     kapt annotationProcessors.room
+    androidTestImplementation androidTestDependencies.values()
 }

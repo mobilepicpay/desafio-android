@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.picpay.desafio.userlist">
 
-    <application>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application android:theme="@style/AppTheme">
         <activity android:name="com.picpay.desafio.userlist.presentation.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

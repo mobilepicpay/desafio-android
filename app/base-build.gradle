@@ -32,10 +32,13 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    
 }
 
 dependencies{
     implementation libDependencies.values()
     testImplementation testDependencies.values()
     debugImplementation debugTestImplementation.values()
+    androidTestImplementation androidTestDependencies.values()
 }

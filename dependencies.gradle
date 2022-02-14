@@ -89,7 +89,6 @@ ext {
     androidTestDependencies = [
             coreTesting   : "androidx.arch.core:core-testing:${versions.test.coreTesting}",
             espresso      : "com.android.support.test.espresso:espresso-intents:${versions.test.espressoIntents}",
-            navigationTest: "androidx.navigation:navigation-testing:${versions.androidx.navigation}",
             mockito       : "org.mockito:mockito-android:${versions.test.mockitoKotlin}"
     ]
 
