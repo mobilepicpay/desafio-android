@@ -52,10 +52,11 @@ class MainActivity : AppCompatActivity() {
     private fun handleResponse(response: Resource<List<User>>) {
         when (response.status) {
             Resource.Status.SUCCESS -> {
-                response.value?.let { showList(it) } ?: showEmptyView()
+                response.value?.let { showList(it) }
             }
             Resource.Status.ERROR -> showError()
             Resource.Status.LOADING -> showLoading()
+            Resource.Status.EMPTY -> showEmptyView()
         }
     }
 

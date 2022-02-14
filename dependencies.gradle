@@ -10,6 +10,7 @@ ext {
             circleimageview   : "3.0.0",
             multidex          : "1.0.3",
             activityKtx       : "1.2.0-alpha03",
+            livedataTesting   : "1.2.0",
             android           :
                     [
                             material: "1.1.0"
@@ -76,12 +77,13 @@ ext {
     ]
 
     testDependencies = [
-            koinTest    : "org.koin:koin-test:${versions.koin}",
-            coreTesting : "androidx.arch.core:core-testing:${versions.test.coreTesting}",
-            mockk       : "io.mockk:mockk:${versions.test.mockk}",
-            androidxCore: "androidx.test:core:${versions.test.androidxCore}",
-            junit       : "junit:junit:${versions.test.junit}",
-            kotlinX     : "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.kotlinX.coroutines}"
+            koinTest       : "org.koin:koin-test:${versions.koin}",
+            coreTesting    : "androidx.arch.core:core-testing:${versions.test.coreTesting}",
+            mockk          : "io.mockk:mockk:${versions.test.mockk}",
+            androidxCore   : "androidx.test:core:${versions.test.androidxCore}",
+            junit          : "junit:junit:${versions.test.junit}",
+            kotlinX        : "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.kotlinX.coroutines}",
+            livedataTesting: "com.jraska.livedata:testing-ktx:${versions.livedataTesting}"
     ]
 
     androidTestDependencies = [

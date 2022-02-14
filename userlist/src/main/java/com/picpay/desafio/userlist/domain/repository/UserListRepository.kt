@@ -5,5 +5,7 @@ import com.picpay.desafio.userlist.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserListRepository {
-    suspend fun getUserList(): Flow<Resource<List<User>>>
+    suspend fun getListFromServer(): Flow<Resource<List<User>>>
+    suspend fun getListFromDatabase(): Flow<Resource<List<User>>>
+    suspend fun saveListFromServer(newList:List<User>)
 }
