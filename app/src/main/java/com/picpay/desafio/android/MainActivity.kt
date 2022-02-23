@@ -1,5 +1,6 @@
 package com.picpay.desafio.android
 
+import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -8,6 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.picpay.desafio.android.data.api.PicPayService
+import com.picpay.desafio.android.domain.entities.UserEntity
+import com.picpay.desafio.android.presentation.adapters.UserListAdapter
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,7 +19,16 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity() {
+
+    //https://github.com/rakshit444/news-sample-app/tree/androidX
+    //https://github.com/ngallazzi/rxjava_playground
+    //https://github.com/ngallazzi/cleanarchitectureblueprints
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
@@ -54,8 +67,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         progressBar.visibility = View.VISIBLE
         service.getUsers()
-            .enqueue(object : Callback<List<User>> {
-                override fun onFailure(call: Call<List<User>>, t: Throwable) {
+            .enqueue(object : Callback<List<UserEntity>> {
+                override fun onFailure(call: Call<List<UserEntity>>, t: Throwable) {
                     val message = getString(R.string.error)
 
                     progressBar.visibility = View.GONE
@@ -65,7 +78,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         .show()
                 }
 
-                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                override fun onResponse(call: Call<List<UserEntity>>, response: Response<List<UserEntity>>) {
                     progressBar.visibility = View.GONE
 
                     adapter.users = response.body()!!
