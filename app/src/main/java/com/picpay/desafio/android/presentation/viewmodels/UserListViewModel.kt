@@ -1,7 +1,10 @@
 package com.picpay.desafio.android.presentation.viewmodels
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.picpay.desafio.android.domain.common.Result
+import com.picpay.desafio.android.domain.entities.UserEntity
 import com.picpay.desafio.android.domain.usecases.GetLocalUsersUseCase
 import com.picpay.desafio.android.domain.usecases.GetRemoteUsersUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -14,16 +17,34 @@ class UserListViewModel(
     private val getUsersRemote: GetRemoteUsersUseCase,
 ) : ViewModel() {
 
+    private val _dataLoading = MutableLiveData(false)
+    val dataLoading: LiveData<Boolean> = _dataLoading
+
+    private val _users: MutableLiveData<List<UserEntity>> = MutableLiveData()
+    val users = _users
+
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
+
     fun getUsers() {
+        setLoading(true)
+
         CoroutineScope(Dispatchers.IO).launch {
             val response = getUsersRemote()
             withContext(Dispatchers.Main) {
                 when (response) {
-                    is Result.Success -> println("weeee ha! ${response.data}")
-                    is Result.Error -> println("fail! ${response.exception}")
+                    is Result.Success -> {
+                        _users.value = response.data
+                        setLoading(false)
+                    }
+                    is Result.Error -> {
+                        _error.value = response.exception.message
+                        setLoading(false)
+                    }
                 }
             }
         }
     }
 
+    private fun setLoading(value: Boolean) = _dataLoading.postValue(value)
 }
