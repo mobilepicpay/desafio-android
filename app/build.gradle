@@ -71,8 +71,8 @@ dependencies {
 
     //Retrofit
     implementation Libs.Retrofit.retrofit
-    implementation Libs.Retrofit.rxAdapter
     implementation Libs.Retrofit.gsonConverter
+
     //OkHttp
     implementation Libs.logInterceptor
 
@@ -83,10 +83,6 @@ dependencies {
     implementation Libs.Koin.core
     implementation Libs.Koin.android
     implementation Libs.Koin.viewmodel
-
-    //Rx
-    implementation Libs.RxJava.rxAndroid
-    implementation Libs.RxJava.rxJava
 
     //Coroutines
     implementation Libs.Coroutines.core

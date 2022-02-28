@@ -64,9 +64,8 @@ object Libs {
     }
 
     object Retrofit {
-        private const val version = "2.5.0"
+        private const val version = "2.9.0"
         const val retrofit = "com.squareup.retrofit2:retrofit:$version"
-        const val rxAdapter = "com.squareup.retrofit2:adapter-rxjava2:$version"
         const val gsonConverter = "com.squareup.retrofit2:converter-gson:$version"
     }
 
@@ -76,12 +75,6 @@ object Libs {
         const val android = "org.koin:koin-android:$version"
         const val viewmodel = "org.koin:koin-androidx-viewmodel:$version"
         const val test = "org.koin:koin-test:$version"
-    }
-
-    object RxJava {
-        const val rxJava = "io.reactivex.rxjava2:rxjava:2.2.13"
-        const val rxAndroid = "io.reactivex.rxjava2:rxandroid:2.1.1"
-        const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:2.4.0"
     }
 
     object Test {
