@@ -94,5 +94,6 @@ object Libs {
     const val gson = "com.google.code.gson:gson:2.8.5"
     const val picasso = "com.squareup.picasso:picasso:2.71828"
     const val circleimageview = "de.hdodenhof:circleimageview:3.0.0"
+    const val logInterceptor = "com.squareup.okhttp3:logging-interceptor:4.2.1"
 
 }

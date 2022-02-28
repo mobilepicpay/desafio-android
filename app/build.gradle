@@ -73,6 +73,8 @@ dependencies {
     implementation Libs.Retrofit.retrofit
     implementation Libs.Retrofit.rxAdapter
     implementation Libs.Retrofit.gsonConverter
+    //OkHttp
+    implementation Libs.logInterceptor
 
     //Material Design
     implementation Libs.Google.material
