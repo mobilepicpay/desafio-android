@@ -20,13 +20,15 @@ class UserListViewModel(
     private val _dataLoading = MutableLiveData(false)
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private val _users: MutableLiveData<List<UserEntity>> = MutableLiveData()
-    val users = _users
+    private val _users: MutableLiveData<List<UserEntity>> by lazy {
+        MutableLiveData<List<UserEntity>>().also { getUsers() }
+    }
+    val users = _users as LiveData<List<UserEntity>>
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
-    fun getUsers() {
+    private fun getUsers() {
         setLoading(true)
 
         CoroutineScope(Dispatchers.IO).launch {

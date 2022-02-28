@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.presentation.adapters.UserListAdapter
 import com.picpay.desafio.android.presentation.viewmodels.UserListViewModel
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,15 +21,13 @@ class MainActivity : AppCompatActivity() {
 
         bindView()
         bindObservers()
-        loadUsers()
     }
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var adapter: UserListAdapter
 
-    private val viewModel: UserListViewModel by inject()
-
+    private val viewModel: UserListViewModel by viewModel()
 
     private fun bindView() {
         recyclerView = findViewById(R.id.recyclerView)
@@ -59,7 +57,5 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT).show()
         })
     }
-
-    private fun loadUsers() = viewModel.getUsers()
 
 }
