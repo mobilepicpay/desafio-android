@@ -26,7 +26,7 @@ class GetLocalUsersUseCaseTest : BaseTest() {
 
     @Before
     override fun setUp() {
-        MockKAnnotations.init(this, relaxUnitFun = true)
+        super.setUp()
         useCase = GetLocalUsersUseCase(repository)
     }
 
@@ -35,9 +35,9 @@ class GetLocalUsersUseCaseTest : BaseTest() {
     fun`when usecase has called then return a list of users`() = runBlockingTest {
         every {
            runBlocking { repository.getCachedUsers() }
-        } returns Result.Success(UserResources.getDummyUsers())
+        } returns Result.Success(UserResources.dummyListUserEntity)
 
-        val expected = Result.Success(UserResources.getDummyUsers())
+        val expected = Result.Success(UserResources.dummyListUserEntity)
 
         assertThat(useCase(), CoreMatchers.equalTo(expected))
     }
@@ -46,9 +46,9 @@ class GetLocalUsersUseCaseTest : BaseTest() {
     fun`when usecase has called then return a empty list of users`() = runBlockingTest {
         every {
             runBlocking { repository.getCachedUsers() }
-        } returns Result.Success(UserResources.getEmptyList())
+        } returns Result.Success(UserResources.emptyListUserEntity)
 
-        val expected = Result.Success(UserResources.getEmptyList())
+        val expected = Result.Success(UserResources.emptyListUserEntity)
 
         assertThat(useCase(), CoreMatchers.equalTo(expected))
     }

@@ -24,7 +24,7 @@ class GetRemoteUsersUseCaseTest : BaseTest() {
 
     @Before
     override fun setUp() {
-        MockKAnnotations.init(this, relaxUnitFun = true)
+        super.setUp()
         useCase = GetRemoteUsersUseCase(repository)
     }
 
@@ -33,9 +33,9 @@ class GetRemoteUsersUseCaseTest : BaseTest() {
     fun`when usecase has called then return a list of users`() = runBlockingTest {
         every {
             runBlocking { repository.getRemoteUsers() }
-        } returns Result.Success(UserResources.getDummyUsers())
+        } returns Result.Success(UserResources.dummyListUserEntity)
 
-        val expected = Result.Success(UserResources.getDummyUsers())
+        val expected = Result.Success(UserResources.dummyListUserEntity)
 
         MatcherAssert.assertThat(useCase(), CoreMatchers.equalTo(expected))
     }
@@ -44,9 +44,9 @@ class GetRemoteUsersUseCaseTest : BaseTest() {
     fun`when usecase has called then return a empty list of users`() = runBlockingTest {
         every {
             runBlocking { repository.getRemoteUsers() }
-        } returns Result.Success(UserResources.getEmptyList())
+        } returns Result.Success(UserResources.emptyListUserEntity)
 
-        val expected = Result.Success(UserResources.getEmptyList())
+        val expected = Result.Success(UserResources.emptyListUserEntity)
 
         MatcherAssert.assertThat(useCase(), CoreMatchers.equalTo(expected))
     }
