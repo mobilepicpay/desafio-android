@@ -55,7 +55,7 @@ class GetRemoteUsersUseCaseTest : BaseTest() {
     fun`when usecase has called then return an error`() = runBlockingTest {
         every {
             runBlocking { repository.getRemoteUsers() }
-        } returns Result.Error(UserResources.getDummyException())
+        } returns Result.Error(UserResources.dummyException)
 
         MatcherAssert.assertThat(useCase(), CoreMatchers.instanceOf(Result.Error::class.java))
     }

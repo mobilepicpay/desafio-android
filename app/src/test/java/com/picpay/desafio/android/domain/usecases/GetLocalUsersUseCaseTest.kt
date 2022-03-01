@@ -57,7 +57,7 @@ class GetLocalUsersUseCaseTest : BaseTest() {
     fun`when usecase has called then return an error`() = runBlockingTest {
         every {
             runBlocking { repository.getCachedUsers() }
-        } returns Result.Error(UserResources.getDummyException())
+        } returns Result.Error(UserResources.dummyException)
 
         assertThat(useCase(), CoreMatchers.instanceOf(Result.Error::class.java))
     }
