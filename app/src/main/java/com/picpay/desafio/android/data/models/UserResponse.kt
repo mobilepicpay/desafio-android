@@ -1,12 +1,14 @@
 package com.picpay.desafio.android.data.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.picpay.desafio.android.domain.entities.UserEntity
 
-
+@Entity
 data class UserResponse(
-    @SerializedName("img") val img: String,
-    @SerializedName("name") val name: String,
+    @PrimaryKey(autoGenerate = false)
     @SerializedName("id") val id: Int,
-    @SerializedName("username") val username: String
+    @SerializedName("name") val name: String,
+    @SerializedName("username") val username: String,
+    @SerializedName("img") val img: String
 )

@@ -15,7 +15,7 @@ class UsersRepositoryImpl(
             val response = remoteDatasource.getUsers()
             return if (response.isSuccessful) {
                 val users = response.body()!!
-                localDatasource.saveUsers(UserMapper.mapResponseToDb(users))
+                localDatasource.saveUsers(users)
                 Result.Success(UserMapper.mapResponseToDomain(users))
             } else {
                 Result.Error(Exception("Falha ao recuperar lista de usuarios"))
@@ -28,7 +28,7 @@ class UsersRepositoryImpl(
     override suspend fun getCachedUsers(): Result<List<UserEntity>> {
         return try {
             val response = localDatasource.getUsers()
-            Result.Success(UserMapper.mapDbToDomain(response))
+            Result.Success(UserMapper.mapResponseToDomain(response))
         } catch (e: Exception) {
             Result.Error(e)
         }
