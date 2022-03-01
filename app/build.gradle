@@ -61,7 +61,7 @@ dependencies {
     implementation Libs.AndroidX.recyclerview
     implementation Libs.AndroidX.cardview
     implementation Libs.AndroidX.constraintlayout
-    implementation Libs.AndroidX.Fragment.fragmentKtx
+    //implementation Libs.AndroidX.Fragment.fragmentKtx
 
     // ViewModel and LiveData
     implementation Libs.AndroidX.Lifecycle.extensions
@@ -88,6 +88,7 @@ dependencies {
     implementation Libs.Coroutines.core
     implementation Libs.Coroutines.android
     testImplementation Libs.Coroutines.test
+    androidTestImplementation Libs.Coroutines.test
 
     //Room
     implementation Libs.Room.core
