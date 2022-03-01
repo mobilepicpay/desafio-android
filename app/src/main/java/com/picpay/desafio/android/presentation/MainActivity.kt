@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.presentation.adapters.UserListAdapter
+import com.picpay.desafio.android.presentation.common.EventObserver
 import com.picpay.desafio.android.presentation.viewmodels.UserListViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -53,9 +54,8 @@ class MainActivity : AppCompatActivity() {
             adapter.users = response
         })
 
-        viewModel.error.observe(this, {
+        viewModel.error.observe(this, EventObserver {
             Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT).show()
         })
     }
-
 }

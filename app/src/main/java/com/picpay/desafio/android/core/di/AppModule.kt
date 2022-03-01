@@ -1,33 +1,48 @@
 package com.picpay.desafio.android.core.di
 
+import androidx.room.Room
 import com.picpay.desafio.android.data.api.NetworkModule
+import com.picpay.desafio.android.data.local.AppDatabase
 import com.picpay.desafio.android.data.repository.*
 import com.picpay.desafio.android.domain.repositories.UsersRepository
+import com.picpay.desafio.android.domain.usecases.GetLocalUsersUseCase
 import com.picpay.desafio.android.domain.usecases.GetRemoteUsersUseCase
 import com.picpay.desafio.android.presentation.viewmodels.UserListViewModel
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 
 import org.koin.dsl.module
 
 object AppModule {
 
-    val mRepositoryModules = module {
+    val repositoryModules = module {
         single<UsersRemoteDatasource> { UsersRemoteDatasourceImpl(service = get()) }
-        single<UsersLocalDatasource> { UsersLocalDatasourceImpl() }
+        single<UsersLocalDatasource> { UsersLocalDatasourceImpl(db = get()) }
         single<UsersRepository> { UsersRepositoryImpl(remoteDatasource = get(), localDatasource = get()) }
     }
 
-    val mUseCaseModules = module {
+    val useCaseModules = module {
         factory { GetRemoteUsersUseCase(repository = get()) }
+        factory { GetLocalUsersUseCase(repository = get()) }
     }
 
-    val mNetworkModules = module {
+    val networkModules = module {
         single { NetworkModule().createPicPayApi() }
     }
 
-    val mViewModels = module {
+    val dbModule = module {
+        single { Room.databaseBuilder(
+            androidContext(),
+            AppDatabase::class.java,
+            "desafioandroid-database")
+            .build()
+        }
+        single { get<AppDatabase>().userDao() }
+    }
+
+    val viewModels = module {
         viewModel {
-            UserListViewModel(getUsersRemote = get())
+            UserListViewModel(getUsersRemote = get(), getUsersLocal = get())
         }
     }
 

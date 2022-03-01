@@ -1,10 +1,13 @@
 package com.picpay.desafio.android.data.repository
 
-import com.picpay.desafio.android.data.models.UserResponse
-import retrofit2.Response
+import com.picpay.desafio.android.data.local.UserDao
+import com.picpay.desafio.android.data.models.UserDb
 
-class UsersLocalDatasourceImpl : UsersLocalDatasource {
-    override suspend fun getUsers(): Response<List<UserResponse>> {
-        TODO("Not yet implemented")
+class UsersLocalDatasourceImpl(private val db: UserDao) : UsersLocalDatasource {
+
+    override suspend fun getUsers() = db.getUsers()
+
+    override suspend fun saveUsers(users: List<UserDb>) {
+        users.forEach { db.addUser(it) }
     }
 }

@@ -1,9 +1,9 @@
 package com.picpay.desafio.android.data.repository
 
-import com.picpay.desafio.android.data.models.UserResponse
-import retrofit2.Response
+import com.picpay.desafio.android.data.models.UserDb
 
 
 interface UsersLocalDatasource {
-    suspend fun getUsers() : Response<List<UserResponse>>
+    suspend fun getUsers() : List<UserDb>
+    suspend fun saveUsers(users: List<UserDb>)
 }

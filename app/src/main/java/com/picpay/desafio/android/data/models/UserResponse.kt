@@ -10,16 +10,3 @@ data class UserResponse(
     @SerializedName("id") val id: Int,
     @SerializedName("username") val username: String
 )
-
-object UserMapper {
-    fun mapToDomain(items: List<UserResponse>): List<UserEntity> {
-        return items.map {
-            UserEntity(
-                img = it.img,
-                name = it.name,
-                id = it.id,
-                username = it.username
-            )
-        }
-    }
-}

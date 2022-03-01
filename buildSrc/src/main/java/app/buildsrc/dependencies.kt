@@ -1,7 +1,7 @@
 package app.buildsrc
 
 object Versions {
-    const val compileSdkVersion = 30
+    const val compileSdkVersion = 31
     const val targetSdkVersion = 30
     const val minSdkVersion = 22
     const val buildToolsVersion = "30.0.2"
@@ -75,6 +75,12 @@ object Libs {
         const val android = "org.koin:koin-android:$version"
         const val viewmodel = "org.koin:koin-androidx-viewmodel:$version"
         const val test = "org.koin:koin-test:$version"
+    }
+
+    object Room {
+        private const val version = "2.4.1"
+        const val core = "androidx.room:room-runtime:$version"
+        const val compiler = "androidx.room:room-compiler:$version"
     }
 
     object Test {
