@@ -17,8 +17,8 @@ object UserResources {
         UserEntity("", "baseName", 5, "baseUserName")
     )
 
-    private val emptyListUserResponse = listOf<UserResponse>()
-    private val dummyListUserResponse = listOf(
+    val emptyListUserResponse = listOf<UserResponse>()
+    val dummyListUserResponse = listOf(
         UserResponse(1, "baseName", "baseUserName", ""),
         UserResponse(2, "baseName", "baseUserName", ""),
         UserResponse(3, "baseName", "baseUserName", ""),
