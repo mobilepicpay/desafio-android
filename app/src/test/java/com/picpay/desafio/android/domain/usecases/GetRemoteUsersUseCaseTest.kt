@@ -4,11 +4,9 @@ import com.picpay.desafio.android.BaseTest
 import com.picpay.desafio.android.domain.common.Result
 import com.picpay.desafio.android.domain.repositories.UsersRepository
 import com.picpay.desafio.android.resources.UserResources
-import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
@@ -31,8 +29,8 @@ class GetRemoteUsersUseCaseTest : BaseTest() {
 
     @Test
     fun`when usecase has called then return a list of users`() = runBlockingTest {
-        every {
-            runBlocking { repository.getRemoteUsers() }
+        coEvery {
+            repository.getRemoteUsers()
         } returns Result.Success(UserResources.dummyListUserEntity)
 
         val expected = Result.Success(UserResources.dummyListUserEntity)
@@ -42,8 +40,8 @@ class GetRemoteUsersUseCaseTest : BaseTest() {
 
     @Test
     fun`when usecase has called then return a empty list of users`() = runBlockingTest {
-        every {
-            runBlocking { repository.getRemoteUsers() }
+        coEvery {
+            repository.getRemoteUsers()
         } returns Result.Success(UserResources.emptyListUserEntity)
 
         val expected = Result.Success(UserResources.emptyListUserEntity)
@@ -53,8 +51,8 @@ class GetRemoteUsersUseCaseTest : BaseTest() {
 
     @Test
     fun`when usecase has called then return an error`() = runBlockingTest {
-        every {
-            runBlocking { repository.getRemoteUsers() }
+        coEvery {
+            repository.getRemoteUsers()
         } returns Result.Error(UserResources.dummyException)
 
         MatcherAssert.assertThat(useCase(), CoreMatchers.instanceOf(Result.Error::class.java))

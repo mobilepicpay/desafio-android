@@ -4,8 +4,7 @@ import com.picpay.desafio.android.BaseTest
 import com.picpay.desafio.android.resources.UserResources
 import com.picpay.desafio.android.domain.common.Result
 import com.picpay.desafio.android.domain.repositories.UsersRepository
-import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.coEvery
 import org.hamcrest.MatcherAssert.assertThat
 
 
@@ -33,8 +32,8 @@ class GetLocalUsersUseCaseTest : BaseTest() {
 
     @Test
     fun`when usecase has called then return a list of users`() = runBlockingTest {
-        every {
-           runBlocking { repository.getCachedUsers() }
+        coEvery {
+            repository.getCachedUsers()
         } returns Result.Success(UserResources.dummyListUserEntity)
 
         val expected = Result.Success(UserResources.dummyListUserEntity)
@@ -44,8 +43,8 @@ class GetLocalUsersUseCaseTest : BaseTest() {
 
     @Test
     fun`when usecase has called then return a empty list of users`() = runBlockingTest {
-        every {
-            runBlocking { repository.getCachedUsers() }
+        coEvery {
+            repository.getCachedUsers()
         } returns Result.Success(UserResources.emptyListUserEntity)
 
         val expected = Result.Success(UserResources.emptyListUserEntity)
@@ -55,8 +54,8 @@ class GetLocalUsersUseCaseTest : BaseTest() {
 
     @Test
     fun`when usecase has called then return an error`() = runBlockingTest {
-        every {
-            runBlocking { repository.getCachedUsers() }
+        coEvery {
+            repository.getCachedUsers()
         } returns Result.Error(UserResources.dummyException)
 
         assertThat(useCase(), CoreMatchers.instanceOf(Result.Error::class.java))

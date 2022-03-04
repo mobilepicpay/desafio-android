@@ -3,10 +3,9 @@ package com.picpay.desafio.android.data.repository
 import com.picpay.desafio.android.BaseTest
 import com.picpay.desafio.android.data.api.PicPayApi
 import com.picpay.desafio.android.resources.UserResources
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.assertThat
@@ -27,8 +26,8 @@ class UsersRemoteDatasourceImplTest : BaseTest() {
 
     @Test
     fun`when datasource is called then return a list of users`() = runBlockingTest {
-        every {
-            runBlocking { service.getUsers() }
+        coEvery {
+            service.getUsers()
         } returns UserResources.apiResponseSuccess
 
         assertThat(datasource.getUsers(), CoreMatchers.equalTo(UserResources.apiResponseSuccess))
@@ -36,8 +35,8 @@ class UsersRemoteDatasourceImplTest : BaseTest() {
 
     @Test
     fun`when datasource is called then return an empty list`() = runBlockingTest {
-        every {
-            runBlocking { service.getUsers() }
+        coEvery {
+            service.getUsers()
         } returns UserResources.apiResponseEmpty
 
         assertThat(datasource.getUsers(), CoreMatchers.equalTo(UserResources.apiResponseEmpty))
@@ -45,8 +44,8 @@ class UsersRemoteDatasourceImplTest : BaseTest() {
 
     @Test
     fun`when datasource is called then return an error`() = runBlockingTest {
-        every {
-            runBlocking { service.getUsers() }
+        coEvery {
+            service.getUsers()
         } returns UserResources.apiResponseError
 
         assertThat(datasource.getUsers(), CoreMatchers.equalTo(UserResources.apiResponseError))
