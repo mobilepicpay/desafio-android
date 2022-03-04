@@ -3,7 +3,7 @@ package app.buildsrc
 object Versions {
     const val compileSdkVersion = 31
     const val targetSdkVersion = 30
-    const val minSdkVersion = 22
+    const val minSdkVersion = 24
     const val buildToolsVersion = "30.0.2"
 }
 
@@ -24,10 +24,6 @@ object Libs {
         const val recyclerview = "androidx.recyclerview:recyclerview:1.1.0"
         const val cardview = "androidx.cardview:cardview:1.0.0"
         const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.1"
-        const val multidex = "androidx.multidex:multidex:2.0.1"
-        const val browser = "androidx.browser:browser:1.0.0"
-        const val viewpager2 = "androidx.viewpager2:viewpager2:1.0.0"
-        const val workRuntime = "androidx.work:work-runtime-ktx:2.6.0"
 
         object Lifecycle {
             private const val version = "2.1.0"
@@ -36,24 +32,10 @@ object Libs {
             const val compiler = "androidx.lifecycle:lifecycle-compiler:$version"
             const val support = "androidx.legacy:legacy-support-v4:1.0.0"
         }
-
-        object Navigation {
-            private const val version = "2.3.1"
-            const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
-            const val ui = "androidx.navigation:navigation-ui-ktx:$version"
-            const val safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:$version"
-        }
-
-        object Fragment {
-            private const val version = "1.2.0"
-            const val fragment = "androidx.fragment:fragment:$version"
-            const val fragmentKtx = "androidx.fragment:fragment-ktx:$version"
-        }
-
     }
 
     object Coroutines {
-        private const val version = "1.3.3"
+        private const val version = "1.5.0"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
@@ -87,7 +69,10 @@ object Libs {
         const val junit = "junit:junit:4.12"
         const val mockk = "io.mockk:mockk:1.10.6"
         const val mockwebserver = "com.squareup.okhttp3:mockwebserver:3.14.1"
-        const val arch = "android.arch.core:core-testing:1.1.1"
+        const val arch = "androidx.arch.core:core-testing:2.1.0"
+        const val testRunner = "androidx.test:runner:$1.1.1"
+        const val espresso = "androidx.test.espresso:espresso-core:$3.1.1"
+        const val coreKtxTest = "androidx.test:core-ktx:$1.4.0"
     }
 
     const val gson = "com.google.code.gson:gson:2.8.5"

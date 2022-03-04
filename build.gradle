@@ -9,12 +9,6 @@ buildscript {
         jcenter()
     }
 
-    ext {
-        test_runner_version = '1.1.1'
-        espresso_version = '3.1.1'
-        core_ktx_test_version = "1.2.0"
-    }
-
     dependencies {
         classpath Libs.androidGradlePlugin
         classpath Libs.Kotlin.gradlePlugin

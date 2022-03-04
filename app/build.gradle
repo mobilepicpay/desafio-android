@@ -46,6 +46,13 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -61,7 +68,6 @@ dependencies {
     implementation Libs.AndroidX.recyclerview
     implementation Libs.AndroidX.cardview
     implementation Libs.AndroidX.constraintlayout
-    //implementation Libs.AndroidX.Fragment.fragmentKtx
 
     // ViewModel and LiveData
     implementation Libs.AndroidX.Lifecycle.extensions
@@ -108,7 +114,7 @@ dependencies {
     testImplementation Libs.Test.arch
 
 
-    androidTestImplementation "androidx.test:runner:$test_runner_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-    androidTestImplementation "androidx.test:core-ktx:$core_ktx_test_version"
+    androidTestImplementation Libs.Test.testRunner
+    androidTestImplementation Libs.Test.espresso
+    androidTestImplementation Libs.Test.coreKtxTest
 }
