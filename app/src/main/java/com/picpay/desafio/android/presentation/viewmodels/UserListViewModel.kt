@@ -21,17 +21,15 @@ class UserListViewModel(
     private val _dataLoading = MutableLiveData(false)
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private val _users: MutableLiveData<List<UserEntity>> by lazy {
-        MutableLiveData<List<UserEntity>>().also { getUsers() }
-    }
+    private val _users = MutableLiveData<List<UserEntity>>()
     val users = _users as LiveData<List<UserEntity>>
 
     private val _error = MutableLiveData<Event<String>>()
     val error: LiveData<Event<String>> = _error
 
-    private fun getUsers() {
-        setLoading(true)
 
+    fun getUsers() {
+        setLoading(true)
         viewModelScope.launch(Dispatchers.IO) {
             val response = getUsersRemote()
             withContext(Dispatchers.Main) {

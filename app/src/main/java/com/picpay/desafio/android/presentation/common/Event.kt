@@ -2,6 +2,7 @@ package com.picpay.desafio.android.presentation.common
 
 import androidx.lifecycle.Observer
 
+@Suppress("EqualsOrHashCode")
 open class Event<out T>(private val content: T) {
 
     var hasBeenHandled = false
@@ -23,6 +24,10 @@ open class Event<out T>(private val content: T) {
      * Returns the content, even if it's already been handled.
      */
     fun peekContent(): T = content
+
+    override fun equals(other: Any?): Boolean {
+        return this.content.toString() == (other as Event<*>).content.toString()
+    }
 }
 
 class EventObserver<T>(private val onEventUnhandledContent: (T) -> Unit) : Observer<Event<T>> {

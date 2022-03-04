@@ -22,6 +22,9 @@ class MainActivity : AppCompatActivity() {
 
         bindView()
         bindObservers()
+
+        if (savedInstanceState == null)
+            viewModel.getUsers()
     }
 
     private lateinit var recyclerView: RecyclerView
