@@ -107,13 +107,12 @@ dependencies {
     implementation Libs.picasso
     implementation Libs.circleimageview
 
-
     //Tests dependencies
     testImplementation Libs.Test.junit
     testImplementation Libs.Test.mockk
     testImplementation Libs.Test.arch
-    testImplementation Libs.Koin.test
 
+    androidTestImplementation Libs.Koin.test
     androidTestImplementation Libs.Test.espressoCore
     androidTestImplementation Libs.Test.testCore
     androidTestImplementation Libs.Test.runner

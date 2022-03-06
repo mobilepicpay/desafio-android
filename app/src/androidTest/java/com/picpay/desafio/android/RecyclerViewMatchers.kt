@@ -11,7 +11,7 @@ import org.hamcrest.Matcher
 
 object RecyclerViewMatchers {
 
-    fun atPosition(
+    private fun atPosition(
         position: Int,
         itemMatcher: Matcher<View>
     ) = object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
