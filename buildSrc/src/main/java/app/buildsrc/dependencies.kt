@@ -1,6 +1,7 @@
 package app.buildsrc
 
 object Versions {
+
     const val compileSdkVersion = 31
     const val targetSdkVersion = 30
     const val minSdkVersion = 24
@@ -10,6 +11,10 @@ object Versions {
 object Libs {
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:4.2.0"
+    const val gson = "com.google.code.gson:gson:2.8.5"
+    const val picasso = "com.squareup.picasso:picasso:2.71828"
+    const val circleimageview = "de.hdodenhof:circleimageview:3.0.0"
+    const val logInterceptor = "com.squareup.okhttp3:logging-interceptor:4.2.1"
 
     object Kotlin {
         private const val version = "1.4.20"
@@ -68,16 +73,12 @@ object Libs {
     object Test {
         const val junit = "junit:junit:4.12"
         const val mockk = "io.mockk:mockk:1.10.6"
-        const val mockwebserver = "com.squareup.okhttp3:mockwebserver:3.14.1"
         const val arch = "androidx.arch.core:core-testing:2.1.0"
-        const val testRunner = "androidx.test:runner:$1.1.1"
-        const val espresso = "androidx.test.espresso:espresso-core:$3.1.1"
-        const val coreKtxTest = "androidx.test:core-ktx:$1.4.0"
+
+        const val espressoCore = "androidx.test.espresso:espresso-core:3.4.0"
+        const val testCore = "androidx.test:core-ktx:1.4.0"
+        const val runner = "androidx.test:runner:1.4.0"
+        const val rules = "androidx.test:rules:1.4.0"
+        const val mockwebserver = "com.squareup.okhttp3:mockwebserver:4.0.0"
     }
-
-    const val gson = "com.google.code.gson:gson:2.8.5"
-    const val picasso = "com.squareup.picasso:picasso:2.71828"
-    const val circleimageview = "de.hdodenhof:circleimageview:3.0.0"
-    const val logInterceptor = "com.squareup.okhttp3:logging-interceptor:4.2.1"
-
 }

@@ -34,10 +34,6 @@ android {
         }
     }
 
-    buildFeatures {
-        viewBinding true
-    }
-
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
@@ -51,6 +47,12 @@ android {
         unitTests.returnDefaultValues = true
         unitTests {
             includeAndroidResources = true
+        }
+    }
+
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
 }
@@ -107,14 +109,16 @@ dependencies {
 
 
     //Tests dependencies
-    testImplementation Libs.Koin.test
     testImplementation Libs.Test.junit
     testImplementation Libs.Test.mockk
-    testImplementation Libs.Test.mockwebserver
     testImplementation Libs.Test.arch
+    testImplementation Libs.Koin.test
 
-
-    androidTestImplementation Libs.Test.testRunner
-    androidTestImplementation Libs.Test.espresso
-    androidTestImplementation Libs.Test.coreKtxTest
+    androidTestImplementation Libs.Test.espressoCore
+    androidTestImplementation Libs.Test.testCore
+    androidTestImplementation Libs.Test.runner
+    androidTestImplementation Libs.Test.rules
+    androidTestImplementation(Libs.Test.mockwebserver) {
+        exclude group:"com.squareup.okhttp3", module:"okhttp"
+    }
 }
