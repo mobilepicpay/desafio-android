@@ -3,15 +3,13 @@
 
     <item
         android:id="@+id/user_list_fragment"
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/ic_round_account_circle"
         android:iconTint="@color/colorAccent"
-        android:title="all users"
-        />
+        android:title="Contatos" />
 
     <item
-        android:id="@+id/saved_user_fragment"
-        android:icon="@drawable/ic_launcher_background"
+        android:id="@+id/favorite_user_fragment"
+        android:icon="@drawable/ic_round_account_circle"
         android:iconTint="@color/colorAccent"
-        android:title="all users"
-        />
+        android:title="Favoritos" />
 </menu>

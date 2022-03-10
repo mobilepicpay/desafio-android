@@ -16,10 +16,10 @@
             app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_userListFragment_to_savedUserFragment2"
-            app:destination="@id/saved_user_fragment" />
+            app:destination="@id/favorite_user_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/saved_user_fragment"
-        android:name="com.picpay.desafio.ui.SavedUserFragment"
+        android:id="@+id/favorite_user_fragment"
+        android:name="com.picpay.desafio.ui.FavoriteUserFragment"
         android:label="SavedUserFragment" />
 </navigation>
