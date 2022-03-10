@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/user_list_fragment"
+        android:icon="@drawable/ic_launcher_background"
+        android:iconTint="@color/colorAccent"
+        android:title="all users"
+        />
+
+    <item
+        android:id="@+id/saved_user_fragment"
+        android:icon="@drawable/ic_launcher_background"
+        android:iconTint="@color/colorAccent"
+        android:title="all users"
+        />
+</menu>
