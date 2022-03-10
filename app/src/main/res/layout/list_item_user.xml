@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/picture"
+        android:id="@+id/contact_image"
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:layout_marginStart="24dp"
@@ -21,27 +21,27 @@
         tools:src="@drawable/ic_round_account_circle" />
 
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/contact_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/name"
-        app:layout_constraintStart_toEndOf="@+id/picture"
-        app:layout_constraintTop_toTopOf="@+id/picture"
+        app:layout_constraintBottom_toTopOf="@+id/contact_name"
+        app:layout_constraintStart_toEndOf="@+id/contact_image"
+        app:layout_constraintTop_toTopOf="@+id/contact_image"
         tools:text="\@username" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:textColor="@color/colorDetail"
-        app:layout_constraintBottom_toBottomOf="@+id/picture"
-        app:layout_constraintStart_toStartOf="@+id/username"
-        app:layout_constraintTop_toBottomOf="@+id/username"
+        app:layout_constraintBottom_toBottomOf="@+id/contact_image"
+        app:layout_constraintStart_toStartOf="@+id/contact_username"
+        app:layout_constraintTop_toBottomOf="@+id/contact_username"
         tools:text="Name Surname" />
 
     <ProgressBar
@@ -56,8 +56,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/picture"
-        app:layout_constraintEnd_toEndOf="@+id/picture"
-        app:layout_constraintStart_toStartOf="@+id/picture"
-        app:layout_constraintTop_toTopOf="@+id/picture" />
+        app:layout_constraintBottom_toBottomOf="@+id/contact_image"
+        app:layout_constraintEnd_toEndOf="@+id/contact_image"
+        app:layout_constraintStart_toStartOf="@+id/contact_image"
+        app:layout_constraintTop_toTopOf="@+id/contact_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>
