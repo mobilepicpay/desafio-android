@@ -3,7 +3,6 @@ package com.picpay.desafio.android.repository.remote
 import com.picpay.desafio.android.repository.model.User
 import com.picpay.desafio.android.repository.remote.webclient.PicPayService
 import io.mockk.*
-import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,7 +33,7 @@ class UserRemoteDataSourceImpTest{
             every { body() } returns mockk()
         }
 
-        runBlocking { userRemoteDataSource.getUser(success, failure) }
+        run { userRemoteDataSource.getUser(success, failure) }
 
         verify { userRemoteDataSource.getUser(capture(successSlot), failure) }
     }
@@ -61,7 +60,7 @@ class UserRemoteDataSourceImpTest{
             every { message() } answers {""}
         }
 
-        runBlocking { userRemoteDataSource.getUser(success = success, failure = failure) }
+        run { userRemoteDataSource.getUser(success = success, failure = failure) }
 
         verify { userRemoteDataSource.getUser(success = any(), failure = capture(failureSlot)) }
     }
@@ -87,7 +86,7 @@ class UserRemoteDataSourceImpTest{
             every { message } answers {""}
         }
 
-        runBlocking { userRemoteDataSource.getUser(success, failure) }
+        run { userRemoteDataSource.getUser(success, failure) }
         verify { userRemoteDataSource.getUser(any(), capture(failureSlot)) }
 
     }

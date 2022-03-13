@@ -8,7 +8,6 @@ import com.picpay.desafio.android.repository.remote.UserRemoteDataSource
 import com.picpay.desafio.android.repository.remote.UserRemoteDataSourceImp
 import com.picpay.desafio.android.repository.remote.webclient.PicPayService
 import io.mockk.*
-import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 class UserRepositoryImpTest {
@@ -32,7 +31,7 @@ class UserRepositoryImpTest {
         }
         coEvery { userLocalDataSource.insert(any()) } answers {}
 
-        runBlocking { repository.getUsers(success = sucess, failure = failure) }
+        run { repository.getUsers(success = sucess, failure = failure) }
 
         coVerify { userLocalDataSource.insert(any()) }
         verify { repository.getUsers(success = capture(sucessSlot), failure = any()) }
@@ -50,7 +49,7 @@ class UserRepositoryImpTest {
             secondArg<(String) -> Unit>().invoke("teste")
         }
 
-        runBlocking { repository.getUsers(success = sucess, failure = failure) }
+        run { repository.getUsers(success = sucess, failure = failure) }
 
         verify { repository.getUsers(success = any(), failure = capture(failureSlot)) }
 
