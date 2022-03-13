@@ -67,23 +67,23 @@ class UserRemoteDataSourceImpTest{
     }
 
     @Test
-    fun deve_devolver_falha_quando_api_retornar_falha(){
+    fun deve_devolver_falha_quando_a_conexao_com_a_api_falhar(){
         val success : (List<User>) -> Unit = {}
         val failure : (String) -> Unit = {}
         val failureSlot = slot<(String) -> Unit>()
         failureSlot.captured = failure
 
         val callMock: Call<List<User>> = mockk()
-        val failureMock: Throwable = mockk()
+        val throwableMock: Throwable = mockk()
 
         every { picPayServiceMock.getUsers() } returns callMock
         every { callMock.enqueue(any()) } answers {
             (args[0] as Callback<List<User>>).apply {
-                onFailure(mockk(), failureMock)
+                onFailure(mockk(), throwableMock)
             }
         }
 
-        failureMock.apply {
+        throwableMock.apply {
             every { message } answers {""}
         }
 
