@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".MainActivity">
+    tools:context=".ui.UserListActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/user_list_title"
             style="@style/ScreenTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,17 +27,32 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/user_list_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/list_item_user" />
+
+            <TextView
+                android:id="@+id/user_list_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Lista de contatos vazia"
+                android:textColor="#FFFFFF"
+                android:textSize="16dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/user_list_progress_bar"
+                app:layout_constraintVertical_bias="0.3" />
+
 
             <ProgressBar
                 android:id="@+id/user_list_progress_bar"
@@ -48,10 +63,10 @@
                 android:layout_marginBottom="8dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/recyclerView"
-                app:layout_constraintStart_toStartOf="@+id/recyclerView"
-                app:layout_constraintTop_toTopOf="@+id/recyclerView"
-                app:layout_constraintVertical_bias="0.3" />
+                app:layout_constraintEnd_toEndOf="@+id/user_list_recyclerView"
+                app:layout_constraintStart_toStartOf="@+id/user_list_recyclerView"
+                app:layout_constraintTop_toTopOf="@+id/user_list_recyclerView"
+                app:layout_constraintVertical_bias="0.52" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
