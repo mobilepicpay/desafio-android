@@ -25,6 +25,6 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
       
-    - name: execute tests in unity
-      run: ./gradlew test
+    - name: Run Unit Tests
+      run: ./gradlew clean test
       
