@@ -3,6 +3,7 @@ package com.picpay.desafio.android.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +13,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_user.view.*
 
-class UserListAdapter : RecyclerView.Adapter<UserListAdapter.ArticleViewHolder>() {
+class UserListAdapter : PagingDataAdapter<UserLocal, UserListAdapter.ArticleViewHolder>(differCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         return ArticleViewHolder(
@@ -59,18 +60,17 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.ArticleViewHolder>(
         }
     }
 
+    val differ = AsyncListDiffer(this, differCallback)
+}
 
-    private val differCallback = object : DiffUtil.ItemCallback<UserLocal>() {
+private val differCallback = object : DiffUtil.ItemCallback<UserLocal>() {
 
-        override fun areItemsTheSame(oldItem: UserLocal, newItem: UserLocal): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: UserLocal, newItem: UserLocal): Boolean {
-            return oldItem.equals(newItem)
-        }
-
+    override fun areItemsTheSame(oldItem: UserLocal, newItem: UserLocal): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    val differ = AsyncListDiffer(this, differCallback)
+    override fun areContentsTheSame(oldItem: UserLocal, newItem: UserLocal): Boolean {
+        return oldItem.equals(newItem)
+    }
+
 }
