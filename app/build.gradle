@@ -89,4 +89,15 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$test_runner_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "androidx.test:core-ktx:$core_ktx_test_version"
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+
+    def room_version = "2.4.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:2.4.2"
+    annotationProcessor "androidx.room:room-compiler:2.4.2"
+
+    testImplementation "io.mockk:mockk:1.11.0"
+
+    testImplementation 'org.hamcrest:hamcrest-all:1.3'
 }
