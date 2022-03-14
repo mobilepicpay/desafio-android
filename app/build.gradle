@@ -18,6 +18,7 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        //testInstrumentationRunner "com.picpay.desafio.android.user.MockTestRunner"
     }
     buildTypes {
         debug {}
@@ -104,4 +105,9 @@ dependencies {
 
     def paging_version = "3.0.0"
     implementation("androidx.paging:paging-runtime:$paging_version")
+
+    androidTestImplementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
+
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
 }

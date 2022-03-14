@@ -18,13 +18,14 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private val URL_BASE = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
+const val URL_BASE = "chave"
 private const val NOME_BANCO_DE_DADOS = "user.db"
 
 val retrofitModule = module {
     single<Retrofit> {
+        val property = getProperty<String>(URL_BASE)
         Retrofit.Builder()
-            .baseUrl(URL_BASE)
+            .baseUrl(property)
             .client(get())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
