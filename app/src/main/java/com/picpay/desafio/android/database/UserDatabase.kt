@@ -9,7 +9,4 @@ import com.picpay.desafio.android.repository.model.UserLocal
 abstract class UserDatabase : RoomDatabase()  {
 
     abstract fun userDao() : UserDao
-
-
-
 }

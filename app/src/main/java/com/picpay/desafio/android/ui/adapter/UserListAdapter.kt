@@ -13,15 +13,15 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_user.view.*
 
-class UserListAdapter : PagingDataAdapter<UserLocal, UserListAdapter.ArticleViewHolder>(differCallback) {
+class UserListAdapter : PagingDataAdapter<UserLocal, UserListAdapter.UserListViewHolder>(differCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        return ArticleViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListViewHolder {
+        return UserListViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.list_item_user, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserListViewHolder, position: Int) {
 
         val user = differ.currentList[position]
         holder.bind(user)
@@ -31,7 +31,7 @@ class UserListAdapter : PagingDataAdapter<UserLocal, UserListAdapter.ArticleView
         return differ.currentList.size
     }
 
-    inner class ArticleViewHolder(itemVew: View) : RecyclerView.ViewHolder(itemVew) {
+    inner class UserListViewHolder(itemVew: View) : RecyclerView.ViewHolder(itemVew) {
 
         fun bind(user: UserLocal) {
             showName(user)

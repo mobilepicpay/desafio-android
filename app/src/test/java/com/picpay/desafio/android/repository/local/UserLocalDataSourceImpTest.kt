@@ -13,7 +13,7 @@ class UserLocalDataSourceImpTest {
     private val userLocalDataSourceImp: UserLocalDataSourceImp = UserLocalDataSourceImp(daoMock)
 
     @Test
-    fun deve_devolver_lista_user_local_quando_recebe_lista_user() {
+    fun must_devolver_list_user_local_when_receive_list_user() {
         val userList = arrayListOf(User(img = "", name = "Roberta", id = 1, username = "Maria"))
         val userListLocal = arrayListOf(UserLocal(img = "", name = "Roberta", id = 1, username = "Maria"))
 

@@ -13,7 +13,7 @@ class UserRemoteDataSourceImpTest{
     private val userRemoteDataSource: UserRemoteDataSource = spyk(UserRemoteDataSourceImp(picPayServiceMock))
 
     @Test
-    fun deve_usar_sucesso_quando_api_retornar_sucesso() {
+    fun must_return_success_when_api_return_success() {
         val success: (List<User>) -> Unit = {}
         val successSlot = slot<(List<User>) -> Unit>()
         val failure: (String) -> Unit = {}
@@ -39,7 +39,7 @@ class UserRemoteDataSourceImpTest{
     }
 
     @Test
-    fun deve_notificar_falha_quando_api_retornar_falha() {
+    fun must_return_failure_when_api_return_failure() {
         val success: (List<User>) -> Unit = {}
         val failure: (String) -> Unit = {}
         val failureSlot = slot<(String) -> Unit>()
@@ -66,7 +66,7 @@ class UserRemoteDataSourceImpTest{
     }
 
     @Test
-    fun deve_devolver_falha_quando_a_conexao_com_a_api_falhar(){
+    fun must_devolve_failure_when_the_connection_with_the_api_failure(){
         val success : (List<User>) -> Unit = {}
         val failure : (String) -> Unit = {}
         val failureSlot = slot<(String) -> Unit>()

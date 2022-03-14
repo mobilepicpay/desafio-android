@@ -21,7 +21,7 @@ class UserRepositoryImpTest {
     private val repository: UserRepository =  spyk(UserRepositoryImp(userRemoteDataSource, userLocalDataSource))
 
     @Test
-    fun deve_inserir_lista_quando_api_retornar_sucesso() {
+    fun must_insert_list_when_api_return_success() {
         val sucess: () -> Unit = {}
         val sucessSlot = slot<() -> Unit>()
         val failure: (String) -> Unit = {}
@@ -39,7 +39,7 @@ class UserRepositoryImpTest {
     }
 
     @Test
-    fun deve_notificar_falha_quando_api_retornar_falha() {
+    fun must_notify_failure_when_api_return_failure() {
         val sucess: () -> Unit = {}
         val failure: (String) -> Unit = {}
         val failureSlot = slot<(String) -> Unit>()
