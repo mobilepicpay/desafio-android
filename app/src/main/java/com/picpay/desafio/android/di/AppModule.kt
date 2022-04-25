@@ -2,7 +2,9 @@ package com.picpay.desafio.android.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.picpay.desafio.android.BuildConfig
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -12,6 +14,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 const val BASE_URL_KEY = "BASE_URL_KEY"
 
 val appModule = module {
+    single {
+        HttpLoggingInterceptor().apply {
+            setLevel(
+                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+                else HttpLoggingInterceptor.Level.NONE
+            )
+        }
+    }
     single(named(BASE_URL_KEY)) {
         "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
     }
@@ -21,6 +31,7 @@ val appModule = module {
     single {
         OkHttpClient
             .Builder()
+            .addInterceptor(get<HttpLoggingInterceptor>())
             .build()
     }
     single<Retrofit> {

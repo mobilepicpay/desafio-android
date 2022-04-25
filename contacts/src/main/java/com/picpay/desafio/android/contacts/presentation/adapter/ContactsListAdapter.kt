@@ -9,17 +9,22 @@ import com.picpay.desafio.android.contacts.domain.model.Contact
 
 class ContactsListAdapter : RecyclerView.Adapter<ContactsListItemViewHolder>() {
 
-    var contacts = emptyList<Contact>()
-        set(value) {
-            val result = DiffUtil.calculateDiff(
-                ContactsListDiffCallback(
-                    field,
-                    value
-                )
-            )
-            result.dispatchUpdatesTo(this)
-            field = value
+    private val items = mutableListOf<Contact>()
+
+    override fun getItemCount(): Int {
+        return items.size
+    }
+
+    companion object Diff : DiffUtil.ItemCallback<Contact>() {
+        override fun areItemsTheSame(oldItem: Contact, newItem: Contact): Boolean {
+            return oldItem.id == newItem.id
         }
+
+        override fun areContentsTheSame(oldItem: Contact, newItem: Contact): Boolean {
+            return oldItem == newItem
+        }
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsListItemViewHolder {
         val view = ListItemContactBinding.inflate(LayoutInflater.from(parent.context))
@@ -27,8 +32,12 @@ class ContactsListAdapter : RecyclerView.Adapter<ContactsListItemViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ContactsListItemViewHolder, position: Int) {
-        holder.bind(contacts[position])
+        holder.bind(items.get(position))
     }
 
-    override fun getItemCount(): Int = contacts.size
+    fun submitList(list: List<Contact>) {
+        items.clear()
+        items.addAll(list)
+        notifyDataSetChanged()
+    }
 }

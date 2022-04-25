@@ -31,10 +31,13 @@ class ContactsActivity : BaseActivity() {
 
     private fun observeViewModel() {
         viewModel.viewState.observe(this) { state ->
-            when (state) {
-                is ContactsViewState.ShowError -> showErrorState()
-                is ContactsViewState.ToggleLoading -> toggleLoading(state.isLoading)
-                is ContactsViewState.ShowContacts -> showContactsList(state.contacts)
+            binding.userListProgressBar.isVisible = state.isLoading
+            if (state.hasError) {
+                showErrorState()
+            } else {
+                if (!state.isLoading) {
+                    showContactsList(state.contacts)
+                }
             }
         }
     }
@@ -48,11 +51,8 @@ class ContactsActivity : BaseActivity() {
             .show()
     }
 
-    private fun toggleLoading(isLoading: Boolean) {
-        binding.userListProgressBar.isVisible = isLoading
-    }
-
     private fun showContactsList(list: List<Contact>) {
-        adapter.contacts = list
+        binding.userListProgressBar.isVisible = false
+        adapter.submitList(list)
     }
 }
