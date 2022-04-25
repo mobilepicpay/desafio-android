@@ -27,16 +27,64 @@ ext {
     rxjava_version = "2.2.21"
     rxkotlin_version = "2.4.0"
     rxandroid_version = "2.1.1"
+    recycler_view_version = "1.2.1"
     core_ktx_test_version = "1.2.0"
 
+    kotlinDep = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    lifecycleDeps = [
+            lifecycle_vm: "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version",
+            lifecycle_livedata: "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version",
+            lifecycle_ktx: "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    ]
+    imageDeps = [
+            picasso     : "com.squareup.picasso:picasso:$picasso_version",
+            circle_image: "de.hdodenhof:circleimageview:$circleimageview_version"
+    ]
+
+    rxDeps = [
+            rxjava   : "io.reactivex.rxjava2:rxjava:$rxjava_version",
+            rxkotlin : "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version",
+            rxandroid: "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+    ]
+
+    koinDeps = [
+            koin_core   : "io.insert-koin:koin-core:$koin_version",
+            koin_android: "io.insert-koin:koin-android:$koin_version"
+    ]
+
+    androidDeps = [
+            android_core     : "androidx.core:core-ktx:$core_ktx_version",
+            appcompat        : "androidx.appcompat:appcompat:$appcompat_version",
+            recycler_view    : "androidx.recyclerview:recyclerview:$recycler_view_version",
+            constraint_layout: "androidx.constraintlayout:constraintlayout:$constraintlayout_version",
+            material         : "com.google.android.material:material:$material_version"
+    ]
 
     networkDeps = [
-            gson: "com.google.code.gson:gson:$gson_version",
-            retrofit: "com.squareup.retrofit2:retrofit:$retrofit_version",
-            retrofix_rxadapter: "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version",
+            gson                   : "com.google.code.gson:gson:$gson_version",
+            retrofit               : "com.squareup.retrofit2:retrofit:$retrofit_version",
+            retrofix_rxadapter     : "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version",
             retrofit_gson_converter: "com.squareup.retrofit2:converter-gson:$retrofit_version",
-            http_logging: "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version",
-            okhttp: "com.squareup.okhttp3:okhttp:$okhttp_version",
-            okhttp_mock: "com.squareup.okhttp3:mockwebserver:$okhttp_version"
+            http_logging           : "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version",
+            okhttp                 : "com.squareup.okhttp3:okhttp:$okhttp_version",
+            okhttp_mock            : "com.squareup.okhttp3:mockwebserver:$okhttp_version"
+    ]
+
+    testDeps = [
+            junit             : "junit:junit:$junit_version",
+            mockito_core      : "org.mockito:mockito-core:$mockito_version",
+            mockito_kotlin    : "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version",
+            androidx_test_core: "androidx.arch.core:core-testing:$core_testing_version",
+            koin_test_junit   : "io.insert-koin:koin-test-junit4:$koin_version",
+            koin_test         : "io.insert-koin:koin-test:$koin_version"
+    ]
+
+    androidTestDeps = [
+            androidx_test_runner: "androidx.test:runner:$test_runner_version",
+            espresso_core       : "androidx.test.espresso:espresso-core:$espresso_version",
+            ktx_test_core       : "androidx.test:core-ktx:$core_ktx_test_version",
+            mockito_android     : "org.mockito:mockito-android:$mockito_version",
+            koin_android_test   : "io.insert-koin:koin-test:$koin_version"
     ]
 }
