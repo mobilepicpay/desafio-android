@@ -3,7 +3,7 @@ package com.picpay.desafio.android.contacts.presentation
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.ViewAssertion
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -23,15 +23,10 @@ import com.picpay.desafio.android.contacts.domain.mapper.ContactResponseMapper
 import com.picpay.desafio.android.contacts.domain.model.Contact
 import com.picpay.desafio.android.contacts.domain.usecase.GetUsers
 import com.picpay.desafio.android.contacts.domain.usecase.GetUsersImpl
-import com.picpay.desafio.android.contacts.presentation.RecyclerViewMatchers.checkRecyclerViewItem
 import com.picpay.desafio.android.contacts.presentation.viewmodel.ContactsViewModel
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import okhttp3.mockwebserver.Dispatcher
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
-import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -41,6 +36,9 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import org.koin.test.KoinTest
+import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
 import retrofit2.Response
 import java.lang.reflect.Type
 
@@ -48,23 +46,16 @@ import java.lang.reflect.Type
 class ContactsActivityTest : KoinTest {
 
 
-    private val server = MockWebServer()
-
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
+
+    @Mock
+    lateinit var service: ContactsService
 
     val mockModule = module {
 
         viewModel { ContactsViewModel(get(), get()) }
 
-        single<ContactsService> {
-            object : ContactsService {
-                var type: Type = object : TypeToken<List<ContactResponse>>() {}.type
-                val response = Gson().fromJson<List<ContactResponse>>(body, type)
-                override fun getContacts(): Single<Response<List<ContactResponse>>> {
-                    return Single.just(Response.success(response))
-                }
-            }
-        }
+        single { service }
 
         single<ContactsRepository> {
             ContactsRepositoryImpl(service = get())
@@ -87,6 +78,7 @@ class ContactsActivityTest : KoinTest {
 
     @Before
     fun setup() {
+        MockitoAnnotations.initMocks(this)
         startKoin {
             modules(mockModule)
         }
@@ -99,6 +91,10 @@ class ContactsActivityTest : KoinTest {
 
     @Test
     fun shouldDisplayTitle() {
+        Mockito
+            .`when`(service.getContacts())
+            .thenReturn(Single.just(Response.success(emptyList())))
+
         launchActivity<ContactsActivity>().apply {
             val expectedTitle = context.getString(R.string.title)
 
@@ -111,35 +107,34 @@ class ContactsActivityTest : KoinTest {
 
     @Test
     fun shouldDisplayListItem() {
-        server.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse {
-                return when (request.path) {
-                    "/users" -> successResponse
-                    else -> errorResponse
-                }
-            }
-        }
+        val type: Type = object : TypeToken<List<ContactResponse>>() {}.type
+        val response = Gson().fromJson<List<ContactResponse>>(body, type)
+        val result = Single.just(Response.success(response))
 
-        server.start(serverPort)
+        Mockito
+            .`when`(service.getContacts())
+            .thenReturn(result)
 
         launchActivity<ContactsActivity>().apply {
             onView(withText("@eduardo.santos"))
                 .check(matches(ViewMatchers.isDisplayed()))
         }
+    }
 
-        server.close()
+    @Test
+    fun onErrorShouldShowEmptyRecyclerView() {
+        Mockito
+            .`when`(service.getContacts())
+            .thenReturn(Single.error(Throwable()))
+
+        launchActivity<ContactsActivity>().apply {
+            onView(withId(R.id.contactContainer))
+                .check(doesNotExist())
+        }
     }
 
     companion object {
-        private const val serverPort = 8080
         val body =
             "[{\"id\":1001,\"name\":\"Eduardo Santos\",\"img\":\"https://randomuser.me/api/portraits/men/9.jpg\",\"username\":\"@eduardo.santos\"}]"
-        private val successResponse by lazy {
-            MockResponse()
-                .setResponseCode(200)
-                .setBody(body)
-        }
-
-        private val errorResponse by lazy { MockResponse().setResponseCode(404) }
     }
 }
