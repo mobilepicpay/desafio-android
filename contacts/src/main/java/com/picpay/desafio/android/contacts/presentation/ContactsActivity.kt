@@ -3,35 +3,33 @@ package com.picpay.desafio.android.contacts.presentation
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
 import com.picpay.desafio.android.commons.base.BaseActivity
 import com.picpay.desafio.android.contacts.R
-import com.picpay.desafio.android.contacts.databinding.ActivityContactsBinding
 import com.picpay.desafio.android.contacts.domain.model.Contact
 import com.picpay.desafio.android.contacts.presentation.adapter.ContactsListAdapter
 import com.picpay.desafio.android.contacts.presentation.viewmodel.ContactsViewModel
+import kotlinx.android.synthetic.main.activity_contacts.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ContactsActivity : BaseActivity() {
     override val viewModel by viewModel<ContactsViewModel>()
 
-    private lateinit var binding: ActivityContactsBinding
     private val adapter by lazy { ContactsListAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_contacts)
+        setContentView(R.layout.activity_contacts)
         setupUI()
         observeViewModel()
     }
 
     private fun setupUI() {
-        binding.recyclerView.adapter = adapter
+        recyclerView.adapter = adapter
     }
 
     private fun observeViewModel() {
         viewModel.viewState.observe(this) { state ->
-            binding.userListProgressBar.isVisible = state.isLoading
+            progressBar.isVisible = state.isLoading
             if (state.hasError) {
                 showErrorState()
             } else {
@@ -44,15 +42,15 @@ class ContactsActivity : BaseActivity() {
 
     private fun showErrorState() {
         val message = getString(R.string.error)
-        binding.userListProgressBar.isVisible = false
-        binding.recyclerView.isVisible = false
+        progressBar.isVisible = false
+        recyclerView.isVisible = false
         Toast
             .makeText(this, message, Toast.LENGTH_SHORT)
             .show()
     }
 
     private fun showContactsList(list: List<Contact>) {
-        binding.userListProgressBar.isVisible = false
+        progressBar.isVisible = false
         adapter.submitList(list)
     }
 }
