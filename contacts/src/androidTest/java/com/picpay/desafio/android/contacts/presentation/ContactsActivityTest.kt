@@ -21,8 +21,8 @@ import com.picpay.desafio.android.contacts.data.repository.ContactsRepository
 import com.picpay.desafio.android.contacts.data.repository.ContactsRepositoryImpl
 import com.picpay.desafio.android.contacts.domain.mapper.ContactResponseMapper
 import com.picpay.desafio.android.contacts.domain.model.Contact
-import com.picpay.desafio.android.contacts.domain.usecase.GetUsers
-import com.picpay.desafio.android.contacts.domain.usecase.GetUsersImpl
+import com.picpay.desafio.android.contacts.domain.usecase.GetContacts
+import com.picpay.desafio.android.contacts.domain.usecase.GetContactsImpl
 import com.picpay.desafio.android.contacts.presentation.viewmodel.ContactsViewModel
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -61,8 +61,8 @@ class ContactsActivityTest : KoinTest {
             ContactsRepositoryImpl(service = get())
         }
 
-        single<GetUsers> {
-            GetUsersImpl(mapper = get(), repository = get())
+        single<GetContacts> {
+            GetContactsImpl(mapper = get(), repository = get())
         }
 
         single<Mapper<ContactResponse, Contact>> { ContactResponseMapper() }

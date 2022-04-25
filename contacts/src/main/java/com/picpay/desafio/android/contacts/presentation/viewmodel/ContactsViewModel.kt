@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.picpay.desafio.android.commons.base.BaseViewModel
 import com.picpay.desafio.android.commons.base.SchedulerProvider
-import com.picpay.desafio.android.contacts.domain.usecase.GetUsers
+import com.picpay.desafio.android.contacts.domain.usecase.GetContacts
 import com.picpay.desafio.android.contacts.presentation.ContactsViewState
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 
 class ContactsViewModel(
-    getUsers: GetUsers,
+    getContacts: GetContacts,
     schedulerProvider: SchedulerProvider
 ) : BaseViewModel() {
 
@@ -25,7 +25,7 @@ class ContactsViewModel(
     }
 
     init {
-        getUsers
+        getContacts
             .execute()
             .subscribeOn(schedulerProvider.io)
             .observeOn(schedulerProvider.ui)

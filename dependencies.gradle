@@ -16,6 +16,7 @@ ext {
     junit_version = '4.12'
     mockito_version = '2.27.0'
     mockito_kotlin_version = '2.1.0'
+    mockk_version = '1.12.3'
 
     test_runner_version = '1.1.1'
     espresso_version = '3.1.1'
@@ -75,6 +76,7 @@ ext {
             junit             : "junit:junit:$junit_version",
             mockito_core      : "org.mockito:mockito-core:$mockito_version",
             mockito_kotlin    : "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version",
+            mockk    : "io.mockk:mockk:$mockk_version",
             androidx_test_core: "androidx.arch.core:core-testing:$core_testing_version",
             koin_test_junit   : "io.insert-koin:koin-test-junit4:$koin_version",
             koin_test         : "io.insert-koin:koin-test:$koin_version"

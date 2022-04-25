@@ -6,14 +6,14 @@ import com.picpay.desafio.android.contacts.data.repository.ContactsRepository
 import com.picpay.desafio.android.contacts.domain.model.Contact
 import io.reactivex.Single
 
-interface GetUsers {
+interface GetContacts {
     fun execute(): Single<List<Contact>>
 }
 
-class GetUsersImpl(
+class GetContactsImpl(
     private val mapper: Mapper<ContactResponse, Contact>,
     private val repository: ContactsRepository
-) : GetUsers {
+) : GetContacts {
 
     override fun execute() =
         repository

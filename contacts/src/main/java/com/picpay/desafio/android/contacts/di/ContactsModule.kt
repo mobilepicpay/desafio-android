@@ -7,13 +7,12 @@ import com.picpay.desafio.android.contacts.data.repository.ContactsRepository
 import com.picpay.desafio.android.contacts.data.repository.ContactsRepositoryImpl
 import com.picpay.desafio.android.contacts.domain.mapper.ContactResponseMapper
 import com.picpay.desafio.android.contacts.domain.model.Contact
-import com.picpay.desafio.android.contacts.domain.usecase.GetUsers
-import com.picpay.desafio.android.contacts.domain.usecase.GetUsersImpl
+import com.picpay.desafio.android.contacts.domain.usecase.GetContacts
+import com.picpay.desafio.android.contacts.domain.usecase.GetContactsImpl
 import com.picpay.desafio.android.contacts.presentation.viewmodel.ContactsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
 val contactsModule = module {
     viewModel { ContactsViewModel(get(), get()) }
@@ -26,8 +25,8 @@ val contactsModule = module {
         ContactsRepositoryImpl(get())
     }
 
-    single<GetUsers> {
-        GetUsersImpl(get(), get())
+    single<GetContacts> {
+        GetContactsImpl(get(), get())
     }
 
     single<Mapper<ContactResponse, Contact>> { ContactResponseMapper() }
