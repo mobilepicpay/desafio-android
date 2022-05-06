@@ -34,6 +34,8 @@ dependencies {
     implementation(libs.androidX.core.ktx)
     api(libs.bundles.retrofit)
 
+    implementation(libs.coroutines.core)
+
     implementation(libs.hilt.core)
     kapt(libs.hilt.compiler)
 }

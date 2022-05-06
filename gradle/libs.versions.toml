@@ -18,6 +18,7 @@ retrofit = "2.9.0"
 accompanist = "0.24.7-alpha"
 gradleUpdate = "0.42.0"
 detekt = "1.18.1"
+hiltcompose = "1.0.0"
 
 [libraries]
 androidX-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidXCore" }
@@ -45,6 +46,7 @@ coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ve
 
 hilt-core = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltcompose" }
 
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }

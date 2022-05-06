@@ -61,6 +61,7 @@ dependencies {
     // Hilt
     implementation(libs.hilt.core)
     kapt(libs.hilt.compiler)
+    implementation(libs.hilt.compose)
 
     // Compose
     implementation(libs.compose.activty)
