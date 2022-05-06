@@ -4,8 +4,8 @@ static def isLinuxOrMacOs() {
 }
 
 task copyGitHooks(type: Copy) {
-    description "Copies the git hooks from ${rootDir}/binar-common-config-android/hooks to the .git folder."
-    from("${rootDir}/binar-common-config-android/hooks/") {
+    description "Copies the git hooks from ${rootDir}/hooks to the .git folder."
+    from("${rootDir}/hooks/") {
         include '**/*.sh'
         rename '(.*).sh', '$1'
     }
@@ -17,17 +17,11 @@ task installGitHooks(type: Exec) {
     description "Installs the pre-commit git hooks from ${rootDir}/hooks."
     group 'git hooks'
     workingDir rootDir
-            commandLine 'chmod'
+    commandLine 'chmod'
     args '-R', '+x', '.git/hooks/'
     dependsOn copyGitHooks
-            onlyIf { isLinuxOrMacOs() }
+    onlyIf { isLinuxOrMacOs() }
     doLast {
         println('Git hook installed successfully.')
     }
-}
-
-afterEvaluate {
-    // We install the hook at the first occasion
-    tasks['clean'].dependsOn installGitHooks
-            tasks['assemble'].dependsOn installGitHooks
 }

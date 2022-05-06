@@ -1,3 +1,4 @@
+apply("$rootDir/hooks.gradle")
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
 
@@ -18,6 +19,6 @@ plugins {
     id("org.jetbrains.kotlin.android") version (kotlinVersion) apply (false)
     id("org.jetbrains.kotlin.jvm") version (kotlinVersion) apply (false)
     id("com.github.ben-manes.versions") version (gradleUpdate)
-    id("io.gitlab.arturbosch.detekt") version(detekt)
+    id("io.gitlab.arturbosch.detekt") version (detekt)
 
 }
