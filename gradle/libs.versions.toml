@@ -17,6 +17,7 @@ mockk = "1.12.3"
 retrofit = "2.9.0"
 accompanist = "0.24.7-alpha"
 gradleUpdate = "0.42.0"
+detekt = "1.18.1"
 
 [libraries]
 androidX-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidXCore" }

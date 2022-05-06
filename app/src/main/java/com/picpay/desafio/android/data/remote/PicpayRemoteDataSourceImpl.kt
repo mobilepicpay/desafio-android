@@ -10,6 +10,7 @@ internal class PicpayRemoteDataSourceImpl @Inject constructor(
 ) : PicpayRemoteDatasource {
 
     override suspend fun getUsers(): Flow<List<UserResponse>> {
+        api.getUsers()
         TODO("Not yet implemented")
     }
 
