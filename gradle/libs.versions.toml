@@ -1,0 +1,59 @@
+[versions]
+kotlin = "1.6.20"
+agp = "7.1.2"
+lifecycle = "2.4.1"
+androidXCore = "1.7.0"
+compose = "1.2.0-alpha08"
+composeActivity = "1.6.0-alpha03"
+constraintLayout = "1.0.0"
+hilt = "2.41"
+coroutines = "1.6.0"
+junit = "4.13.2"
+material = "1.7.0-alpha01"
+appcompat = "1.6.0-alpha03"
+splashscreen = "1.0.0-beta02"
+truth = "1.1.3"
+mockk = "1.12.3"
+retrofit = "2.9.0"
+accompanist = "0.24.7-alpha"
+gradleUpdate = "0.42.0"
+
+[libraries]
+androidX-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidXCore" }
+androidX-lifecycle-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidX-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
+
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
+compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+compose-constraintlayout = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintLayout" }
+compose-activty = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
+compose-debug-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-debug-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
+compose-androidtest-junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
+
+junit = { module = "junit:junit", version.ref = "junit" }
+truth = { module = "com.google.truth:truth", version.ref = "truth" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+
+material = { module = "com.google.android.material:material", version.ref = "material" }
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+
+hilt-core = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+
+retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+
+accompanist-insets = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+
+[bundles]
+compose = ["compose-ui", "compose-material", "compose-preview"]
+accompanist = ["accompanist-insets"]
+commom-ui = ["material", "appcompat"]
+compose-debug = ["compose-debug-tooling", "compose-debug-manifest"]
+testing-unit = ["junit", "truth", "mockk"]
+retrofit = ["retrofit-core", "retrofit-gson"]
