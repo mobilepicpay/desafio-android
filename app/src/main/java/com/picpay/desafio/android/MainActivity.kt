@@ -1,75 +1,38 @@
 package com.picpay.desafio.android
 
-import android.view.View
-import android.widget.ProgressBar
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.picpay.desafio.android.core_ui.theme.PicpayTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var progressBar: ProgressBar
-    private lateinit var adapter: UserListAdapter
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        installSplashScreen()
+        setContent {
 
-    private val url = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
+            PicpayTheme {
+                val systemUi = rememberSystemUiController()
+                val colors = MaterialTheme.colors
 
-    private val gson: Gson by lazy { GsonBuilder().create() }
-
-    private val okHttp: OkHttpClient by lazy {
-        OkHttpClient.Builder()
-            .build()
-    }
-
-    private val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(url)
-            .client(okHttp)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-    }
-
-    private val service: PicPayService by lazy {
-        retrofit.create(PicPayService::class.java)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        recyclerView = findViewById(R.id.recyclerView)
-        progressBar = findViewById(R.id.user_list_progress_bar)
-
-        adapter = UserListAdapter()
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        progressBar.visibility = View.VISIBLE
-        service.getUsers()
-            .enqueue(object : Callback<List<User>> {
-                override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                    val message = getString(R.string.error)
-
-                    progressBar.visibility = View.GONE
-                    recyclerView.visibility = View.GONE
-
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
-                        .show()
+                SideEffect {
+                    systemUi.setStatusBarColor(
+                        color = colors.primary
+                    )
                 }
 
-                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                    progressBar.visibility = View.GONE
-
-                    adapter.users = response.body()!!
-                }
-            })
+                Text("Hello There")
+            }
+        }
     }
+
 }
