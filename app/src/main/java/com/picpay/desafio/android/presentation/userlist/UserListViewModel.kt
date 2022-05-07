@@ -28,7 +28,7 @@ internal class UserListViewModel @Inject constructor(
     }
 
     private fun getUsers() {
-        viewModelScope.launch() {
+        viewModelScope.launch(dispatcher) {
             userInteractor.getUsers().collect { response ->
                 response.handleResult(
                     onSuccess = { users ->
