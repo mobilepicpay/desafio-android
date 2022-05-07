@@ -71,6 +71,7 @@ dependencies {
 
     // Testing
     testImplementation(libs.bundles.testing.unit)
+    testImplementation(libs.coroutines.test)
 
 }
 
