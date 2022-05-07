@@ -1,6 +1,13 @@
 package com.picpay.desafio.android.presentation.userlist
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
@@ -50,7 +57,7 @@ private fun UserListStateContent(
 ) {
     when (state) {
         is UserListState.Loading -> UserListLoading(modifier = Modifier.fillMaxSize())
-        is UserListState.Error -> UserListError(modifier = Modifier.fillMaxSize())
+        is UserListState.Error -> UserListError()
         is UserListState.Ready -> UserListReady(
             users = state.users,
             modifier = Modifier.fillMaxSize()
@@ -89,8 +96,6 @@ private fun UserListReady(
 }
 
 @Composable
-private fun UserListError(
-    modifier: Modifier = Modifier
-) {
+private fun UserListError() {
     // Figure this later
 }
