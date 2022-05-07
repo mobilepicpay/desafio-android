@@ -19,6 +19,7 @@ accompanist = "0.24.7-alpha"
 gradleUpdate = "0.42.0"
 detekt = "1.18.1"
 hiltcompose = "1.0.0"
+coil = "2.0.0-rc03"
 
 [libraries]
 androidX-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidXCore" }
@@ -33,6 +34,7 @@ compose-activty = { module = "androidx.activity:activity-compose", version.ref =
 compose-debug-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-debug-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 compose-androidtest-junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
+compose-coil = {module = "io.coil-kt:coil-compose", version.ref = "coil"}
 
 junit = { module = "junit:junit", version.ref = "junit" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }

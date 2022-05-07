@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.compose.activty)
     debugImplementation(libs.bundles.compose.debug)
     implementation(libs.accompanist.insets)
+    implementation(libs.compose.coil)
 
     // Testing
     testImplementation(libs.bundles.testing.unit)

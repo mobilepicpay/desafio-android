@@ -73,10 +73,14 @@ private fun UserListReady(
     users: List<UserPresentable>
 ) {
     LazyColumn(
-        modifier = modifier
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(users) { user ->
-            UserCard(user = user)
+            UserCard(
+                modifier = Modifier.fillMaxWidth(),
+                user = user
+            )
         }
         item {
             Spacer(Modifier.height(20.dp))

@@ -11,7 +11,7 @@ internal data class User(
 
 internal fun User.mapToUserPresentable() = UserPresentable(
     img = img,
-    name = if (name.isEmpty()) name else "-",
+    name = name.ifEmpty { "-" },
     id = id,
-    username = if (username.isEmpty()) username else "-"
+    username = username.ifEmpty { "-" }
 )
