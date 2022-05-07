@@ -11,6 +11,8 @@ import java.util.concurrent.CancellationException
 
 object RetrofitClient {
 
+    const val UNEXPECTED_ERROR = "Unexpected Network Error"
+
     /**
      * Builds a Retrofit client given a Retrofit requests Interface using the given baseUrl and OkHttpClient
      * @param baseUrl Base url to be used in the network requests
@@ -49,7 +51,7 @@ object RetrofitClient {
                     )
                     else -> Response.Error(
                         NetworkError(
-                            errorMessage = "Unexpected Network Error",
+                            errorMessage = UNEXPECTED_ERROR,
                             errorCode = 500
                         )
                     )
