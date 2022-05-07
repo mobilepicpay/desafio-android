@@ -38,6 +38,8 @@ dependencies {
 
     implementation(libs.hilt.core)
     kapt(libs.hilt.compiler)
+
+    implementation(libs.bundles.testing.unit)
 }
 
 kapt {
