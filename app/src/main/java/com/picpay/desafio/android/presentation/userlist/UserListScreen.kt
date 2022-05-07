@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -19,10 +20,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.picpay.desafio.android.MainActivity
+import com.picpay.desafio.android.R
 import com.picpay.desafio.android.presentation.model.UserPresentable
 import com.picpay.desafio.android.presentation.userlist.components.UserCard
 
@@ -45,7 +48,10 @@ fun UserListScreen() {
                 )
             )
             Spacer(modifier = Modifier.height(15.dp))
-            UserListStateContent(state = viewModel.screenState.collectAsState().value)
+            UserListStateContent(
+                state = viewModel.screenState.collectAsState().value,
+                tryAgain = { viewModel.retryRequest() }
+            )
         }
 
     }
@@ -53,11 +59,12 @@ fun UserListScreen() {
 
 @Composable
 private fun UserListStateContent(
+    tryAgain: () -> Unit,
     state: UserListState
 ) {
     when (state) {
         is UserListState.Loading -> UserListLoading(modifier = Modifier.fillMaxSize())
-        is UserListState.Error -> UserListError()
+        is UserListState.Error -> UserListError(tryAgain)
         is UserListState.Ready -> UserListReady(
             users = state.users,
             modifier = Modifier.fillMaxSize()
@@ -96,6 +103,21 @@ private fun UserListReady(
 }
 
 @Composable
-private fun UserListError() {
-    // Figure this later
+private fun UserListError(
+    tryAgain: () -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(stringResource(id = R.string.error))
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = tryAgain
+        ) {
+            Text(stringResource(id = R.string.try_again))
+        }
+
+    }
 }

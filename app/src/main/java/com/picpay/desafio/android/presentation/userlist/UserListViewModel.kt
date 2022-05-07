@@ -41,4 +41,8 @@ internal class UserListViewModel @Inject constructor(
         }
     }
 
+    fun retryRequest() {
+        getUsers()
+    }
+
 }
