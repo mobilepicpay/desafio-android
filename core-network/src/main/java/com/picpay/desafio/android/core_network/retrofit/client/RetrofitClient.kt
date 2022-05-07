@@ -2,6 +2,7 @@ package com.picpay.desafio.android.core_network.retrofit.client
 
 import com.picpay.desafio.android.core_network.models.NetworkError
 import com.picpay.desafio.android.core_network.models.Response
+import kotlinx.coroutines.flow.FlowCollector
 import okhttp3.OkHttpClient
 import retrofit2.HttpException
 import retrofit2.Retrofit
@@ -33,26 +34,27 @@ object RetrofitClient {
      * @param request Suspend function used to make the HTTP request
      * @throws CancellationException When parent coroutine is cancelled
      * */
-    suspend fun <T> makeCall(request: suspend () -> T): Response<T> {
-        return try {
-            Response.Success(request())
-        } catch (e: Throwable) {
-            when (e) {
-                is CancellationException -> throw e
-                is HttpException -> Response.Error(
-                    NetworkError(
-                        errorMessage = e.message(),
-                        errorCode = e.code()
+    suspend fun <T> FlowCollector<Response<T>>.makeCall(request: suspend () -> T) {
+        emit(
+            try {
+                Response.Success(request())
+            } catch (e: Throwable) {
+                when (e) {
+                    is CancellationException -> throw e
+                    is HttpException -> Response.Error(
+                        NetworkError(
+                            errorMessage = e.message(),
+                            errorCode = e.code()
+                        )
                     )
-                )
-                else -> Response.Error(
-                    NetworkError(
-                        errorMessage = "Unexpected Network Error",
-                        errorCode = 500
+                    else -> Response.Error(
+                        NetworkError(
+                            errorMessage = "Unexpected Network Error",
+                            errorCode = 500
+                        )
                     )
-                )
+                }
             }
-        }
-
+        )
     }
 }

@@ -5,8 +5,7 @@ import retrofit2.http.GET
 
 internal interface PicpayApi {
 
-    // This Endpoint is not a subdomain of the base url??
-    @GET("")
+    @GET("users")
     suspend fun getUsers(): List<UserResponse>
 
 }

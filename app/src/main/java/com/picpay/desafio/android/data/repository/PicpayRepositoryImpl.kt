@@ -1,5 +1,6 @@
 package com.picpay.desafio.android.data.repository
 
+import com.picpay.desafio.android.core_network.models.Response
 import com.picpay.desafio.android.data.datasource.PicpayRemoteDatasource
 import com.picpay.desafio.android.data.model.mapToUser
 import com.picpay.desafio.android.domain.models.User
@@ -12,7 +13,14 @@ internal class PicpayRepositoryImpl @Inject constructor(
     private val datasource: PicpayRemoteDatasource
 ) : PicpayRepository {
 
-    override suspend fun getUsers(): Flow<List<User>> =
-        datasource.getUsers().map { users -> users.map { it.mapToUser() } }
+    override suspend fun getUsers(): Flow<Response<List<User>>> =
+        datasource.getUsers().map { response ->
+            response.mapResponse { users ->
+                // Filtering users with null id
+                users
+                    .filter { user -> user.id != null }
+                    .map { userData -> userData.mapToUser() }
+            }
+        }
 
 }
