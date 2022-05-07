@@ -8,7 +8,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.picpay.desafio.android.core_ui.theme.PicpayTheme
-import com.picpay.desafio.android.presentation.UserListScreen
+import com.picpay.desafio.android.presentation.userlist.UserListScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

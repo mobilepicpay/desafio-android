@@ -16,7 +16,10 @@ internal class PicpayRepositoryImpl @Inject constructor(
     override suspend fun getUsers(): Flow<Response<List<User>>> =
         datasource.getUsers().map { response ->
             response.mapResponse { users ->
-                users.map { userData -> userData.mapToUser() }
+                // Filtering users with null id
+                users
+                    .filter { user -> user.id != null }
+                    .map { userData -> userData.mapToUser() }
             }
         }
 

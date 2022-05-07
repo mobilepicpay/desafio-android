@@ -68,6 +68,9 @@ dependencies {
     debugImplementation(libs.bundles.compose.debug)
     implementation(libs.accompanist.insets)
 
+    // Testing
+    testImplementation(libs.bundles.testing.unit)
+
 }
 
 kapt {

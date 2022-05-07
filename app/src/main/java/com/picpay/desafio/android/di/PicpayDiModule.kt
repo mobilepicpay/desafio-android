@@ -6,6 +6,8 @@ import com.picpay.desafio.android.data.remote.PicpayApi
 import com.picpay.desafio.android.data.remote.PicpayRemoteDataSourceImpl
 import com.picpay.desafio.android.data.repository.PicpayRepositoryImpl
 import com.picpay.desafio.android.domain.repository.PicpayRepository
+import com.picpay.desafio.android.domain.usecase.UsersInteractor
+import com.picpay.desafio.android.domain.usecase.UsersUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,6 +33,11 @@ internal object PicpayDiModule {
     @Provides
     fun providePicpayRepository(datasource: PicpayRemoteDatasource): PicpayRepository {
         return PicpayRepositoryImpl(datasource)
+    }
+
+    @Provides
+    fun provideUserUseCase(repository: PicpayRepository): UsersInteractor {
+        return UsersUseCase(repository)
     }
 
 }
