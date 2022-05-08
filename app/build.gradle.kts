@@ -62,6 +62,9 @@ dependencies {
     implementation(libs.hilt.core)
     kapt(libs.hilt.compiler)
     implementation(libs.hilt.compose)
+    // Hilt Test
+    androidTestImplementation(libs.hilt.test)
+    kaptAndroidTest(libs.hilt.compiler)
 
     // Compose
     implementation(libs.compose.activty)
@@ -73,6 +76,7 @@ dependencies {
     testImplementation(libs.bundles.testing.unit)
     testImplementation(libs.coroutines.test)
     testImplementation(libs.turbine)
+    androidTestImplementation(libs.compose.androidtest.junit)
 
 }
 

@@ -73,7 +73,7 @@ private fun UserListStateContent(
 }
 
 @Composable
-fun UserListLoading(
+private fun UserListLoading(
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier, contentAlignment = Alignment.Center) {

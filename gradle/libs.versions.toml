@@ -52,6 +52,7 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 hilt-core = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltcompose" }
+hilt-test = {module = "com.google.dagger:hilt-android-testing", version.ref = "hilt"}
 
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
