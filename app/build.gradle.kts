@@ -16,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.picpay.desafio.android.utils.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -76,7 +76,7 @@ dependencies {
     testImplementation(libs.bundles.testing.unit)
     testImplementation(libs.coroutines.test)
     testImplementation(libs.turbine)
-    androidTestImplementation(libs.compose.androidtest.junit)
+    androidTestImplementation(libs.bundles.testing.ui)
 
 }
 
@@ -93,4 +93,8 @@ detekt {
 
     // Specifying a baseline file. All findings stored in this file in subsequent runs of detekt.
     baseline = file("path/to/baseline.xml")
+}
+
+hilt {
+    enableTransformForLocalTests = true
 }

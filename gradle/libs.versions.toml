@@ -21,11 +21,14 @@ detekt = "1.18.1"
 hiltcompose = "1.0.0"
 coil = "2.0.0-rc03"
 turbine = "0.8.0"
+androidXTest = "1.4.0"
 
 [libraries]
 androidX-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidXCore" }
 androidX-lifecycle-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidX-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
+androidX-test-runner = {module = "androidx.test:runner", version.ref = "androidXTest"}
+androidX-test-rules = {module = "androidx.test:rules", version.ref = "androidXTest"}
 
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
@@ -65,4 +68,5 @@ accompanist = ["accompanist-insets"]
 commom-ui = ["material", "appcompat"]
 compose-debug = ["compose-debug-tooling", "compose-debug-manifest"]
 testing-unit = ["junit", "truth", "mockk"]
+testing-ui = ["androidX-test-runner", "androidX-test-rules", "compose-androidtest-junit"]
 retrofit = ["retrofit-core", "retrofit-gson"]

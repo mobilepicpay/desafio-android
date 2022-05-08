@@ -20,6 +20,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -27,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.picpay.desafio.android.MainActivity
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.presentation.model.UserPresentable
+import com.picpay.desafio.android.presentation.userlist.UserListTestTag.USER_LAZY_COLUMN
 import com.picpay.desafio.android.presentation.userlist.components.UserCard
 
 @Composable
@@ -87,7 +89,7 @@ private fun UserListReady(
     users: List<UserPresentable>
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.testTag(USER_LAZY_COLUMN),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(users) { user ->
