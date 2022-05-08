@@ -1,7 +1,7 @@
-package com.picpay.desafio.android.core_network.retrofit.client
+package com.picpay.desafio.android.coreNetwork.retrofit.client
 
-import com.picpay.desafio.android.core_network.models.NetworkError
-import com.picpay.desafio.android.core_network.models.Response
+import com.picpay.desafio.android.coreNetwork.models.NetworkError
+import com.picpay.desafio.android.coreNetwork.models.Response
 import kotlinx.coroutines.flow.FlowCollector
 import okhttp3.OkHttpClient
 import retrofit2.HttpException
@@ -16,7 +16,8 @@ object RetrofitClient {
     /**
      * Builds a Retrofit client given a Retrofit requests Interface using the given baseUrl and OkHttpClient
      * @param baseUrl Base url to be used in the network requests
-     * @param httpClient Custom HttpClient to add interceptors or other behaviors to the Retrofit Client, if no client is passed the default builder will be used
+     * @param httpClient Custom HttpClient to add interceptors or other behaviors to the Retrofit Client,
+     * if no client is passed the default builder will be used
      * */
     inline fun <reified T> makeService(
         baseUrl: String,
@@ -32,15 +33,17 @@ object RetrofitClient {
     }
 
     /**
-     * Receives a retrofit suspend function and return the request's result. Throws cancellation exception if the parent coroutine is cancelled.
+     * Receives a retrofit suspend function and return the request's result.
+     * Throws cancellation exception if the parent coroutine is cancelled.
      * @param request Suspend function used to make the HTTP request
      * @throws CancellationException When parent coroutine is cancelled
      * */
+    @Suppress("TooGenericExceptionCaught")
     suspend fun <T> FlowCollector<Response<T>>.makeCall(request: suspend () -> T) {
         emit(
             try {
                 Response.Success(request())
-            } catch (e: Throwable) {
+            } catch (e: Exception) {
                 when (e) {
                     is CancellationException -> throw e
                     is HttpException -> Response.Error(

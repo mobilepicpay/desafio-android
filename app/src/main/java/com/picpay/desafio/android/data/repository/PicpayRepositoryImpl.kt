@@ -1,6 +1,6 @@
 package com.picpay.desafio.android.data.repository
 
-import com.picpay.desafio.android.core_network.models.Response
+import com.picpay.desafio.android.coreNetwork.models.Response
 import com.picpay.desafio.android.data.datasource.PicpayRemoteDatasource
 import com.picpay.desafio.android.data.model.mapToUser
 import com.picpay.desafio.android.domain.models.User

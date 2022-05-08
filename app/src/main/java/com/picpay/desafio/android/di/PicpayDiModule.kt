@@ -1,6 +1,6 @@
 package com.picpay.desafio.android.di
 
-import com.picpay.desafio.android.core_network.retrofit.client.RetrofitClient
+import com.picpay.desafio.android.coreNetwork.retrofit.client.RetrofitClient
 import com.picpay.desafio.android.data.datasource.PicpayRemoteDatasource
 import com.picpay.desafio.android.data.remote.PicpayApi
 import com.picpay.desafio.android.data.remote.PicpayRemoteDataSourceImpl

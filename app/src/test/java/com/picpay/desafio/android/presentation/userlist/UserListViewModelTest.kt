@@ -1,8 +1,8 @@
 package com.picpay.desafio.android.presentation.userlist
 
 import com.google.common.truth.Truth
-import com.picpay.desafio.android.core_network.models.NetworkError
-import com.picpay.desafio.android.core_network.models.Response
+import com.picpay.desafio.android.coreNetwork.models.NetworkError
+import com.picpay.desafio.android.coreNetwork.models.Response
 import com.picpay.desafio.android.domain.usecase.UsersInteractor
 import io.mockk.coEvery
 import io.mockk.coVerify

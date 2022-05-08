@@ -1,7 +1,7 @@
 package com.picpay.desafio.android.data.model
 
 import com.google.gson.annotations.SerializedName
-import com.picpay.desafio.android.core_network.models.MissingFieldException
+import com.picpay.desafio.android.coreNetwork.models.MissingFieldException
 import com.picpay.desafio.android.domain.models.User
 
 internal data class UserResponse(

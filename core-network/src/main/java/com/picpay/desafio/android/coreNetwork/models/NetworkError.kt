@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.core_network.models
+package com.picpay.desafio.android.coreNetwork.models
 
 data class NetworkError(
     val errorMessage: String,

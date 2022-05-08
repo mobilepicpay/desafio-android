@@ -1,8 +1,8 @@
-package com.picpay.desafio.android.core_network.retrofit.client
+package com.picpay.desafio.android.coreNetwork.retrofit.client
 
 import com.google.common.truth.Truth
-import com.picpay.desafio.android.core_network.models.Response
-import com.picpay.desafio.android.core_network.retrofit.client.RetrofitClient.makeCall
+import com.picpay.desafio.android.coreNetwork.models.Response
+import com.picpay.desafio.android.coreNetwork.retrofit.client.RetrofitClient.makeCall
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.Flow

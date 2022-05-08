@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package com.picpay.desafio.android.di
 
 import javax.inject.Qualifier
