@@ -10,7 +10,6 @@ android {
     compileSdk = 32
 
     defaultConfig {
-        applicationId = "br.com.alaksion.qrcodereader"
         minSdk = 24
         targetSdk = 31
         versionCode = 1
