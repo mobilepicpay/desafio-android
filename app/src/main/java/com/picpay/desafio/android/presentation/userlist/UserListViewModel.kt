@@ -29,6 +29,7 @@ internal class UserListViewModel @Inject constructor(
 
     private fun getUsers() {
         viewModelScope.launch(dispatcher) {
+            mutableScreenState.value = UserListState.Loading
             userInteractor.getUsers().collect { response ->
                 response.handleResult(
                     onSuccess = { users ->
