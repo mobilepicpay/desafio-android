@@ -20,6 +20,7 @@ gradleUpdate = "0.42.0"
 detekt = "1.18.1"
 hiltcompose = "1.0.0"
 coil = "2.0.0-rc03"
+turbine = "0.8.0"
 
 [libraries]
 androidX-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidXCore" }
@@ -34,7 +35,7 @@ compose-activty = { module = "androidx.activity:activity-compose", version.ref =
 compose-debug-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-debug-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 compose-androidtest-junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
-compose-coil = {module = "io.coil-kt:coil-compose", version.ref = "coil"}
+compose-coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
 junit = { module = "junit:junit", version.ref = "junit" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
@@ -45,6 +46,8 @@ appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat"
 
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 hilt-core = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
