@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.core_ui.theme
+package com.picpay.desafio.android.coreUi.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

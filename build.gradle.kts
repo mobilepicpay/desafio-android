@@ -34,4 +34,3 @@ allprojects {
         }
     }
 }
-

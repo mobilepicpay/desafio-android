@@ -1,6 +1,7 @@
 plugins {
     id ("com.android.library")
     id ("org.jetbrains.kotlin.android")
+    id("io.gitlab.arturbosch.detekt") version libs.versions.detekt.get()
 }
 
 android {
@@ -41,4 +42,10 @@ dependencies {
     api (libs.bundles.compose)
     api (libs.compose.constraintlayout)
 
+}
+
+detekt {
+    parallel = true
+    config = files("$rootDir/config/detekt/detekt.yml")
+    baseline = file("$rootDir/config/detekt/baseline.xml")
 }

@@ -25,7 +25,6 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-//            shrinkResources = true
         }
     }
 
@@ -86,15 +85,6 @@ kapt {
 
 detekt {
     parallel = true
-
-    // Define the detekt configuration(s) you want to use.
-    // Defaults to the default detekt configuration.
-    config = files("path/to/config.yml")
-
-    // Specifying a baseline file. All findings stored in this file in subsequent runs of detekt.
-    baseline = file("path/to/baseline.xml")
-}
-
-hilt {
-    enableTransformForLocalTests = true
+    config = files("$rootDir/config/detekt/detekt.yml")
+    baseline = file("$rootDir/config/detekt/baseline.xml")
 }

@@ -1,6 +1,6 @@
 package com.picpay.desafio.android.presentation.userlist
 
-import com.picpay.desafio.android.core_network.models.Response
+import com.picpay.desafio.android.coreNetwork.models.Response
 import com.picpay.desafio.android.di.IODispatcher
 import com.picpay.desafio.android.di.PicpayDiModule
 import com.picpay.desafio.android.domain.usecase.UsersInteractor

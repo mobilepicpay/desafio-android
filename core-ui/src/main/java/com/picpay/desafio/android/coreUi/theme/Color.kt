@@ -1,4 +1,5 @@
-package com.picpay.desafio.android.core_ui.theme
+@file:Suppress("MagicNumber")
+package com.picpay.desafio.android.coreUi.theme
 
 import androidx.compose.ui.graphics.Color
 

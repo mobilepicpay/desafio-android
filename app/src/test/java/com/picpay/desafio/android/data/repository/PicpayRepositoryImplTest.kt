@@ -1,7 +1,7 @@
 package com.picpay.desafio.android.data.repository
 
 import com.google.common.truth.Truth
-import com.picpay.desafio.android.core_network.models.Response
+import com.picpay.desafio.android.coreNetwork.models.Response
 import com.picpay.desafio.android.data.datasource.PicpayRemoteDatasource
 import com.picpay.desafio.android.data.model.UserResponse
 import com.picpay.desafio.android.domain.repository.PicpayRepository

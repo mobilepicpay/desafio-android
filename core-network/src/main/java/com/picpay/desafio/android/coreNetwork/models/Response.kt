@@ -1,7 +1,8 @@
-package com.picpay.desafio.android.core_network.models
+package com.picpay.desafio.android.coreNetwork.models
 
 /**
- * Wrapper class to retrofit response. The success class is intended to be used as wrapper for successful requests, the error class
+ * Wrapper class to retrofit response. The success class is intended to be used as wrapper for
+ * successful requests, the error class
  * is responsible to wrap the error caused by the Retrofit exception
  * */
 sealed class Response<out T> {
