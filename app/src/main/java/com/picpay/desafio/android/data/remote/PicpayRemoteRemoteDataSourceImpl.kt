@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-internal class PicpayRemoteDataSourceImpl @Inject constructor(
+internal class PicpayRemoteRemoteDataSourceImpl @Inject constructor(
     private val api: PicpayApi
 ) : PicpayRemoteDatasource {
 

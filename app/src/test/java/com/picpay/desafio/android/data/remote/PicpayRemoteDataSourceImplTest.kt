@@ -17,7 +17,7 @@ internal class PicpayRemoteDataSourceImplTest {
 
     @Before
     fun setUp() {
-        datasource = PicpayRemoteDataSourceImpl(
+        datasource = PicpayRemoteRemoteDataSourceImpl(
             api = api
         )
     }
