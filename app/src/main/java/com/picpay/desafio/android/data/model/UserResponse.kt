@@ -20,3 +20,10 @@ internal fun UserResponse.mapToUser() = User(
     id = id ?: throw MissingFieldException("user Id"),
     username = username.orEmpty()
 )
+
+internal fun UserResponse.mapToUserEntity() = UserEntity(
+    img = img.orEmpty(),
+    name = name.orEmpty(),
+    id = id ?: throw MissingFieldException("user Id"),
+    username = username.orEmpty()
+)

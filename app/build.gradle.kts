@@ -76,6 +76,10 @@ dependencies {
     testImplementation(libs.turbine)
     androidTestImplementation(libs.bundles.testing.ui)
 
+    //Room
+    implementation(libs.bundles.room)
+    kapt(libs.room.compiler)
+
 }
 
 kapt {

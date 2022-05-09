@@ -22,6 +22,7 @@ hiltcompose = "1.0.0"
 coil = "2.0.0-rc03"
 turbine = "0.8.0"
 androidXTest = "1.4.0"
+room = "2.4.1"
 
 [libraries]
 androidX-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidXCore" }
@@ -62,6 +63,10 @@ retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref 
 
 accompanist-insets = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
 [bundles]
 compose = ["compose-ui", "compose-material", "compose-preview"]
 accompanist = ["accompanist-insets"]
@@ -70,3 +75,4 @@ compose-debug = ["compose-debug-tooling", "compose-debug-manifest"]
 testing-unit = ["junit", "truth", "mockk"]
 testing-ui = ["androidX-test-runner", "androidX-test-rules", "compose-androidtest-junit"]
 retrofit = ["retrofit-core", "retrofit-gson"]
+room = ["room-ktx", "room-runtime"]

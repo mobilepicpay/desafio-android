@@ -1,5 +1,9 @@
 package com.picpay.desafio.android.coreNetwork.retrofit.client
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import com.picpay.desafio.android.coreNetwork.models.NetworkError
 import com.picpay.desafio.android.coreNetwork.models.Response
 import kotlinx.coroutines.flow.FlowCollector
@@ -8,6 +12,7 @@ import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.CancellationException
+
 
 object RetrofitClient {
 
@@ -62,4 +67,5 @@ object RetrofitClient {
             }
         )
     }
+
 }
