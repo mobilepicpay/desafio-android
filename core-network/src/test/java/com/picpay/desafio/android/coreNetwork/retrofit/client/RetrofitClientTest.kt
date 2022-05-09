@@ -30,7 +30,7 @@ class RetrofitClientTest {
 
     @Test
     fun `Should return network error 500 when uncaught exception is thrown`() = runBlocking {
-        coEvery { request() } throws object : Throwable() {}
+        coEvery { request() } throws NullPointerException()
 
         val value: Flow<Response<Unit>> = flow {
             makeCall { request() }
