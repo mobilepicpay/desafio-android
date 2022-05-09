@@ -1,9 +1,15 @@
 package com.picpay.desafio.android
 
 import androidx.recyclerview.widget.DiffUtil
-import com.picpay.desafio.android.User
+import com.picpay.desafio.android.domain.models.User
 
-class UserListDiffCallback(
+/**
+ * Composition/Recomposition and the way the Compose runtime updates the composition tree already solves
+ * the diff problem for lists, that's why this class is not needed anymore.
+ *
+ * I won't delete this as a reminder for the technical interview.
+ * */
+internal class UserListDiffCallback(
     private val oldList: List<User>,
     private val newList: List<User>
 ) : DiffUtil.Callback() {
