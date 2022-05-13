@@ -1,17 +1,16 @@
-apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
-
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+}
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 32
     defaultConfig {
         applicationId "com.picpay.desafio.android"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
 
@@ -30,19 +29,21 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    buildFeatures {
+        dataBinding true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation "androidx.core:core-ktx:$core_ktx_version"
 
@@ -51,9 +52,8 @@ dependencies {
 
     implementation "com.google.android.material:material:$material_version"
 
-    implementation "org.koin:koin-core:$koin_version"
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    implementation "io.insert-koin:koin-core:$koin_version"
+    implementation "io.insert-koin:koin-android:$koin_version"
 
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
@@ -69,7 +69,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
 
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.code.gson:gson:2.8.9'
 
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
@@ -84,7 +84,7 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
-    implementation "org.koin:koin-test:$koin_version"
+    implementation "io.insert-koin:koin-test:$koin_version"
 
     androidTestImplementation "androidx.test:runner:$test_runner_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
