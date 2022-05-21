@@ -1,8 +1,8 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.domain.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class User(
