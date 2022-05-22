@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.domain.model.User
+import com.picpay.desafio.android.domain.model.Contact
 import com.picpay.desafio.android.presenter.adapter.viewholder.ContactViewHolder
 
-class ContactAdapter : ListAdapter<User, ContactViewHolder>(User.diffCallback) {
+class ContactAdapter : ListAdapter<Contact, ContactViewHolder>(Contact.diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context)

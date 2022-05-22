@@ -18,8 +18,7 @@ buildscript {
         coroutines_version = "1.6.1"
 
         junit_version = '4.13.2'
-        mockito_version = '2.27.0'
-        mockito_kotlin_version = '2.1.0'
+        mockito_version = '4.0.0'
 
         core_testing_version = '2.1.0'
         test_runner_version = '1.4.0'
