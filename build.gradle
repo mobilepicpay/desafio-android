@@ -8,7 +8,6 @@ buildscript {
         appcompat_version = '1.4.1'
         core_ktx_version = '1.7.0'
         constraintlayout_version = '2.1.4'
-        material_version = "1.6.0"
 
         retrofit_version = '2.9.0'
         okhttp_version = '4.9.2'

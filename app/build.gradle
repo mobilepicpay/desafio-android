@@ -12,7 +12,6 @@ android {
         targetSdkVersion 32
         versionCode 1
         versionName "1.0"
-
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -35,8 +34,7 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
-
-    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
 
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
@@ -57,6 +55,7 @@ dependencies {
     implementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
 
     implementation "com.squareup.picasso:picasso:$picasso_version"
+    implementation 'jp.wasabeef:picasso-transformations:2.4.0'
 
     testImplementation "junit:junit:$junit_version"
 
