@@ -1,51 +1,64 @@
 package com.picpay.desafio.android.presenter
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.ActivityMainBinding
-import com.picpay.desafio.android.domain.repository.ContactRepository
 import com.picpay.desafio.android.presenter.adapter.ContactAdapter
 import com.picpay.desafio.android.presenter.adapter.ContactHeaderAdapter
-import kotlinx.coroutines.launch
+import com.picpay.desafio.android.presenter.viewmodel.ContactState
+import com.picpay.desafio.android.presenter.viewmodel.ContactViewModel
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
+    private val viewModel by inject<ContactViewModel>()
+
     private var binder: ActivityMainBinding? = null
-
-    private val repository by inject<ContactRepository>()
-
     private lateinit var contactsAdapter: ContactAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binder = ActivityMainBinding.inflate(layoutInflater).also {
             contactsAdapter = ContactAdapter()
-            val contactsHeaderAdapter = ContactHeaderAdapter()
-            val concatAdapter = ConcatAdapter(contactsHeaderAdapter, contactsAdapter)
-            it.recyclerView.apply {
-                layoutManager = LinearLayoutManager(this@MainActivity)
-                adapter = concatAdapter
+            it.contactList.apply {
+                adapter = ConcatAdapter(ContactHeaderAdapter(), contactsAdapter)
             }
+            it.buttonTryAgain.setOnClickListener { viewModel.loadContacts() }
         }
         setContentView(binder?.root)
     }
 
-    override fun onResume() {
-        super.onResume()
-        lifecycleScope.launch {
-            repository.getContacts().onSuccess {
-                contactsAdapter.submitList(it)
-            }.onFailure {
-                val message = getString(R.string.error)
-                Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
-                    .show()
-            }
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        lifecycleScope.launchWhenStarted {
+            viewModel.state.collect { handleState(it) }
+        }
+    }
+
+    private fun handleState(state: ContactState) = when (state) {
+        ContactState.Error -> {
+            binder?.contactList?.isVisible = false
+            binder?.loading?.isVisible = false
+            binder?.groupError?.isVisible = true
+        }
+        ContactState.Initial -> {
+            binder?.contactList?.isVisible = false
+            binder?.loading?.isVisible = false
+            binder?.groupError?.isVisible = false
+        }
+        ContactState.Loading -> {
+            binder?.contactList?.isVisible = false
+            binder?.loading?.isVisible = true
+            binder?.groupError?.isVisible = false
+        }
+        is ContactState.Success -> {
+            contactsAdapter.submitList(state.data)
+            binder?.contactList?.isVisible = true
+            binder?.loading?.isVisible = false
+            binder?.groupError?.isVisible = false
         }
     }
 
