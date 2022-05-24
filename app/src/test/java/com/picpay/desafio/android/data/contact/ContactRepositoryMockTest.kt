@@ -17,7 +17,7 @@ import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 @Config(manifest = Config.NONE, sdk = [28])
-class ContactRepositoryTest : DataTest() {
+class ContactRepositoryMockTest : DataTest() {
 
     private val gson = Gson()
 

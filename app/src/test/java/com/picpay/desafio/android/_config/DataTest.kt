@@ -4,31 +4,25 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.koin.core.component.inject
-import org.koin.core.context.loadKoinModules
-import org.koin.core.context.stopKoin
-import org.koin.core.module.Module
 
 open class DataTest : BaseKoinTest() {
 
     protected val mockWebServer: MockWebServer by inject()
 
-    open val koinModules: List<Module> = emptyList()
-
     @Before
-    open fun setup() {
-        loadKoinModules(koinModules)
+    open fun setupMockWebServer() {
         try {
             mockWebServer.start()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
     }
 
     @After
-    open fun tearDown() {
-        stopKoin()
+    open fun tearDownMockWebServer() {
         try {
             mockWebServer.start()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
     }
+
 }
