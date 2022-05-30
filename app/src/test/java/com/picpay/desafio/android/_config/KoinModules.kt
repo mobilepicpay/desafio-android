@@ -1,6 +1,6 @@
 package com.picpay.desafio.android._config
 
-import com.picpay.desafio.android.data._config.ClientFactory
+import com.picpay.desafio.android.data._config.network.ClientFactory
 import com.picpay.desafio.android.data.contact.ContactAPI
 import okhttp3.mockwebserver.MockWebServer
 import org.koin.dsl.module

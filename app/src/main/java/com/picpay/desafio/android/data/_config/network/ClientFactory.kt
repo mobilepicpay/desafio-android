@@ -1,8 +1,9 @@
-package com.picpay.desafio.android.data._config
+package com.picpay.desafio.android.data._config.network
 
 import android.annotation.SuppressLint
 import android.os.Build
 import com.google.gson.GsonBuilder
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,6 +15,8 @@ import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
 object ClientFactory {
+
+    const val CACHE_SIZE = (10 * 1024 * 1024).toLong() // 10MB
 
     private const val CONNECTION_TIMEOUT = 1L
     private const val READ_TIMEOUT = 1L
@@ -53,8 +56,11 @@ object ClientFactory {
     }
 
     fun buildOkHttpClient(
+        cache: Cache? = null,
         builder: OkHttpClient.Builder.() -> Unit = { }
     ): OkHttpClient = OkHttpClient.Builder().apply {
+        // config cache
+        cache(cache)
         // apply default params
         connectTimeout(CONNECTION_TIMEOUT, TimeUnit.MINUTES)
         readTimeout(READ_TIMEOUT, TimeUnit.MINUTES)
