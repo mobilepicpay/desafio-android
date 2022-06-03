@@ -29,6 +29,7 @@ buildscript {
         rxjava_version = "2.2.17"
         rxandroid_version = "2.1.1"
         core_ktx_test_version = "1.2.0"
+        nav_version = "2.4.2"
     }
 
     repositories {
@@ -37,8 +38,8 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:7.2.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
