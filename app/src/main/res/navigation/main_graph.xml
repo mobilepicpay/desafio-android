@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.picpay.desafio.android.ui.home.HomeFragment"
+        android:name="com.picpay.desafio.android.ui.home.UserFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_user" />
 </navigation>
