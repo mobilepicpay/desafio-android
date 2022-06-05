@@ -13,30 +13,16 @@ import com.picpay.desafio.android.utils.network.SafeCall
 import com.picpay.desafio.android.utils.service.PicPayService
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class UserViewModel() : ViewModel() {
+class UserViewModel(private val service: PicPayService) : ViewModel() {
     private var _state: MutableLiveData<UserListState> = MutableLiveData()
     val state : LiveData<UserListState> = _state
     private var users : List<User>? = null
-    private val okHttp: OkHttpClient by lazy {
-        OkHttpClient.Builder()
-            .build()
-    }
-    private val gson: Gson by lazy { GsonBuilder().create() }
 
-    private val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(okHttp)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
 
-    }
-    private val service: PicPayService by lazy {
-        retrofit.create(PicPayService::class.java)
-    }
 
     fun getUsers() {
         viewModelScope.launch {
