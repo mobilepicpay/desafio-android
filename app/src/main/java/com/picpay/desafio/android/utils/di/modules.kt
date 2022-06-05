@@ -1,10 +1,15 @@
 package com.picpay.desafio.android.utils.di
 
+import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import com.picpay.desafio.android.ui.home.UserViewModel
 import com.picpay.desafio.android.utils.Constants
+import com.picpay.desafio.android.utils.Constants.SHARED_PREFERENCE_NAME
 import com.picpay.desafio.android.utils.service.PicPayService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -19,6 +24,16 @@ val network = module {
     single { createHttpClient() }
     single { retrofitClient(get())}
     single { createNetworkApi(get()) }
+    single { provideSharedPref(androidApplication()) }
+
+}
+
+
+fun provideSharedPref(app: Application): SharedPreferences {
+    return app.applicationContext.getSharedPreferences(
+        SHARED_PREFERENCE_NAME,
+        Context.MODE_PRIVATE
+    )
 }
 
 fun retrofitClient(client: OkHttpClient): Retrofit {

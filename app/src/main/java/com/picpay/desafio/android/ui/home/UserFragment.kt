@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.picpay.desafio.android.databinding.FragmentUserBinding
 import com.picpay.desafio.android.model.User
+import kotlinx.android.extensions.CacheImplementation
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -31,10 +32,14 @@ class UserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
-        getList()
-    }
-    private fun getList(){
         viewModel.getUsers()
+        setSwipe()
+    }
+
+    private fun setSwipe() = with(binding) {
+        swipe.setOnRefreshListener {
+            viewModel.getUsers(true)
+        }
     }
 
     private fun setObservers() {
@@ -43,16 +48,20 @@ class UserFragment : Fragment() {
                 when (state) {
                     is UserListState.Success -> setRecycler(state.users)
                     is UserListState.Error -> renderError(state.message)
-                    is UserListState.UserLoading -> renderLoading(state.isLoading)
+                    is UserListState.UserLoading -> renderLoading(state.isLoading, state.isRefresh)
                 }
             }
         }
     }
 
-    private fun renderLoading(isLoading: Boolean) = with(binding){
-        recyclerView.isVisible = isLoading.not()
-        title.isVisible = isLoading.not()
-        userListProgressBar.isVisible = isLoading
+    private fun renderLoading(isLoading: Boolean, isRefresh: Boolean) = with(binding){
+        if(isRefresh){
+            swipe.isRefreshing = isLoading
+        } else {
+            recyclerView.isVisible = isLoading.not()
+            title.isVisible = isLoading.not()
+            userListProgressBar.isVisible = isLoading
+        }
     }
 
     private fun renderError(message: String) {
