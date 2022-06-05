@@ -61,8 +61,13 @@ class UserFragment : Fragment() {
 
     private fun setRecycler(users: List<User>) = with(binding) {
         recyclerView.apply {
-            adapter = UserListAdapter(users)
+            adapter = UserListAdapter(users, onClick = { onClick(it) })
             layoutManager = LinearLayoutManager(requireContext())
         }
+    }
+
+    private fun onClick(name: String){
+        Toast.makeText(requireContext(), name, Toast.LENGTH_SHORT).show()
+
     }
 }

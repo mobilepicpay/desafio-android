@@ -10,7 +10,9 @@ import com.picpay.desafio.android.databinding.ListItemUserBinding
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
-class UserListAdapter(val userList: List<User>) :
+class UserListAdapter(
+    val userList: List<User>,
+    val onClick: (String) -> Unit) :
     RecyclerView.Adapter<UserListAdapter.UserListItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListAdapter.UserListItemViewHolder {
@@ -44,6 +46,9 @@ class UserListAdapter(val userList: List<User>) :
                         progressBar.visibility = View.GONE
                     }
                 })
+            root.setOnClickListener {
+                onClick.invoke(user.name)
+            }
         }
     }
 }
