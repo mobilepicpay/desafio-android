@@ -17,15 +17,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 val viewModelModules = module{
-    viewModel { UserViewModel(get())}
+    viewModel { UserViewModel(get(), get())}
 }
 
-val network = module {
+val networkModule = module {
     single { createHttpClient() }
     single { retrofitClient(get())}
     single { createNetworkApi(get()) }
-    single { provideSharedPref(androidApplication()) }
+}
 
+val sharedPreferenceModules = module{
+    single { provideSharedPref(androidApplication()) }
 }
 
 

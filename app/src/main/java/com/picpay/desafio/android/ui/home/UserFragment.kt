@@ -1,6 +1,11 @@
 package com.picpay.desafio.android.ui.home
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.picpay.desafio.android.databinding.FragmentUserBinding
 import com.picpay.desafio.android.model.User
+import com.picpay.desafio.android.utils.extensions.isNetworkAvailable
 import kotlinx.android.extensions.CacheImplementation
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,15 +31,20 @@ class UserFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentUserBinding.inflate(inflater, container,false)
+        binding = FragmentUserBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
-        viewModel.getUsers()
+        getList()
         setSwipe()
+    }
+
+    private fun getList() {
+        if (isNetworkAvailable()) viewModel.getUsers()
+        else viewModel.getSharedList()
     }
 
     private fun setSwipe() = with(binding) {
@@ -44,7 +55,7 @@ class UserFragment : Fragment() {
 
     private fun setObservers() {
         lifecycleScope.launch {
-            viewModel.state.observe(requireActivity()){ state ->
+            viewModel.state.observe(requireActivity()) { state ->
                 when (state) {
                     is UserListState.Success -> setRecycler(state.users)
                     is UserListState.Error -> renderError(state.message)
@@ -54,8 +65,9 @@ class UserFragment : Fragment() {
         }
     }
 
-    private fun renderLoading(isLoading: Boolean, isRefresh: Boolean) = with(binding){
-        if(isRefresh){
+
+    private fun renderLoading(isLoading: Boolean, isRefresh: Boolean) = with(binding) {
+        if (isRefresh) {
             swipe.isRefreshing = isLoading
         } else {
             recyclerView.isVisible = isLoading.not()
@@ -75,7 +87,7 @@ class UserFragment : Fragment() {
         }
     }
 
-    private fun onClick(name: String){
+    private fun onClick(name: String) {
         Toast.makeText(requireContext(), name, Toast.LENGTH_SHORT).show()
 
     }

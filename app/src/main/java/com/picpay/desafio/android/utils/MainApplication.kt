@@ -14,7 +14,7 @@ class MainApplication: Application() {
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@MainApplication)
-            modules(listOf(viewModelModules,network))
+            modules(listOf(viewModelModules,networkModule, sharedPreferenceModules))
         }
     }
 }
