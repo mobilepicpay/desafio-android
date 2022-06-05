@@ -13,17 +13,14 @@ import com.picpay.desafio.android.utils.Constants.UNEXPECTED_ERROR
 import com.picpay.desafio.android.utils.network.SafeCall
 import com.picpay.desafio.android.utils.service.PicPayService
 import kotlinx.coroutines.launch
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 import java.lang.reflect.Type
 
 class UserViewModel(private val service: PicPayService, private val prefs: SharedPreferences)
-    : ViewModel(), KoinComponent {
+    : ViewModel() {
 
     private var _state: MutableLiveData<UserListState> = MutableLiveData()
     val state : LiveData<UserListState> = _state
     private var users : List<User>? = null
-//    private val prefs: SharedPreferences by inject()
 
     fun getUsers(isRefresh: Boolean = false) {
         viewModelScope.launch {
@@ -52,7 +49,7 @@ class UserViewModel(private val service: PicPayService, private val prefs: Share
 
     private fun saveShared(users: List<User>){
         val jsonList = Gson().toJson(users)
-        prefs.edit().putString(Constants.USER_LIST_KEY, jsonList).commit()
+        prefs.edit().putString(Constants.USER_LIST_KEY, jsonList).apply()
     }
 
     fun getSharedList() = viewModelScope.launch {
