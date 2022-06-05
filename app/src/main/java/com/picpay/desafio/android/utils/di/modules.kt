@@ -1,6 +1,5 @@
 package com.picpay.desafio.android.utils.di
 
-import android.provider.SyncStateContract
 import com.picpay.desafio.android.ui.home.UserViewModel
 import com.picpay.desafio.android.utils.Constants
 import com.picpay.desafio.android.utils.service.PicPayService
@@ -19,7 +18,7 @@ val viewModelModules = module{
 val network = module {
     single { createHttpClient() }
     single { retrofitClient(get())}
-    single(override = true) { createNetworkApi(get()) }
+    single { createNetworkApi(get()) }
 }
 
 fun retrofitClient(client: OkHttpClient): Retrofit {
