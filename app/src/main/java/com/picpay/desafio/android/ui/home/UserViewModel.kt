@@ -34,7 +34,7 @@ class UserViewModel(private val service: PicPayService, private val prefs: Share
                 in 200..299 -> {
                     users = response?.body()
                     _state.value = UserListState.Success(users ?: listOf())
-                    saveShared(users ?: listOf())
+                    saveShared(users)
                 }
                 in 300..499 -> {
                     _state.value = UserListState.Error(response?.message() ?: UNEXPECTED_ERROR)
@@ -47,7 +47,7 @@ class UserViewModel(private val service: PicPayService, private val prefs: Share
         }
     }
 
-    private fun saveShared(users: List<User>){
+    private fun saveShared(users: List<User>?){
         val jsonList = Gson().toJson(users)
         prefs.edit().putString(Constants.USER_LIST_KEY, jsonList).apply()
     }
