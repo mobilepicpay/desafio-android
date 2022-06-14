@@ -2,7 +2,7 @@ package com.picpay.desafio.android.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.picpay.desafio.android.data.remote.PicPayService
+import com.picpay.desafio.android.data.remote.PicPayApi
 import com.picpay.desafio.android.data.remote.UserRemoteDataSource
 import com.picpay.desafio.android.data.repository.UserDataRepository
 import com.picpay.desafio.android.domain.repository.UserRepository
@@ -23,14 +23,14 @@ val networkModule = module {
     fun provideGson() = GsonBuilder().create()
     fun provideOkHttp() = OkHttpClient.Builder().build()
     fun provideRetrofit(okHttp: OkHttpClient, gson: Gson) = Retrofit.Builder()
-        .baseUrl(PicPayService.BASE_URL)
+        .baseUrl(PicPayApi.BASE_URL)
         .client(okHttp)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
     single { provideGson() }
     single { provideOkHttp() }
     single { provideRetrofit(get(), get()) }
-    single { getRetrofit().create(PicPayService::class.java) }
+    single { getRetrofit().create(PicPayApi::class.java) }
 }
 
 val dataModule = module {

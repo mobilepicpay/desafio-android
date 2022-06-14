@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
 
-class UserRemoteDataSource(private val api: PicPayService) {
+class UserRemoteDataSource(private val api: PicPayApi) {
 
     private fun <T> call(block: suspend FlowCollector<T>.() -> T): Flow<T> = flow {
         emit(block())
