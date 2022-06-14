@@ -1,6 +1,9 @@
 package com.picpay.desafio.android
 
-import androidx.appcompat.app.AppCompatActivity
+import com.picpay.desafio.android.bases.BaseActivity
+import com.picpay.desafio.android.databinding.ActivityMainBinding
+import com.picpay.desafio.android.extensions.viewBinding
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : BaseActivity<Nothing>() {
+    override val binding by viewBinding(ActivityMainBinding::inflate)
 }
