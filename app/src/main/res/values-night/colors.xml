@@ -5,6 +5,6 @@
     <color name="colorAccent">#11C76F</color>
     <color name="colorPrimaryLight">#ACB1BD</color>
     <color name="colorDetail">#80FFFFFF</color>
-    <color name="colorVariant">#FFFFFFFF</color>
-    <color name="colorVariantDark">#1D1E20</color>
+    <color name="colorVariant">#1D1E20</color>
+    <color name="colorVariantDark">#FFFFFFFF</color>
 </resources>
