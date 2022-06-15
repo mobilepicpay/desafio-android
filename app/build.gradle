@@ -48,21 +48,12 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     implementation "androidx.core:core-ktx:$core_ktx_version"
-
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
-
     implementation "com.google.android.material:material:$material_version"
 
     implementation "io.insert-koin:koin-android:$koin_version"
-    //implementation "org.koin:koin-core:$koin_version"
-    //implementation "org.koin:koin-android:$koin_version"
-    //implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-
-    //implementation "com.google.dagger:dagger:$dagger_version"
-    //kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
@@ -80,6 +71,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     implementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
 
@@ -90,7 +82,6 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
-    //implementation "org.koin:koin-test:$koin_version"
 
     androidTestImplementation "androidx.test:runner:$test_runner_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
