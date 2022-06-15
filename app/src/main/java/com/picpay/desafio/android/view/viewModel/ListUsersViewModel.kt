@@ -17,6 +17,10 @@ class ListUsersViewModel(private val getUserCase: GetUserCase): ViewModel() {
         getAllUsers()
     }
 
+    fun clickRefresh(){
+        getAllUsers()
+    }
+
     private fun getAllUsers(){
         _users.postValue(Resource.Loading())
         viewModelScope.launch {

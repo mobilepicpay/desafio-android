@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.picpay.desafio.android.core.Resource
 import com.picpay.desafio.android.data.response.User
 import com.picpay.desafio.android.databinding.ActivityMainBinding
@@ -22,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
+
+        binding.viewModel = viewModel
         setContentView(view)
     }
 
@@ -34,23 +35,32 @@ class MainActivity : AppCompatActivity() {
         viewModel.allUsers.observe(this) { state ->
             when (state) {
                 is Resource.Success<*> -> {
-                    binding.userListProgressBar.visibility = View.GONE
+                    goneImageError()
                     state.data?.let { setAdapter(it) }
                 }
                 is Resource.Error<*> -> {
-                    binding.userListProgressBar.visibility = View.GONE
-                    this.let {
-                        Snackbar.make(
-                            binding.root,
-                            state.message.toString(),
-                            Snackbar.LENGTH_LONG
-                        ).show()
-                    }
+                    setImageError()
                 }
                 is Resource.Loading<*> -> {
                     binding.userListProgressBar.visibility = View.VISIBLE
                 }
             }
+        }
+    }
+
+    private fun setImageError(){
+        binding.run {
+            userListProgressBar.visibility = View.GONE
+            title.visibility = View.GONE
+            constraintError.visibility = View.VISIBLE
+        }
+    }
+
+    private fun goneImageError(){
+        binding.run {
+            userListProgressBar.visibility = View.GONE
+            title.visibility = View.VISIBLE
+            constraintError.visibility = View.GONE
         }
     }
 
