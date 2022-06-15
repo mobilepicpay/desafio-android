@@ -8,8 +8,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/draco/StudioProjects/Code-Refactoring/app/src/main/res/drawable/ic_round_account_circle.xml" value="0.1395" />
         <entry key="..\:/Users/draco/StudioProjects/Code-Refactoring/app/src/main/res/layout/activity_main.xml" value="0.2462962962962963" />
-        <entry key="..\:/Users/draco/StudioProjects/Code-Refactoring/app/src/main/res/layout/list_item_user.xml" value="0.1037037037037037" />
+        <entry key="..\:/Users/draco/StudioProjects/Code-Refactoring/app/src/main/res/layout/list_item_user.xml" value="0.25" />
       </map>
     </option>
   </component>
