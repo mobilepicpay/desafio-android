@@ -3,7 +3,8 @@ package com.picpay.desafio.android.ui
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.data.remote.model.User
+import com.picpay.desafio.android.data.remote.model.UserRM
+import com.picpay.desafio.android.domain.model.User
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_user.view.*
