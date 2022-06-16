@@ -9,5 +9,5 @@ import retrofit2.http.GET
 interface UserRDS {
 
     @GET("users")
-    fun getUsers(): Call<List<User>>
+    fun getUsers(): List<UserRM>
 }
