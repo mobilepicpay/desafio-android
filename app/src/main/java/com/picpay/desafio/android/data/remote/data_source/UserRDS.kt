@@ -9,5 +9,5 @@ import retrofit2.http.GET
 interface UserRDS {
 
     @GET("users")
-    fun getUsers(): List<UserRM>
+    suspend fun getUsers(): List<UserRM>
 }
