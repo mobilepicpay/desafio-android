@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.picpay.desafio.android.extensions.viewModelClass
+import com.picpay.desafio.android.extensions.getViewModelClass
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 abstract class BaseFragment<V : BaseViewModel> : Fragment() {
@@ -14,7 +14,7 @@ abstract class BaseFragment<V : BaseViewModel> : Fragment() {
     abstract val binding: ViewBinding
     abstract fun initComponents()
     abstract fun initObservers()
-    val viewModel: V by lazy { getViewModel(clazz = viewModelClass()) }
+    val viewModel: V by lazy { getViewModel(clazz = getViewModelClass()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

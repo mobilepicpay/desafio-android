@@ -2,8 +2,9 @@ package com.picpay.desafio.android.presentation.viewModels
 
 import com.picpay.desafio.android.base.BaseTest
 import com.picpay.desafio.android.domain.useCases.ListContactsUseCase
-import com.picpay.desafio.android.providers.ContactMockProvider
-import com.picpay.desafio.android.providers.ErrorMockProvider
+import com.picpay.desafio.android.extensions.orFalse
+import com.picpay.desafio.android.providers.MockContactProvider
+import com.picpay.desafio.android.providers.MockErrorProvider
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -12,30 +13,30 @@ import org.junit.Test
 class ContactViewModelTest : BaseTest() {
 
     private lateinit var viewModel: ContactViewModel
-    private val listContacts = mockk<ListContactsUseCase>(relaxed = true)
+    private val listContactsUseCase = mockk<ListContactsUseCase>(relaxed = true)
 
     override fun setup() {
         super.setup()
-        viewModel = ContactViewModel(listContacts)
+        viewModel = ContactViewModel(listContactsUseCase)
     }
 
     @Test
-    fun loadContactsTest() {
+    fun shouldLoadingContacts() {
         viewModel.run {
-            coEvery { listContacts() } returns ContactMockProvider.mockedFlowContacts()
+            coEvery { listContactsUseCase() } returns MockContactProvider.mockedFlowContacts()
             loadContacts()
-            coVerify { listContacts() }
-            assert(contacts.value?.isNotEmpty() ?: false)
+            coVerify { listContactsUseCase() }
+            assertTrue(contacts.value?.isNotEmpty().orFalse())
         }
     }
 
     @Test
-    fun loadContactsTestError() {
+    fun shouldNotLoadContacts() {
         viewModel.run {
-            coEvery { listContacts() } returns ErrorMockProvider.mockErrorFlow()
+            coEvery { listContactsUseCase() } returns MockErrorProvider.mockErrorFlow()
             loadContacts()
-            coVerify { listContacts() }
-            assert(messages.value != null)
+            coVerify { listContactsUseCase() }
+            assertNotNull(messageResource.value)
         }
     }
 }

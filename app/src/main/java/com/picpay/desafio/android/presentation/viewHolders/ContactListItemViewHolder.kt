@@ -5,22 +5,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.ListItemUserBinding
-import com.picpay.desafio.android.domain.model.UserModel
+import com.picpay.desafio.android.domain.model.ContactModel
 import com.picpay.desafio.android.extensions.toLayoutInflater
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
-class UserListItemViewHolder(
+class ContactListItemViewHolder(
     private val binding: ListItemUserBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(userModel: UserModel) {
+    fun bind(contactModel: ContactModel) {
         with(binding) {
-            name.text = userModel.name
-            username.text = userModel.username
+            name.text = contactModel.name
+            username.text = contactModel.username
             progressBar.visibility = View.VISIBLE
             Picasso.get()
-                .load(userModel.img)
+                .load(contactModel.image)
                 .error(R.drawable.ic_round_account_circle)
                 .into(picture, object : Callback {
                     override fun onSuccess() {
@@ -36,7 +36,7 @@ class UserListItemViewHolder(
 
     companion object {
 
-        fun newInstance(parent: ViewGroup) = UserListItemViewHolder(
+        fun newInstance(parent: ViewGroup) = ContactListItemViewHolder(
             ListItemUserBinding.inflate(parent.context.toLayoutInflater(), parent, false)
         )
     }

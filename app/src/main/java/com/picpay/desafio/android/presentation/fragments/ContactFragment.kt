@@ -7,13 +7,13 @@ import com.picpay.desafio.android.bases.BaseFragment
 import com.picpay.desafio.android.databinding.FragContactBinding
 import com.picpay.desafio.android.extensions.showToastShortText
 import com.picpay.desafio.android.extensions.viewBinding
-import com.picpay.desafio.android.presentation.adapters.UserListAdapter
+import com.picpay.desafio.android.presentation.adapters.ContactListAdapter
 import com.picpay.desafio.android.presentation.viewModels.ContactViewModel
 
 class ContactFragment : BaseFragment<ContactViewModel>() {
 
     override val binding by viewBinding(FragContactBinding::inflate)
-    private val listAdapter: UserListAdapter by lazy { UserListAdapter() }
+    private val listAdapter: ContactListAdapter by lazy { ContactListAdapter() }
 
     override fun initComponents() {
         with(binding) {
@@ -27,9 +27,9 @@ class ContactFragment : BaseFragment<ContactViewModel>() {
     override fun initObservers() {
         with(viewModel) {
             isLoading.observe(viewLifecycleOwner) { binding.userListProgressBar.isVisible = it }
-            messages.observe(viewLifecycleOwner) {
+            messageResource.observe(viewLifecycleOwner) { resource ->
                 binding.recyclerView.visibility = View.GONE
-                this@ContactFragment.context?.showToastShortText(getString(it))
+                resource?.let { this@ContactFragment.context?.showToastShortText(getString(it)) }
             }
             contacts.observe(viewLifecycleOwner) {
                 binding.recyclerView.visibility = View.VISIBLE

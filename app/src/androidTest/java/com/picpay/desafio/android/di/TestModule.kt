@@ -19,10 +19,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 fun Scope.getRetrofit() = get<Retrofit>()
 
-object MainModuleInitializer {
+object TestModuleInitializer {
 
     private val networkModule = module {
-        fun provideBaseUrl() = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
+        fun provideBaseUrl() = "http://localhost:8080"
         fun provideGson() = GsonBuilder().create()
         fun provideOkHttp() = OkHttpClient.Builder().build()
         fun provideRetrofit(baseUrl: String, okHttp: OkHttpClient, gson: Gson) = Retrofit.Builder()

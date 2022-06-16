@@ -3,13 +3,13 @@ package com.picpay.desafio.android.bases
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import com.picpay.desafio.android.extensions.viewModelClass
+import com.picpay.desafio.android.extensions.getViewModelClass
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity() {
 
     abstract val binding: ViewBinding
-    val viewModel: V by lazy { getViewModel(clazz = viewModelClass()) }
+    val viewModel: V by lazy { getViewModel(clazz = getViewModelClass()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

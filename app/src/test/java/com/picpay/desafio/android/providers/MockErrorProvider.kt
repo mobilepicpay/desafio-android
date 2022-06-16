@@ -2,6 +2,6 @@ package com.picpay.desafio.android.providers
 
 import kotlinx.coroutines.flow.flow
 
-object ErrorMockProvider {
+object MockErrorProvider {
     fun mockErrorFlow() = flow { emit(throw Exception()) }
 }

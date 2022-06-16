@@ -2,17 +2,17 @@ package com.picpay.desafio.android.base
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.mockk.MockKAnnotations
-import kotlinx.coroutines.flow.flow
+import junit.framework.TestCase
 import org.junit.Before
 import org.junit.Rule
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
-abstract class BaseTest {
+abstract class BaseTest : TestCase() {
 
     @get: Rule
-    val coroutineRule = CoroutineRule()
+    val coroutineRule = CoroutineTestRule()
 
     @get: Rule
     val rule = InstantTaskExecutorRule()
