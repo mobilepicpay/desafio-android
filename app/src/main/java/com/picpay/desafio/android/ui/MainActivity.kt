@@ -4,20 +4,22 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.data.remote.data_source.UserRDS
-import com.picpay.desafio.android.data.remote.model.UserRM
-import com.picpay.desafio.android.domain.model.User
+import com.picpay.desafio.android.data.repository.UserRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.SocketException
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -42,8 +44,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             .build()
     }
 
-    private val service: UserRDS by lazy {
+    private val userRDS: UserRDS by lazy {
         retrofit.create(UserRDS::class.java)
+    }
+
+    private val repository: UserRepository by lazy {
+        UserRepository(userRDS = userRDS)
     }
 
     override fun onResume() {
@@ -57,23 +63,23 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         progressBar.visibility = View.VISIBLE
-        service.getUsers()
-            .enqueue(object : Callback<List<User>> {
-                override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                    val message = getString(R.string.error)
+        lifecycleScope.launch {
+            try {
 
-                    progressBar.visibility = View.GONE
-                    recyclerView.visibility = View.GONE
+                val users = repository.getUsers()
 
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
-                        .show()
-                }
+                progressBar.visibility = View.GONE
 
-                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                    progressBar.visibility = View.GONE
+                adapter.users = users
+            }catch (exception:SocketException){
+                val message = getString(R.string.error)
 
-                    adapter.users = response.body()!!
-                }
-            })
+                progressBar.visibility = View.GONE
+                recyclerView.visibility = View.GONE
+
+                Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
     }
 }
