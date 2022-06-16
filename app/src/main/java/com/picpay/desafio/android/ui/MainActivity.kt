@@ -1,4 +1,4 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.ui
 
 import android.view.View
 import android.widget.ProgressBar
@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.picpay.desafio.android.R
+import com.picpay.desafio.android.data.remote.data_source.UserRDS
+import com.picpay.desafio.android.data.remote.model.User
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,8 +41,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             .build()
     }
 
-    private val service: PicPayService by lazy {
-        retrofit.create(PicPayService::class.java)
+    private val service: UserRDS by lazy {
+        retrofit.create(UserRDS::class.java)
     }
 
     override fun onResume() {
