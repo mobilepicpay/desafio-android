@@ -17,13 +17,13 @@ object MockUserProvider {
         internalMockedUser(),
         UserEntity(
             id = 2,
-            img = "https://randomuser.me/api/portraits/woman/2.jpg",
+            img = "https://randomuser.me/api/portraits/women/2.jpg",
             name = "Marina Coelho",
             username = "@marina.coelho"
         ),
         UserEntity(
             id = 3,
-            img = "https://randomuser.me/api/portraits/woman/3.jpg",
+            img = "https://randomuser.me/api/portraits/women/3.jpg",
             name = "Márcia Silva",
             username = "@marcia.silva"
         )

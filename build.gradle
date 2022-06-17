@@ -6,6 +6,7 @@ buildscript {
         kotlin_version = '1.6.21'
 
         appcompat_version = '1.4.2'
+        legacy_support_version = '1.0.0'
         core_ktx_version = '1.8.0'
         fragment_ktx_version = '1.4.1'
         core_testing_version = '2.1.0'

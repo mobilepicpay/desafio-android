@@ -3,9 +3,7 @@ package com.picpay.desafio.android.presentation.fragments
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.data.server.MockWebServerRule
@@ -30,12 +28,6 @@ class ContactFragmentTest {
         mockWebServerRule.server.enqueue(MockResponseProvider.usersMockResponse())
         scenario = launchFragmentInContainer()
         scenario.moveToState(Lifecycle.State.RESUMED)
-    }
-
-    @Test
-    fun shouldDisplayTitle() {
-        onView(withId(R.id.title)).check(matches(isDisplayed()))
-        onView(withText(R.string.title)).check(matches(isDisplayed()))
     }
 
     @Test

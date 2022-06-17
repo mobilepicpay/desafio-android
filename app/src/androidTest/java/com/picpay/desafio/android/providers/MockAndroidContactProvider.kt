@@ -17,12 +17,12 @@ object MockAndroidContactProvider {
     private fun internalMockedContacts() = listOf(
         internalMockedContact(),
         ContactModel(
-            image = "https://randomuser.me/api/portraits/woman/2.jpg",
+            image = "https://randomuser.me/api/portraits/women/2.jpg",
             name = "Marina Coelho",
             username = "@marina.coelho"
         ),
         ContactModel(
-            image = "https://randomuser.me/api/portraits/woman/3.jpg",
+            image = "https://randomuser.me/api/portraits/women/3.jpg",
             name = "Márcia Silva",
             username = "@marcia.silva"
         )

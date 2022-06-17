@@ -1,12 +1,10 @@
 package com.picpay.desafio.android.presentation.fragments
 
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.picpay.desafio.android.bases.BaseFragment
 import com.picpay.desafio.android.databinding.FragContactBinding
-import com.picpay.desafio.android.extensions.showToastShortText
-import com.picpay.desafio.android.extensions.viewBinding
+import com.picpay.desafio.android.extensions.*
 import com.picpay.desafio.android.presentation.adapters.ContactListAdapter
 import com.picpay.desafio.android.presentation.viewModels.ContactViewModel
 
@@ -17,6 +15,8 @@ class ContactFragment : BaseFragment<ContactViewModel>() {
 
     override fun initComponents() {
         with(binding) {
+            srlContent.setTheme()
+            srlContent.setOnRefreshListener(viewModel::loadContacts)
             recyclerView.apply {
                 adapter = listAdapter
                 layoutManager = LinearLayoutManager(context)
@@ -26,7 +26,7 @@ class ContactFragment : BaseFragment<ContactViewModel>() {
 
     override fun initObservers() {
         with(viewModel) {
-            isLoading.observe(viewLifecycleOwner) { binding.userListProgressBar.isVisible = it }
+            isLoading.observe(viewLifecycleOwner) { binding.srlContent.updateRefreshing(it.orFalse()) }
             messageResource.observe(viewLifecycleOwner) { resource ->
                 binding.recyclerView.visibility = View.GONE
                 resource?.let { this@ContactFragment.context?.showToastShortText(getString(it)) }
