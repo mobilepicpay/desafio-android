@@ -64,7 +64,6 @@ dependencies {
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-androidx-viewmodel:$koin_version"
     testImplementation "io.insert-koin:koin-test:$koin_version"
-    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
 
     // Coroutines dependencies
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
