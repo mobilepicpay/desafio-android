@@ -13,10 +13,12 @@ import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.data.remote.data_source.UserRDS
 import com.picpay.desafio.android.data.repository.UserRepository
+import com.picpay.desafio.android.domain.usecase.GetUsersUC
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.SocketException
@@ -52,6 +54,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         UserRepository(userRDS = userRDS)
     }
 
+    private val getUsersUC: GetUsersUC by lazy{
+        GetUsersUC(repository = repository)
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -66,12 +72,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         lifecycleScope.launch {
             try {
 
-                val users = repository.getUsers()
+                val users = getUsersUC.invoke()
 
                 progressBar.visibility = View.GONE
 
                 adapter.users = users
-            }catch (exception:SocketException){
+            }catch (exception:Exception){
                 val message = getString(R.string.error)
 
                 progressBar.visibility = View.GONE
