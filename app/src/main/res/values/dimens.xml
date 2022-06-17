@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Sizes-->
+    <dimen name="none">0dp</dimen>
+    <dimen name="image_size">52dp</dimen>
+
+    <!--Margins-->
+    <dimen name="big_margin">48dp</dimen>
+    <dimen name="medium_margin">24dp</dimen>
+    <dimen name="half_material_margin">8dp</dimen>
+    <dimen name="image_vertical_margin">12dp</dimen>
+    <dimen name="default_material_margin">16dp</dimen>
+</resources>
