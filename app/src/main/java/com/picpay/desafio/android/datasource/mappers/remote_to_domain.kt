@@ -1,6 +1,6 @@
-package com.picpay.desafio.android.data.mappers
+package com.picpay.desafio.android.datasource.mappers
 
-import com.picpay.desafio.android.data.remote.model.UserRM
+import com.picpay.desafio.android.datasource.remote.model.UserRM
 import com.picpay.desafio.android.domain.model.User
 
 fun List<UserRM>.toDomain():List<User>{

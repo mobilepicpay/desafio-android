@@ -1,7 +1,6 @@
 package com.picpay.desafio.android
 
-import com.picpay.desafio.android.data.remote.data_source.UserRDS
-import com.picpay.desafio.android.data.remote.model.UserRM
+import com.picpay.desafio.android.datasource.remote.UserRDS
 import com.picpay.desafio.android.domain.model.User
 
 class ExampleService(
