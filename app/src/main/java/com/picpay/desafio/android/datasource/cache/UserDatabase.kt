@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.picpay.desafio.android.datasource.cache.model.UserCM
 
 @Database(entities = [UserCM::class], version = 1, exportSchema = false)
-abstract class UserCDS: RoomDatabase() {
+abstract class UserDatabase: RoomDatabase() {
 
     abstract val userDAO: UserDAO
 
@@ -16,9 +16,9 @@ abstract class UserCDS: RoomDatabase() {
 
 
         @Volatile
-        private var INSTANCE: UserCDS? = null
+        private var INSTANCE: UserDatabase? = null
 
-        fun getInstance(context: Context): UserCDS{
+        fun getInstance(context: Context): UserDatabase{
 
             synchronized(this){
                 var instance = INSTANCE
@@ -26,7 +26,7 @@ abstract class UserCDS: RoomDatabase() {
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        UserCDS::class.java,
+                        UserDatabase::class.java,
                         USER_DATABASE_NAME,
                     ).fallbackToDestructiveMigration().build()
                     INSTANCE = instance
