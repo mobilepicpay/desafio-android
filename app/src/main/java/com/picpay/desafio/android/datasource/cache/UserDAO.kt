@@ -10,8 +10,8 @@ import com.picpay.desafio.android.datasource.cache.model.UserCM
 @Dao
 interface UserDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(users:List<UserCM>)
+    suspend fun insertAll(users:List<UserCM>)
 
     @Query("SELECT * FROM $USER_TABLE")
-    fun getUsers(): List<UserCM>
+    suspend fun getUsers(): List<UserCM>
 }

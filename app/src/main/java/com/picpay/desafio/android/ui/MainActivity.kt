@@ -1,5 +1,7 @@
 package com.picpay.desafio.android.ui
 
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -10,9 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.R
+import com.picpay.desafio.android.datasource.cache.UserDatabase
+import com.picpay.desafio.android.datasource.cache.UserDAO
 import com.picpay.desafio.android.datasource.remote.UserRDS
 import com.picpay.desafio.android.datasource.repository.UserRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -45,8 +51,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         retrofit.create(UserRDS::class.java)
     }
 
+    private val userCDS: UserDAO by lazy {
+        UserDatabase.getInstance(applicationContext).userDAO
+    }
+
     private val repository: UserRepository by lazy {
-        UserRepository(userRDS = userRDS)
+        UserRepository(
+            userRDS = userRDS,
+            userCDS = userCDS,
+        )
     }
 
     override fun onResume() {
@@ -68,7 +81,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 progressBar.visibility = View.GONE
 
                 adapter.users = users
-            }catch (exception:SocketException){
+            }catch (exception:Exception){
                 val message = getString(R.string.error)
 
                 progressBar.visibility = View.GONE
