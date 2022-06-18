@@ -4,21 +4,16 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.data.remote.data_source.UserRDS
-import com.picpay.desafio.android.data.repository.UserRepository
-import com.picpay.desafio.android.domain.usecase.GetUsersUC
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.picpay.desafio.android.datasource.remote.UserRDS
+import com.picpay.desafio.android.datasource.repository.UserRepository
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
-import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.SocketException
@@ -54,10 +49,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         UserRepository(userRDS = userRDS)
     }
 
-    private val getUsersUC: GetUsersUC by lazy{
-        GetUsersUC(repository = repository)
-    }
-
     override fun onResume() {
         super.onResume()
 
@@ -72,12 +63,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         lifecycleScope.launch {
             try {
 
-                val users = getUsersUC.invoke()
+                val users = repository.getUsers()
 
                 progressBar.visibility = View.GONE
 
                 adapter.users = users
-            }catch (exception:Exception){
+            }catch (exception:SocketException){
                 val message = getString(R.string.error)
 
                 progressBar.visibility = View.GONE
