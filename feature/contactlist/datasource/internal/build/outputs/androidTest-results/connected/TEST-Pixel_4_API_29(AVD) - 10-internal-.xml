@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.picpay.desafio.feature.contactlist.datasource.internal.ContactListDatabaseTest" tests="1" failures="0" errors="0" skipped="0" time="0.384" timestamp="2022-06-20T22:28:08" hostname="localhost">
+  <properties>
+    <property name="device" value="Pixel_4_API_29(AVD) - 10" />
+    <property name="flavor" value="" />
+    <property name="project" value="internal" />
+  </properties>
+  <testcase name="insertUserAndGetAllUser" classname="com.picpay.desafio.feature.contactlist.datasource.internal.ContactListDatabaseTest" time="0.025" />
+</testsuite>

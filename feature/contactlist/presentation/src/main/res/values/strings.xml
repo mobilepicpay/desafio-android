@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="internet_connection_error">Problema de conexão, tente novamente mais tarde</string>
+    <string name="unknown_error">Erro desconhecido, tente novamente mais tarde.</string>
+    <string name="contacts">Contatos</string>
+</resources>
