@@ -1,2 +1,0 @@
-06-20 19:28:03.909 11736 11767 I TestRunner: started: insertUserAndGetAllUser(com.picpay.desafio.feature.contactlist.datasource.internal.ContactListDatabaseTest)
-06-20 19:28:04.597 11736 11767 I TestRunner: finished: insertUserAndGetAllUser(com.picpay.desafio.feature.contactlist.datasource.internal.ContactListDatabaseTest)
