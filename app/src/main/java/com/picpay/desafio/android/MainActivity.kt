@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.picpay.desafio.android.users.data.api.UsersApi
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,8 +39,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             .build()
     }
 
-    private val service: PicPayService by lazy {
-        retrofit.create(PicPayService::class.java)
+    private val service: UsersApi by lazy {
+        retrofit.create(UsersApi::class.java)
     }
 
     override fun onResume() {
