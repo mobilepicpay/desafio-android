@@ -3,15 +3,17 @@ package com.picpay.desafio.android.users.presentation.view
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.users.presentation.view.adapter.UserListAdapter
 import com.picpay.desafio.android.users.data.api.UsersApi
 import com.picpay.desafio.android.users.data.api.response.UserResponse
+import com.picpay.desafio.android.users.presentation.view.adapter.UserListAdapter
+import com.picpay.desafio.android.users.presentation.viewmodel.UsersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -48,6 +50,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         retrofit.create(UsersApi::class.java)
     }
 
+    val usersViewModel: UsersViewModel by viewModels()
+
     override fun onResume() {
         super.onResume()
 
@@ -59,7 +63,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         progressBar.visibility = View.VISIBLE
-        service.getUsers()
+
+        usersViewModel.init()
+        observeViewModel()
+    }
+
+    private fun observeViewModel() = with(usersViewModel.uiState) {
+        users.observeForever { userList ->
+            progressBar.visibility = View.GONE
+
+            adapter.users = userList
+        }
+    }
+
+    private fun fetchUsers() {
+        service.getUsersLegacy()
             .enqueue(object : Callback<List<UserResponse>> {
                 override fun onFailure(call: Call<List<UserResponse>>, t: Throwable) {
                     val message = getString(R.string.error)
@@ -74,7 +92,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 override fun onResponse(call: Call<List<UserResponse>>, response: Response<List<UserResponse>>) {
                     progressBar.visibility = View.GONE
 
-                    adapter.users = response.body()!!
+//                    adapter.users = response.body()!!
                 }
             })
     }
