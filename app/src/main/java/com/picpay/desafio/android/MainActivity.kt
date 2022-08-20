@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.users.data.api.UsersApi
+import com.picpay.desafio.android.users.data.api.response.UserResponse
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -55,8 +56,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         progressBar.visibility = View.VISIBLE
         service.getUsers()
-            .enqueue(object : Callback<List<User>> {
-                override fun onFailure(call: Call<List<User>>, t: Throwable) {
+            .enqueue(object : Callback<List<UserResponse>> {
+                override fun onFailure(call: Call<List<UserResponse>>, t: Throwable) {
                     val message = getString(R.string.error)
 
                     progressBar.visibility = View.GONE
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         .show()
                 }
 
-                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                override fun onResponse(call: Call<List<UserResponse>>, response: Response<List<UserResponse>>) {
                     progressBar.visibility = View.GONE
 
                     adapter.users = response.body()!!
