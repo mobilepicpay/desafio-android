@@ -16,6 +16,7 @@ buildscript {
         okhttp_version = '4.3.1'
         picasso_version = '2.71828'
         circleimageview_version = '3.0.0'
+        nav_version = "2.5.1"
 
         junit_version = '4.13.2'
         mockito_version = '2.27.0'
