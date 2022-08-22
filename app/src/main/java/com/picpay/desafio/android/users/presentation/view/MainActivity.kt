@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         users.observeForever { userList ->
             progressBar.visibility = View.GONE
 
-            adapter.users = userList
+            adapter.submitList(userList)
         }
     }
 

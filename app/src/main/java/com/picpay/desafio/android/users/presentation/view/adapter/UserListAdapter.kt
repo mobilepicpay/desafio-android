@@ -2,24 +2,11 @@ package com.picpay.desafio.android.users.presentation.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.users.domain.model.User
 
-class UserListAdapter : RecyclerView.Adapter<UserListItemViewHolder>() {
-
-    var users = emptyList<User>()
-        set(value) {
-            val result = DiffUtil.calculateDiff(
-                UserListDiffCallback(
-                    field,
-                    value
-                )
-            )
-            result.dispatchUpdatesTo(this)
-            field = value
-        }
+class UserListAdapter : ListAdapter<User, UserListItemViewHolder>(UserDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListItemViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -29,8 +16,6 @@ class UserListAdapter : RecyclerView.Adapter<UserListItemViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: UserListItemViewHolder, position: Int) {
-        holder.bind(users[position])
+        holder.bind(getItem(position))
     }
-
-    override fun getItemCount(): Int = users.size
 }
