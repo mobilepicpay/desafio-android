@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".users.presentation.view.MainActivity">
+    tools:context=".main.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/picpay_nav_host_fragment"

@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class UserResponseToModelMapper @Inject constructor() {
 
-    fun mapFrom(response: UserResponse): User = User(
+    fun mapFrom(response: UserResponse) = User(
         id = response.id,
         img = response.img,
         name = response.name,

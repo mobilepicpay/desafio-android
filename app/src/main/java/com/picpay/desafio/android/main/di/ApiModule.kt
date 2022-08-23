@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.core.di
+package com.picpay.desafio.android.main.di
 
 import dagger.Module
 import dagger.Provides
