@@ -9,16 +9,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UsersViewModel @Inject constructor(
-    private val getUsers: GetUsersUseCase
+    private val getUsers: GetUsersUseCase,
+    val viewState: UsersViewState = UsersViewState()
 ) : ViewModel() {
 
-    val uiState = UsersViewState()
-
     fun init() {
+        viewState.state.postValue(UsersViewState.State.LOADING)
+
         viewModelScope.launch {
-            getUsers().onSuccess { users ->
-                uiState.users.postValue(users)
-            }
+            getUsers()
+                .onSuccess { users ->
+                    viewState.state.postValue(UsersViewState.State.SUCCESS)
+                    viewState.users.postValue(users)
+                }
+                .onError {
+                    viewState.state.postValue(UsersViewState.State.ERROR)
+                }
         }
     }
 }

@@ -27,6 +27,7 @@ class UsersFragment : Fragment() {
         binding = FragmentUsersBinding.inflate(inflater)
         binding.apply {
             lifecycleOwner = this@UsersFragment
+            viewState = viewModel.viewState
         }
 
         return binding.root
@@ -45,7 +46,7 @@ class UsersFragment : Fragment() {
         recyclerView.adapter = usersAdapter
     }
 
-    private fun observeViewState() = with(viewModel.uiState) {
+    private fun observeViewState() = with(viewModel.viewState) {
         users.observe(viewLifecycleOwner) { userList ->
             usersAdapter.submitList(userList)
         }
