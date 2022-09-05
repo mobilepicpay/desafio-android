@@ -7,21 +7,23 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.FragmentUserListBinding
-import com.picpay.desafio.android.domain.model.UserModel
+import com.picpay.desafio.android.domain.model.ContactModel
 import com.picpay.desafio.android.listItemUser
 import com.picpay.desafio.android.presentation.viewModel.ContactListViewModel
 import com.picpay.desafio.android.presentation.viewModel.State
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 
-class ContactListFragment : Fragment() {
+class ContactListFragment : Fragment(), KoinComponent {
 
-    private val vm by viewModels<ContactListViewModel>()
+    //private val vm by viewModels<ContactListViewModel>()
+    private val vm by inject<ContactListViewModel>()
     private lateinit var binding: FragmentUserListBinding
 
     override fun onCreateView(
@@ -65,7 +67,7 @@ class ContactListFragment : Fragment() {
         vm.loadContacts()
     }
 
-    private fun modelBuilder(data: List<UserModel>) {
+    private fun modelBuilder(data: List<ContactModel>) {
         binding.recyclerView.withModels {
             data.forEachIndexed { _, model ->
                 listItemUser {
@@ -78,7 +80,7 @@ class ContactListFragment : Fragment() {
                             view.dataBinding.root.findViewById<CircleImageView>(R.id.picture)
                         val progressBar =
                             view.dataBinding.root.findViewById<ProgressBar>(R.id.progressBar)
-                        
+
                         Picasso.get()
                             .load(model.img)
                             .error(R.drawable.ic_round_account_circle)
