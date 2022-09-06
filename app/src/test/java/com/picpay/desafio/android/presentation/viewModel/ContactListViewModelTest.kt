@@ -2,8 +2,8 @@ package com.picpay.desafio.android.presentation.viewModel
 
 import com.picpay.desafio.android.BaseTest
 import com.picpay.desafio.android.domain.useCases.ListContactsUseCase
+import com.picpay.desafio.android.provider.MockContactProvider
 import com.picpay.desafio.android.provider.MockErrorProvider
-import com.picpay.desafio.android.provider.MockUserProvider
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -25,11 +25,13 @@ class ContactViewModelTest : BaseTest() {
     @Test
     fun shouldLoadingContacts() {
         contactListViewModel.run {
-            coEvery { listContactsUseCase.execute() } returns MockUserProvider.mockedFlowUsers()
+            coEvery { listContactsUseCase.execute() } returns MockContactProvider.mockedFlowContacts()
             loadContacts()
             coVerify { listContactsUseCase.execute() }
             val r = items.value
-            assertEquals(MockUserProvider.mockedUsers(), r)
+            assertEquals(MockContactProvider.mockedContacts(), r)
+
+            assertTrue(responseState.value is State.Success)
         }
     }
 

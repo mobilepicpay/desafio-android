@@ -1,64 +1,33 @@
 package com.picpay.desafio.android
 
-import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import androidx.test.platform.app.InstrumentationRegistry
-import okhttp3.mockwebserver.Dispatcher
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
-import okhttp3.mockwebserver.RecordedRequest
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.test.espresso.matcher.ViewMatchers.assertThat
+import androidx.test.ext.junit.rules.activityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.equalTo
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4ClassRunner::class)
+@RunWith(AndroidJUnit4::class)
 class MainActivityTest {
 
-    private val server = MockWebServer()
+    @get: Rule
+    val rule = activityScenarioRule<MainActivity>()
 
-    private val context = InstrumentationRegistry.getInstrumentation().targetContext
-
-    @Test
-    fun shouldDisplayTitle() {
-        /*launchActivity<MainActivity>().apply {
-            val expectedTitle = context.getString(R.string.title)
-
-            moveToState(Lifecycle.State.RESUMED)
-
-            onView(withText(expectedTitle)).check(matches(isDisplayed()))
-        }*/
-    }
+    var navControl: NavController? = null
 
     @Test
-    fun shouldDisplayListItem() {
-        server.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse {
-                return when (request.path) {
-                    "/users" -> successResponse
-                    else -> errorResponse
-                }
-            }
+    fun shouldNavigateToHomeFragment() {
+        val homeFragmentId = R.id.userListFragment
+
+        rule.scenario.onActivity {
+            navControl = Navigation.findNavController(it, R.id.nav_host_fragment_activity_main)
         }
 
-        server.start(serverPort)
-
-        /*launchActivity<MainActivity>().apply {
-            // TODO("validate if list displays items returned by server")
-        }*/
-
-        server.close()
+        assertThat(navControl!!.currentDestination!!.id, `is`(equalTo(homeFragmentId)))
     }
 
-    companion object {
-        private const val serverPort = 8080
-
-        private val successResponse by lazy {
-            val body =
-                "[{\"id\":1001,\"name\":\"Eduardo Santos\",\"img\":\"https://randomuser.me/api/portraits/men/9.jpg\",\"username\":\"@eduardo.santos\"}]"
-
-            MockResponse()
-                .setResponseCode(200)
-                .setBody(body)
-        }
-
-        private val errorResponse by lazy { MockResponse().setResponseCode(404) }
-    }
 }

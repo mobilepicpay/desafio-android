@@ -2,7 +2,7 @@ package com.picpay.desafio.android.domain.useCases
 
 import com.picpay.desafio.android.BaseTest
 import com.picpay.desafio.android.data.repository.ContactRepository
-import com.picpay.desafio.android.provider.MockUserProvider
+import com.picpay.desafio.android.provider.MockContactProvider
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -23,10 +23,10 @@ class ListContactsUseCaseTest : BaseTest() {
         runBlocking {
             coEvery {
                 repository.getContacts()
-            } returns MockUserProvider.mockedFlowUsers()
+            } returns MockContactProvider.mockedFlowContacts()
 
             listContactsUseCase.execute().collect {
-                assertEquals(MockUserProvider.mockedUsers(), it)
+                assertEquals(MockContactProvider.mockedContacts(), it)
             }
         }
     }
