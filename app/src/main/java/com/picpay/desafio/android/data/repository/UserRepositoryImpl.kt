@@ -1,6 +1,6 @@
 package com.picpay.desafio.android.data.repository
 
-import com.picpay.desafio.android.core.DataResult
+import com.picpay.desafio.android.core.Outcome
 import com.picpay.desafio.android.data.model.UserEntity
 import com.picpay.desafio.android.data.source.local.UserDao
 import com.picpay.desafio.android.data.source.remote.UserRemoteDataSource
@@ -17,11 +17,11 @@ class UserRepositoryImpl constructor(
     private val mapper: UserMapper
 ) : UserRepository {
 
-    override suspend fun getUser(): Flow<DataResult<List<UserEntity>>?> {
+    override fun getUser(): Flow<Outcome<List<UserEntity>>?> {
         return flow {
-            emit(DataResult.Loading())
-            var result: DataResult<List<UserEntity>>? = remoteDataSource.getUsers()
-            if (result is DataResult.Success) {
+            emit(Outcome.Loading())
+            var result: Outcome<List<UserEntity>>? = remoteDataSource.getUsers()
+            if (result is Outcome.Success) {
                 result.data.let { list ->
                     userDao.deleteAll()
                     userDao.insertAll(list.filter { it.id != null })
@@ -33,8 +33,8 @@ class UserRepositoryImpl constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    private fun getCachedUsers(): DataResult<List<UserEntity>>? =
+    private fun getCachedUsers(): Outcome<List<UserEntity>>? =
         userDao.getAll()?.let { list ->
-            DataResult.Success(list)
+            Outcome.Success(list)
         }
 }
