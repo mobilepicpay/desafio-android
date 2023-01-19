@@ -12,7 +12,7 @@ class ExampleServiceTest {
 
     private val api = mock<PicPayService>()
 
-    private val service = ExampleService(api)
+//    private val service = ExampleService(api)
 
     @Test
     fun exampleTest() {
