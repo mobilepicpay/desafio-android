@@ -9,7 +9,7 @@ import com.picpay.desafio.android.data.model.UserEntity
 
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM user order by name DESC")
+    @Query("SELECT * FROM user order by id ASC")
     fun getAll(): List<UserEntity>?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

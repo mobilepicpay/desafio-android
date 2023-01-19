@@ -33,7 +33,7 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
 
     }
     dependencies {
@@ -48,14 +48,14 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
 
     }
 }
 
 subprojects {
     afterEvaluate { project ->
-        project.apply from: '../spotless.gradle'
+        project.apply from: '../spotless.gradle.kts'
     }
 }
 
