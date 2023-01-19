@@ -18,15 +18,20 @@ class UserRepositoryImpl constructor(
         return flow {
             val cached = getCachedUsers()
             if (cached.isNotEmpty()) {
-                emit(getCachedUsers())
+                emit(cached)
             }
-            val result = remoteDataSource.getUsers()
-            result.let { list ->
-                userDao.deleteAll()
-                userDao.insertAll(list.filter { it.id != null })
+            try {
+                val result = remoteDataSource.getUsers()
+                result.let { list ->
+                    userDao.deleteAll()
+                    userDao.insertAll(list.filter { it.id != null })
+                }
+                emit(result)
+            } catch (e: Exception) {
+                if (cached.isEmpty()) {
+                    throw e
+                }
             }
-
-            emit(result)
         }.flowOn(Dispatchers.IO)
     }
 
