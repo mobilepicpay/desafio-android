@@ -1,36 +1,54 @@
 package com.picpay.desafio.android.presentation
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.picpay.desafio.android.core.Outcome
+import com.picpay.desafio.android.domain.model.User
+import com.picpay.desafio.android.domain.usecase.GetAndUpdateUsersUseCase
 import com.picpay.desafio.android.domain.usecase.GetUsersUseCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flatMapMerge
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-class UserViewModel constructor(private val mainDataUseCase: GetUsersUseCase) : ViewModel() {
+class UserViewModel constructor(
+    private val getUserUseCase: GetUsersUseCase,
+    private val getAndUpdateUsersUseCase: GetAndUpdateUsersUseCase
+) : ViewModel() {
+    private val _uiState = MutableLiveData<UserViewState>()
+    val uiState: LiveData<UserViewState>
+        get() = _uiState
 
     init {
-        refresh()
+        getUsers()
     }
-
-    val uiLiveData: LiveData<UserViewState> =
-        mainDataUseCase.resultFlow.flatMapMerge {
-            return@flatMapMerge flowOf(
-                when (it) {
-                    is Outcome.Error -> UserViewState.Error(error = it.error)
-                    is Outcome.Loading -> UserViewState.Loading
-                    is Outcome.Success -> UserViewState.Success(list = it.data)
-                }
-            )
-        }.asLiveData(Dispatchers.Main)
 
     fun refresh() {
         viewModelScope.launch {
-            mainDataUseCase.launch()
+            getAndUpdateUsersUseCase.invoke().onStart {
+                _uiState.value = UserViewState.Loading
+            }.collect { result ->
+                handleUseCaseOutcome(result)
+            }
+        }
+    }
+
+    private fun getUsers() {
+        viewModelScope.launch {
+            getUserUseCase.invoke().onStart {
+                _uiState.value = UserViewState.Loading
+            }.collect { result ->
+                handleUseCaseOutcome(result)
+            }
+        }
+    }
+
+    private fun handleUseCaseOutcome(result: Outcome<List<User>>) {
+        _uiState.value = when (result) {
+            is Outcome.Success -> UserViewState.Success(result.data)
+            is Outcome.Error -> {
+                UserViewState.Error(result.error)
+            }
         }
     }
 }

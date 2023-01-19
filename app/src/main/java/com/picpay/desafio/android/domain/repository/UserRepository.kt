@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
     fun getUser(): Flow<List<UserEntity>>
+    fun getUpDateUsers(): Flow<List<UserEntity>>
 }

@@ -11,12 +11,12 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 
-class GetUsersUseCase constructor(
+class GetAndUpdateUsersUseCase constructor(
     private val postsRepository: UserRepository
 ) : FlowUseCase<List<User>> {
 
     override fun invoke(): Flow<Outcome<List<User>>> = flow {
-        postsRepository.getUser().catch { error ->
+        postsRepository.getUpDateUsers().catch { error ->
             if (error is HttpException) {
                 emit(Outcome.Error(DataError(error.code(), error.message)))
             } else {

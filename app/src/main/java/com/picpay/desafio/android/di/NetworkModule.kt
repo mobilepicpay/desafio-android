@@ -15,11 +15,11 @@ private const val TIME_OUT = 30L
 
 val networkModule = module {
 
-    single<PicPayService> { createService(get()) }
+    single { createService(get()) }
 
-    single<Retrofit> { createRetrofit(get(), get(), BuildConfig.BASE_URL) }
+    single { createRetrofit(get(), get(), BuildConfig.BASE_URL) }
 
-    single<OkHttpClient> { createOkHttpClient() }
+    single { createOkHttpClient() }
 
     single { GsonBuilder().create() }
 

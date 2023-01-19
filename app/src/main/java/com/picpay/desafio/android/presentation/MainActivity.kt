@@ -22,17 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-    }
-
-    //    private val url = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
-    override fun onResume() {
-        super.onResume()
-
-        adapter = UserListAdapter()
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-
-        viewModel.uiLiveData.observe(this) { state ->
+        viewModel.uiState.observe(this) { state ->
             when (state) {
                 is UserViewState.Success -> onSuccess(state.list)
                 is UserViewState.Loading -> onLoading()
@@ -41,22 +31,41 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        adapter = UserListAdapter()
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.btRefresh.setOnClickListener {
+            viewModel.refresh()
+        }
+    }
+
     private fun onLoading() {
         binding.userListProgressBar.visibility = View.VISIBLE
+        binding.btRefresh.visibility = View.GONE
+        binding.recyclerView.visibility = View.GONE
     }
 
     private fun onError(error: DataError) {
-        val message = getString(R.string.error)
-
+        val
+        message = if (error.statusCode != 0) {
+            error.statusMessage ?: getString(R.string.error)
+        } else {
+            getString(R.string.error) + error.statusMessage
+        }
         binding.userListProgressBar.visibility = View.GONE
         binding.recyclerView.visibility = View.GONE
+        binding.btRefresh.visibility = View.VISIBLE
 
         Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
             .show()
     }
 
     private fun onSuccess(list: List<User>) {
+        binding.recyclerView.visibility = View.VISIBLE
         binding.userListProgressBar.visibility = View.GONE
+        binding.btRefresh.visibility = View.GONE
         adapter.submitList(list)
     }
 }

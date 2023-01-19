@@ -15,8 +15,8 @@ class UserRepositoryImpl constructor(
 ) : UserRepository {
 
     @Suppress("TooGenericExceptionCaught")
-    override fun getUser(): Flow<List<UserEntity>> {
-        return flow {
+    override fun getUser(): Flow<List<UserEntity>> =
+        flow {
             val cached = getCachedUsers()
             if (cached.isNotEmpty()) {
                 emit(cached)
@@ -34,7 +34,16 @@ class UserRepositoryImpl constructor(
                 }
             }
         }.flowOn(Dispatchers.IO)
-    }
+
+    override fun getUpDateUsers(): Flow<List<UserEntity>> =
+        flow {
+            val result = remoteDataSource.getUsers()
+            result.let { list ->
+                userDao.deleteAll()
+                userDao.insertAll(list.filter { it.id != null })
+            }
+            emit(result)
+        }.flowOn(Dispatchers.IO)
 
     private fun getCachedUsers(): List<UserEntity> =
         userDao.getAll() ?: listOf()
