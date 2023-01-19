@@ -1,3 +1,5 @@
+package plugins
+
 import com.diffplug.gradle.spotless.SpotlessExtension
 import com.diffplug.gradle.spotless.SpotlessPlugin
 
@@ -14,9 +16,9 @@ configure<SpotlessExtension> {
     }
 
     kotlin {
+        target ("**/*.kt")
         ktfmt()
         ktlint()
-        diktat()
         prettier()
         trimTrailingWhitespace()
         indentWithSpaces()

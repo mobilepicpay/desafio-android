@@ -7,8 +7,8 @@ import com.picpay.desafio.android.domain.model.User
 object UserMapper : BaseMapper<UserEntity, User>() {
     override fun transformTo(source: UserEntity): User =
         User(
-            username = source.username,
-            name = source.name,
-            img = source.img
+            username = source.username ?: "",
+            name = source.name ?: "",
+            img = source.img ?: ""
         )
 }

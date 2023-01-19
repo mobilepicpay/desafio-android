@@ -14,6 +14,7 @@ class UserRepositoryImpl constructor(
     private val userDao: UserDao
 ) : UserRepository {
 
+    @Suppress("TooGenericExceptionCaught")
     override fun getUser(): Flow<List<UserEntity>> {
         return flow {
             val cached = getCachedUsers()
