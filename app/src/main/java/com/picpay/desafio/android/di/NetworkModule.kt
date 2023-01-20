@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import com.picpay.desafio.android.BuildConfig
 import com.picpay.desafio.android.data.source.remote.PicPayService
 import com.picpay.desafio.android.data.source.remote.UserRemoteDataSource
+import com.picpay.desafio.android.data.source.remote.UserRemoteDataSourceImpl
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -23,7 +24,7 @@ val networkModule = module {
 
     single { GsonBuilder().create() }
 
-    single { UserRemoteDataSource(get()) }
+    single<UserRemoteDataSource> { UserRemoteDataSourceImpl(get()) }
 }
 
 fun createOkHttpClient(): OkHttpClient =

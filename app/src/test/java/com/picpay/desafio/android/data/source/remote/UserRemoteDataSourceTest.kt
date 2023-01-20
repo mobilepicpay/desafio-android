@@ -16,7 +16,7 @@ class UserRemoteDataSourceTest {
 
     private val api = mock<PicPayService>()
 
-    private val remoteDataSource = UserRemoteDataSource(api)
+    private val remoteDataSource = UserRemoteDataSourceImpl(api)
 
     @Test
     fun `Given UserRemoteDataSource When call getUsers Than should return list of users `() =

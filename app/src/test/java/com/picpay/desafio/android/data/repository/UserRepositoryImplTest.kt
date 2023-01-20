@@ -3,7 +3,7 @@ package com.picpay.desafio.android.data.repository
 import com.nhaarman.mockitokotlin2.whenever
 import com.picpay.desafio.android.UsersStub.listUsersEntity
 import com.picpay.desafio.android.data.source.local.UserDao
-import com.picpay.desafio.android.data.source.remote.UserRemoteDataSource
+import com.picpay.desafio.android.data.source.remote.UserRemoteDataSourceImpl
 import com.picpay.desafio.android.domain.repository.UserRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
@@ -16,7 +16,7 @@ import kotlin.test.assertEquals
 @ExperimentalCoroutinesApi
 class UserRepositoryImplTest {
 
-    private val remoteDataSource: UserRemoteDataSource = mock()
+    private val remoteDataSource: UserRemoteDataSourceImpl = mock()
     private val userDao: UserDao = mock()
     private val repository: UserRepository = UserRepositoryImpl(remoteDataSource, userDao)
 
