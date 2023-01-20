@@ -56,12 +56,11 @@ object Dependencies {
     val testRunner by lazy { "androidx.test:runner:${Versions.testRunner}" }
     val testArch by lazy { "androidx.arch.core:core-testing:${Versions.testArch}" }
     val espresso by lazy { "androidx.test.espresso:espresso-core:${Versions.espresso}" }
+    val espressoIdling by lazy { "androidx.test.espresso:espresso-idling-resource:${Versions.espresso}" }
     val junit by lazy { "junit:junit:${Versions.junit}" }
+    val androidJunit by lazy { "androidx.test.ext:junit:${Versions.androidJunit}" }
 
     //    Mock
-    val mockitoCore by lazy { "org.mockito:mockito-core:${Versions.mockitoCore}" }
-    val mockitoKotlin by lazy {
-        "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockitoKotlin}"
-    }
+    val mockk by lazy { "io.mockk:mockk:${Versions.mockk}" }
     val mockWebserver by lazy { "com.squareup.okhttp3:mockwebserver:${Versions.okhttp}" }
 }

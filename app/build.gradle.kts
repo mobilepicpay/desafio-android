@@ -1,4 +1,5 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import config.ConfigData
 import dependencies.Dependencies
 
 plugins {
@@ -9,17 +10,17 @@ plugins {
 
 val baseUrl: String = gradleLocalProperties(rootDir).getProperty("BASE_URL")
 android {
-    namespace = config.ConfigData.namespace
-    compileSdk = config.ConfigData.compileSdkVersion
+    namespace = ConfigData.namespace
+    compileSdk = ConfigData.compileSdkVersion
 
     defaultConfig {
-        applicationId = config.ConfigData.namespace
-        minSdk = config.ConfigData.minSdkVersion
-        targetSdk = config.ConfigData.targetSdkVersion
-        versionCode = config.ConfigData.versionCode
-        versionName = config.ConfigData.versionName
+        applicationId = ConfigData.namespace
+        minSdk = ConfigData.minSdkVersion
+        targetSdk = ConfigData.targetSdkVersion
+        versionCode = ConfigData.versionCode
+        versionName = ConfigData.versionName
 
-        testInstrumentationRunner = "com.picpay.desafio.android.ApiTestRunner"
+        testInstrumentationRunner = ConfigData.testInstrumentationRunner
         buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
     }
 
@@ -77,15 +78,10 @@ dependencies {
 
     implementation(Dependencies.room)
     implementation(Dependencies.roomRuntime)
-    implementation("androidx.test.espresso:espresso-idling-resource:3.5.1")
+    implementation(Dependencies.espressoIdling)
 
     testImplementation(Dependencies.junit)
-    testImplementation(Dependencies.mockitoCore)
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    testImplementation("io.mockk:mockk:1.13.3")
-
-    testImplementation(Dependencies.mockitoKotlin)
+    testImplementation(Dependencies.mockk)
     testImplementation(Dependencies.testArch)
     testImplementation(Dependencies.testKoin)
     testImplementation(Dependencies.coroutinesTest)
@@ -93,8 +89,12 @@ dependencies {
 
     androidTestImplementation(Dependencies.testRunner)
     androidTestImplementation(Dependencies.espresso)
+    androidTestImplementation(Dependencies.espressoIdling)
     androidTestImplementation(Dependencies.testCore)
     androidTestImplementation(Dependencies.testArch)
     androidTestImplementation(Dependencies.testKoin)
+    androidTestImplementation(Dependencies.coroutinesTest)
+    androidTestImplementation(Dependencies.androidJunit)
+
     kapt(Dependencies.roomCompiler)
 }

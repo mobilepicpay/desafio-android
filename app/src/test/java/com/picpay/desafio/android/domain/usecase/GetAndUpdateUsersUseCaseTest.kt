@@ -1,11 +1,12 @@
 package com.picpay.desafio.android.domain.usecase
 
-import com.nhaarman.mockitokotlin2.whenever
 import com.picpay.desafio.android.UsersStub.listUsers
 import com.picpay.desafio.android.UsersStub.listUsersEntity
 import com.picpay.desafio.android.core.DataError
 import com.picpay.desafio.android.core.Outcome
 import com.picpay.desafio.android.domain.repository.UserRepository
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -14,7 +15,6 @@ import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody
 import org.junit.Test
-import org.mockito.Mockito.mock
 import retrofit2.HttpException
 import retrofit2.Response
 import kotlin.test.assertEquals
@@ -22,7 +22,7 @@ import kotlin.test.assertEquals
 @ExperimentalCoroutinesApi
 class GetAndUpdateUsersUseCaseTest {
 
-    private val repository: UserRepository = mock()
+    private val repository: UserRepository = mockk()
     private val getAndUpdateUsersUseCase = GetAndUpdateUsersUseCase(repository)
 
     private val exception = RuntimeException("dummy")
@@ -30,11 +30,8 @@ class GetAndUpdateUsersUseCaseTest {
     @Test
     fun `Given GetAndUpdateUsersUseCaseTest When call invoke than should return Success `() =
         runTest {
-            whenever(repository.getUpDateUsers()).thenReturn(
-                flow {
-                    emit(listUsersEntity)
-                }
-            )
+            coEvery { repository.getUpDateUsers() } returns flow { emit(listUsersEntity) }
+
             val response = getAndUpdateUsersUseCase.invoke().toList()
 
             assertEquals(
@@ -48,9 +45,8 @@ class GetAndUpdateUsersUseCaseTest {
     @Test
     fun `Given GetAndUpdateUsersUseCaseTest When call invoke than should return Error`() =
         runTest {
-            whenever(repository.getUpDateUsers()).thenThrow(
-                exception
-            )
+            coEvery { repository.getUpDateUsers() } throws exception
+
             getAndUpdateUsersUseCase.invoke().catch {
                 assertEquals(exception, it)
             }
@@ -59,19 +55,16 @@ class GetAndUpdateUsersUseCaseTest {
     @Test
     fun `Given GetAndUpdateUsersUseCaseTest When call invoke than should emit HttpException`() =
         runTest {
-            whenever(repository.getUpDateUsers()).thenReturn(
+            coEvery { repository.getUpDateUsers() } returns
                 flow {
                     throw HttpException(
                         Response.error<ResponseBody>(
                             500,
-                            ResponseBody.create(
-                                "".toMediaTypeOrNull(),
-                                "some content"
-                            )
+                            ResponseBody.create("".toMediaTypeOrNull(), "some content")
                         )
                     )
                 }
-            )
+
             val response = getAndUpdateUsersUseCase.invoke().toList()
 
             assertEquals(
@@ -85,11 +78,7 @@ class GetAndUpdateUsersUseCaseTest {
     @Test
     fun `Given GetAndUpdateUsersUseCaseTest When call invoke than should emit Exception`() =
         runTest {
-            whenever(repository.getUpDateUsers()).thenReturn(
-                flow {
-                    throw exception
-                }
-            )
+            coEvery { repository.getUpDateUsers() } returns flow { throw exception }
 
             val response = getAndUpdateUsersUseCase.invoke().toList()
 

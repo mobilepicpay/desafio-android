@@ -4,15 +4,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.IdlingResource
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.picpay.desafio.android.ApiTestRunner.Companion.MOCK_WEB_SERVER_PORT
-import com.picpay.desafio.android.EspressoIdlingResourceRule
+import com.picpay.desafio.android.OkHttp3IdlingResource
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.RecyclerViewMatchers.checkRecyclerViewItem
-import com.picpay.desafio.android.core.EspressoIdlingResource
 import com.picpay.desafio.android.data.source.local.AppDatabase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -22,7 +22,6 @@ import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.test.KoinTest
@@ -33,8 +32,7 @@ class MainActivityTest : KoinTest {
 
     private val server = MockWebServer()
 
-    @get:Rule
-    val espressoIdlingResourceRule = EspressoIdlingResourceRule()
+    var resource: IdlingResource = OkHttp3IdlingResource.create("OkHttp", getKoin().get())
 
     private lateinit var webServer: MockWebServer
 
@@ -42,7 +40,7 @@ class MainActivityTest : KoinTest {
     @Throws(Exception::class)
     fun setup() {
         webServer = MockWebServer()
-        IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
+        IdlingRegistry.getInstance().register(resource)
     }
 
     @After
@@ -51,7 +49,7 @@ class MainActivityTest : KoinTest {
         webServer.shutdown()
         val db = getKoin().get<AppDatabase>()
         db.clearAllTables()
-        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
+        IdlingRegistry.getInstance().unregister(resource)
     }
 
     @Test

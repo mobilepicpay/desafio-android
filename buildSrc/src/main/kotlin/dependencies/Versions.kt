@@ -22,8 +22,8 @@ object Versions {
     const val espresso = "3.5.1"
     const val testCore = "1.5.0"
     const val junit = "4.13.2"
-    const val mockitoCore = "5.0.0"
-    const val mockitoKotlin = "2.2.0"
+    const val androidJunit = "1.1.5"
+    const val mockk = "1.13.3"
     const val picasso = "2.8"
     const val circleimageview = "3.1.0"
 }
