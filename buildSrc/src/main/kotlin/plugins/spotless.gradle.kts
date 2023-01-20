@@ -17,6 +17,7 @@ configure<SpotlessExtension> {
 
     kotlin {
         target ("**/*.kt")
+        targetExclude("**/build/**")
         ktfmt()
         ktlint()
         trimTrailingWhitespace()
