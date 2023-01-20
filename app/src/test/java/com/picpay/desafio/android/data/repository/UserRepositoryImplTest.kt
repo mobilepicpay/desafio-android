@@ -1,7 +1,7 @@
 package com.picpay.desafio.android.data.repository
 
 import com.nhaarman.mockitokotlin2.whenever
-import com.picpay.desafio.android.data.entity.UserEntity
+import com.picpay.desafio.android.UsersStub.listUsersEntity
 import com.picpay.desafio.android.data.source.local.UserDao
 import com.picpay.desafio.android.data.source.remote.UserRemoteDataSource
 import com.picpay.desafio.android.domain.repository.UserRepository
@@ -20,11 +20,6 @@ class UserRepositoryImplTest {
     private val userDao: UserDao = mock()
     private val repository: UserRepository = UserRepositoryImpl(remoteDataSource, userDao)
 
-    private val listUsers = listOf(
-        UserEntity(img = "img 1", name = "name 1", username = "user name 1", id = 1),
-        UserEntity(img = "img 2", name = "name 2", username = "user name 2", id = 2)
-    )
-
     private val exception = RuntimeException("dummy")
 
     @Test
@@ -41,34 +36,34 @@ class UserRepositoryImplTest {
     @Test
     fun `Given UserRepositoryImpl When call getUser than should return users from database and remote empty`() =
         runTest {
-            whenever(userDao.getAll()).thenReturn(listUsers)
+            whenever(userDao.getAll()).thenReturn(listUsersEntity)
             whenever(remoteDataSource.getUsers()).thenReturn(listOf())
 
             val responseList = repository.getUser().toList()
 
-            assertEquals(responseList, listOf(listUsers, listOf()))
+            assertEquals(responseList, listOf(listUsersEntity, listOf()))
         }
 
     @Test
     fun `Given UserRepositoryImpl When call getUser than should return empty from database and remote users`() =
         runTest {
             whenever(userDao.getAll()).thenReturn(listOf())
-            whenever(remoteDataSource.getUsers()).thenReturn(listUsers)
+            whenever(remoteDataSource.getUsers()).thenReturn(listUsersEntity)
 
             val responseList = repository.getUser().toList()
 
-            assertEquals(responseList, listOf(listUsers))
+            assertEquals(responseList, listOf(listUsersEntity))
         }
 
     @Test
     fun `Given UserRepositoryImpl When call getUser than should return error from database and remote users`() =
         runTest {
             whenever(userDao.getAll()).thenThrow(RuntimeException(""))
-            whenever(remoteDataSource.getUsers()).thenReturn(listUsers)
+            whenever(remoteDataSource.getUsers()).thenReturn(listUsersEntity)
 
             val responseList = repository.getUser().toList()
 
-            assertEquals(responseList, listOf(listUsers))
+            assertEquals(responseList, listOf(listUsersEntity))
         }
 
     @Test
@@ -85,22 +80,22 @@ class UserRepositoryImplTest {
     @Test
     fun `Given UserRepositoryImpl When call getUser than should return users from database and remote error`() =
         runTest {
-            whenever(userDao.getAll()).thenReturn(listUsers)
+            whenever(userDao.getAll()).thenReturn(listUsersEntity)
             whenever(remoteDataSource.getUsers()).thenThrow(exception)
 
             val responseList = repository.getUser().toList()
 
-            assertEquals(responseList, listOf(listUsers))
+            assertEquals(responseList, listOf(listUsersEntity))
         }
 
     @Test
     fun `Given UserRepositoryImpl When call getUpDateUsers than should return users `() =
         runTest {
-            whenever(remoteDataSource.getUsers()).thenReturn(listUsers)
+            whenever(remoteDataSource.getUsers()).thenReturn(listUsersEntity)
 
             val responseList = repository.getUser().toList()
 
-            assertEquals(responseList, listOf(listUsers))
+            assertEquals(responseList, listOf(listUsersEntity))
         }
 
     @Test

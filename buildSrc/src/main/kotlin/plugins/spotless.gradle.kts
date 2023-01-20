@@ -19,7 +19,6 @@ configure<SpotlessExtension> {
         target ("**/*.kt")
         ktfmt()
         ktlint()
-        prettier()
         trimTrailingWhitespace()
         indentWithSpaces()
         endWithNewline()

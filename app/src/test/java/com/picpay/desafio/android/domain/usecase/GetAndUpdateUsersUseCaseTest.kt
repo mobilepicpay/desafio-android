@@ -1,10 +1,10 @@
 package com.picpay.desafio.android.domain.usecase
 
 import com.nhaarman.mockitokotlin2.whenever
+import com.picpay.desafio.android.UsersStub.listUsers
+import com.picpay.desafio.android.UsersStub.listUsersEntity
 import com.picpay.desafio.android.core.DataError
 import com.picpay.desafio.android.core.Outcome
-import com.picpay.desafio.android.data.entity.UserEntity
-import com.picpay.desafio.android.domain.model.User
 import com.picpay.desafio.android.domain.repository.UserRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
@@ -24,15 +24,6 @@ class GetAndUpdateUsersUseCaseTest {
 
     private val repository: UserRepository = mock()
     private val getAndUpdateUsersUseCase = GetAndUpdateUsersUseCase(repository)
-
-    private val listUsersEntity = listOf(
-        UserEntity(img = "img 1", name = "name 1", username = "user name 1", id = 1L),
-        UserEntity(img = "img 2", name = "name 2", username = "user name 2", id = 2L)
-    )
-    private val listUsers = listOf(
-        User(img = "img 1", name = "name 1", username = "user name 1"),
-        User(img = "img 2", name = "name 2", username = "user name 2")
-    )
 
     private val exception = RuntimeException("dummy")
 
