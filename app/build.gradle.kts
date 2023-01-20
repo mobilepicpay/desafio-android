@@ -19,7 +19,7 @@ android {
         versionCode = config.ConfigData.versionCode
         versionName = config.ConfigData.versionName
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.picpay.desafio.android.ApiTestRunner"
         buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
     }
 
@@ -77,6 +77,7 @@ dependencies {
 
     implementation(Dependencies.room)
     implementation(Dependencies.roomRuntime)
+    implementation("androidx.test.espresso:espresso-idling-resource:3.5.1")
 
     testImplementation(Dependencies.junit)
     testImplementation(Dependencies.mockitoCore)
@@ -94,5 +95,6 @@ dependencies {
     androidTestImplementation(Dependencies.espresso)
     androidTestImplementation(Dependencies.testCore)
     androidTestImplementation(Dependencies.testArch)
+    androidTestImplementation(Dependencies.testKoin)
     kapt(Dependencies.roomCompiler)
 }

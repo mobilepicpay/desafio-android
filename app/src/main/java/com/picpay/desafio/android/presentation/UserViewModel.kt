@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.picpay.desafio.android.core.EspressoIdlingResource
 import com.picpay.desafio.android.core.Outcome
 import com.picpay.desafio.android.domain.model.User
 import com.picpay.desafio.android.domain.usecase.GetAndUpdateUsersUseCase
@@ -22,9 +23,11 @@ class UserViewModel constructor(
     fun refresh() {
         viewModelScope.launch {
             getAndUpdateUsersUseCase.invoke().onStart {
+                EspressoIdlingResource.increment()
                 _uiState.value = UserViewState.Loading
             }.collect { result ->
                 handleUseCaseOutcome(result)
+                EspressoIdlingResource.decrement()
             }
         }
     }
@@ -32,9 +35,11 @@ class UserViewModel constructor(
     fun getUsers() {
         viewModelScope.launch {
             getUserUseCase.invoke().onStart {
+                EspressoIdlingResource.increment()
                 _uiState.value = UserViewState.Loading
             }.collect { result ->
                 handleUseCaseOutcome(result)
+                EspressoIdlingResource.decrement()
             }
         }
     }
