@@ -1,6 +1,6 @@
 package com.picpay.desafio.android.data.source.remote
 
-import com.picpay.desafio.android.data.model.UserEntity
+import com.picpay.desafio.android.data.entity.UserEntity
 import retrofit2.Response
 
 class UserRemoteDataSource constructor(private val service: PicPayService) {
@@ -17,7 +17,7 @@ class UserRemoteDataSource constructor(private val service: PicPayService) {
         if (!response.isSuccessful || body != null) {
             return body!!
         } else {
-            throw java.lang.Exception(response.message())
+            throw Exception(response.errorBody()?.string() ?: "")
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.picpay.desafio.android.data.repository
 
-import com.picpay.desafio.android.data.model.UserEntity
+import com.picpay.desafio.android.data.entity.UserEntity
 import com.picpay.desafio.android.data.source.local.UserDao
 import com.picpay.desafio.android.data.source.remote.UserRemoteDataSource
 import com.picpay.desafio.android.domain.repository.UserRepository
@@ -14,22 +14,26 @@ class UserRepositoryImpl constructor(
     private val userDao: UserDao
 ) : UserRepository {
 
+    private var cached: List<UserEntity>? = null
+
     @Suppress("TooGenericExceptionCaught")
     override fun getUser(): Flow<List<UserEntity>> =
         flow {
-            val cached = getCachedUsers()
-            if (cached.isNotEmpty()) {
-                emit(cached)
+            try {
+                cached = getCachedUsers()
+                if (cached?.isNotEmpty() == true) {
+                    emit(cached!!)
+                }
+            } catch (ignore: Exception) {
             }
             try {
-                val result = remoteDataSource.getUsers()
-                result.let { list ->
+                remoteDataSource.getUsers().filter { it.id != null }.let { list ->
                     userDao.deleteAll()
-                    userDao.insertAll(list.filter { it.id != null })
+                    userDao.insertAll(list)
+                    emit(list)
                 }
-                emit(result)
             } catch (e: Exception) {
-                if (cached.isEmpty()) {
+                if (cached.isNullOrEmpty()) {
                     throw e
                 }
             }
@@ -37,12 +41,11 @@ class UserRepositoryImpl constructor(
 
     override fun getUpDateUsers(): Flow<List<UserEntity>> =
         flow {
-            val result = remoteDataSource.getUsers()
-            result.let { list ->
+            remoteDataSource.getUsers().filter { it.id != null }.let { list ->
                 userDao.deleteAll()
-                userDao.insertAll(list.filter { it.id != null })
+                userDao.insertAll(list)
+                emit(list)
             }
-            emit(result)
         }.flowOn(Dispatchers.IO)
 
     private fun getCachedUsers(): List<UserEntity> =

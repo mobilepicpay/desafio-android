@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
                 is UserViewState.Error -> onError(state.error)
             }
         }
+        viewModel.getUsers()
     }
 
     override fun onResume() {

@@ -19,10 +19,6 @@ class UserViewModel constructor(
     val uiState: LiveData<UserViewState>
         get() = _uiState
 
-    init {
-        getUsers()
-    }
-
     fun refresh() {
         viewModelScope.launch {
             getAndUpdateUsersUseCase.invoke().onStart {
@@ -33,7 +29,7 @@ class UserViewModel constructor(
         }
     }
 
-    private fun getUsers() {
+    fun getUsers() {
         viewModelScope.launch {
             getUserUseCase.invoke().onStart {
                 _uiState.value = UserViewState.Loading

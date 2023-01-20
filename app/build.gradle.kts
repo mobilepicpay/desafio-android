@@ -32,6 +32,11 @@ android {
             )
         }
     }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -75,6 +80,10 @@ dependencies {
 
     testImplementation(Dependencies.junit)
     testImplementation(Dependencies.mockitoCore)
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    testImplementation("io.mockk:mockk:1.13.3")
+
     testImplementation(Dependencies.mockitoKotlin)
     testImplementation(Dependencies.testArch)
     testImplementation(Dependencies.testKoin)
@@ -84,6 +93,6 @@ dependencies {
     androidTestImplementation(Dependencies.testRunner)
     androidTestImplementation(Dependencies.espresso)
     androidTestImplementation(Dependencies.testCore)
-
+    androidTestImplementation(Dependencies.testArch)
     kapt(Dependencies.roomCompiler)
 }

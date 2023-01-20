@@ -1,11 +1,10 @@
 package com.picpay.desafio.android.data.source.local
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.picpay.desafio.android.data.model.UserEntity
+import com.picpay.desafio.android.data.entity.UserEntity
 
 @Dao
 interface UserDao {
@@ -14,9 +13,6 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(movies: List<UserEntity>)
-
-    @Delete
-    fun delete(movie: UserEntity)
 
     @Query("DELETE FROM user")
     fun deleteAll()
