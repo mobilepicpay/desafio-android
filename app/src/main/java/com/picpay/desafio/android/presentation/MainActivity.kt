@@ -22,6 +22,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        adapter = UserListAdapter()
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.btRefresh.setOnClickListener {
+            viewModel.getUsers(false)
+        }
         viewModel.uiState.observe(this) { state ->
             when (state) {
                 is UserViewState.Success -> onSuccess(state.list)
@@ -29,16 +35,12 @@ class MainActivity : AppCompatActivity() {
                 is UserViewState.Error -> onError(state.error)
             }
         }
-        viewModel.getUsers()
     }
 
     override fun onResume() {
         super.onResume()
-        adapter = UserListAdapter()
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.btRefresh.setOnClickListener {
-            viewModel.refresh()
+        if (viewModel.uiState.value == null) {
+            viewModel.getUsers(true)
         }
     }
 
@@ -49,8 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onError(error: DataError) {
-        val
-        message = if (error.statusCode != 0) {
+        val message = if (error.statusCode != 0) {
             error.statusMessage ?: getString(R.string.error)
         } else {
             getString(R.string.error) + error.statusMessage

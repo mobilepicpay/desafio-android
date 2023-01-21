@@ -11,6 +11,7 @@ import io.mockk.mockk
 import io.mockk.runs
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -33,88 +34,94 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    fun `Given UserRepositoryImpl When call getUser than should return empty from database and remote empty`() =
+    fun `Given UserRepositoryImpl When call getUser with cache Than should return empty from database and remote empty`() =
         runTest {
             every { userDao.getAll() } returns listOf()
             coEvery { remoteDataSource.getUsers() } returns listOf()
 
-            val responseList = repository.getUser().toList()
+            val responseList = repository.getUser(true).toList()
 
             assertEquals(responseList, listOf(listOf()))
         }
 
     @Test
-    fun `Given UserRepositoryImpl When call getUser than should return users from database and remote empty`() =
+    fun `Given UserRepositoryImpl When call getUser with cache Than should return users from database and remote empty`() =
         runTest {
             every { userDao.getAll() } returns listUsersEntity
             coEvery { remoteDataSource.getUsers() } returns listOf()
 
-            val responseList = repository.getUser().toList()
+            val responseList = repository.getUser(true).toList()
 
             assertEquals(responseList, listOf(listUsersEntity, listOf()))
         }
 
     @Test
-    fun `Given UserRepositoryImpl When call getUser than should return empty from database and remote users`() =
+    fun `Given UserRepositoryImpl When call getUser with cache with cache Than should return empty from database and remote users`() =
         runTest {
             every { userDao.getAll() } returns listOf()
             coEvery { remoteDataSource.getUsers() } returns listUsersEntity
 
-            val responseList = repository.getUser().toList()
+            val responseList = repository.getUser(true).toList()
 
             assertEquals(responseList, listOf(listUsersEntity))
         }
 
     @Test
-    fun `Given UserRepositoryImpl When call getUser than should return error from database and remote users`() =
+    fun `Given UserRepositoryImpl When call getUser with cache Than should return error from database and remote users`() =
         runTest {
             every { userDao.getAll() } throws RuntimeException("")
             coEvery { remoteDataSource.getUsers() } returns listUsersEntity
 
-            val responseList = repository.getUser().toList()
+            val responseList = repository.getUser(true).toList()
 
             assertEquals(responseList, listOf(listUsersEntity))
         }
 
     @Test
-    fun `Given UserRepositoryImpl When call getUser than should return empty from database and remote error`() =
+    fun `Given UserRepositoryImpl When call getUser with cache Than should return empty from database and remote error`() =
         runTest {
             every { userDao.getAll() } returns listOf()
             coEvery { remoteDataSource.getUsers() } throws exception
 
-            repository.getUser().catch {
+            repository.getUser(true).catch {
                 assertEquals(exception, it)
+            }.collectLatest {
+                assert(false)
             }
         }
 
     @Test
-    fun `Given UserRepositoryImpl When call getUser than should return users from database and remote error`() =
+    fun `Given UserRepositoryImpl When call getUser with cache Than should return users from database and remote error`() =
         runTest {
             every { userDao.getAll() } returns listUsersEntity
             coEvery { remoteDataSource.getUsers() } throws exception
 
-            val responseList = repository.getUser().toList()
+            val responseList = repository.getUser(true).toList()
 
             assertEquals(responseList, listOf(listUsersEntity))
         }
 
     @Test
-    fun `Given UserRepositoryImpl When call getUpDateUsers than should return users `() =
+    fun `Given UserRepositoryImpl When call getUser no cache Than should return users `() =
         runTest {
+            every { userDao.getAll() } returns listOf()
             coEvery { remoteDataSource.getUsers() } returns listUsersEntity
 
-            val responseList = repository.getUser().toList()
+            val responseList = repository.getUser(true).toList()
 
             assertEquals(responseList, listOf(listUsersEntity))
         }
 
     @Test
-    fun `Given UserRepositoryImpl When call getUpDateUsers than should error`() =
+    fun `Given UserRepositoryImpl When call getUser no cache Than should error`() =
         runTest {
+            every { userDao.getAll() } returns listUsersEntity
             coEvery { remoteDataSource.getUsers() } throws exception
 
-            repository.getUser().catch {
+            repository.getUser(false).catch {
                 assertEquals(exception, it)
+            }.collectLatest {
+                assert(false)
             }
         }
 }

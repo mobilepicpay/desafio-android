@@ -9,6 +9,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
@@ -30,12 +31,12 @@ class GetUsersUseCaseTest {
     @Test
     fun `Given getUsersUseCase When call invoke than should return Success and Success`() =
         runTest {
-            coEvery { repository.getUser() } returns flow {
+            coEvery { repository.getUser(true) } returns flow {
                 emit(listUsersEntity)
                 emit(listUsersEntity)
             }
 
-            val response = getUsersUseCase.invoke().toList()
+            val response = getUsersUseCase.invoke(GetUsersUseCase.Request(true)).toList()
 
             assertEquals(
                 listOf(
@@ -49,17 +50,19 @@ class GetUsersUseCaseTest {
     @Test
     fun `Given GetAndUpdateUsersUseCaseTest When call invoke than should return Error`() =
         runTest {
-            coEvery { repository.getUser() } throws exception
+            coEvery { repository.getUser(true) } throws exception
 
-            getUsersUseCase.invoke().catch {
+            getUsersUseCase.invoke(GetUsersUseCase.Request(true)).catch {
                 assertEquals(exception, it)
+            }.collectLatest {
+                assert(false)
             }
         }
 
     @Test
     fun `Given GetAndUpdateUsersUseCaseTest When call invoke than should emit HttpException`() =
         runTest {
-            coEvery { repository.getUser() } returns flow {
+            coEvery { repository.getUser(true) } returns flow {
                 throw HttpException(
                     Response.error<ResponseBody>(
                         500,
@@ -71,7 +74,7 @@ class GetUsersUseCaseTest {
                 )
             }
 
-            val response = getUsersUseCase.invoke().toList()
+            val response = getUsersUseCase.invoke(GetUsersUseCase.Request(true)).toList()
 
             assertEquals(
                 listOf(
@@ -84,9 +87,9 @@ class GetUsersUseCaseTest {
     @Test
     fun `Given GetAndUpdateUsersUseCaseTest When call invoke than should emit Exception`() =
         runTest {
-            coEvery { repository.getUser() } returns flow { throw exception }
+            coEvery { repository.getUser(true) } returns flow { throw exception }
 
-            val response = getUsersUseCase.invoke().toList()
+            val response = getUsersUseCase.invoke(GetUsersUseCase.Request(true)).toList()
 
             assertEquals(
                 listOf(

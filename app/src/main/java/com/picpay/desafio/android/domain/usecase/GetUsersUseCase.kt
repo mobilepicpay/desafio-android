@@ -3,6 +3,7 @@ package com.picpay.desafio.android.domain.usecase
 import com.picpay.desafio.android.core.DataError
 import com.picpay.desafio.android.core.FlowUseCase
 import com.picpay.desafio.android.core.Outcome
+import com.picpay.desafio.android.core.Params
 import com.picpay.desafio.android.domain.mapper.UserMapper
 import com.picpay.desafio.android.domain.model.User
 import com.picpay.desafio.android.domain.repository.UserRepository
@@ -13,10 +14,12 @@ import retrofit2.HttpException
 
 class GetUsersUseCase constructor(
     private val postsRepository: UserRepository
-) : FlowUseCase<List<User>> {
+) : FlowUseCase<GetUsersUseCase.Request, List<User>> {
 
-    override fun invoke(): Flow<Outcome<List<User>>> = flow {
-        postsRepository.getUser().catch { error ->
+    data class Request(val isGetCacheValues: Boolean) : Params
+
+    override fun invoke(params: Request): Flow<Outcome<List<User>>> = flow {
+        postsRepository.getUser(params.isGetCacheValues).catch { error ->
             if (error is HttpException) {
                 emit(Outcome.Error(DataError(error.code(), error.message)))
             } else {

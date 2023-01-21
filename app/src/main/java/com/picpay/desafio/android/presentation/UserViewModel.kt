@@ -5,45 +5,28 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.picpay.desafio.android.core.Outcome
-import com.picpay.desafio.android.domain.model.User
-import com.picpay.desafio.android.domain.usecase.GetAndUpdateUsersUseCase
 import com.picpay.desafio.android.domain.usecase.GetUsersUseCase
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class UserViewModel constructor(
-    private val getUserUseCase: GetUsersUseCase,
-    private val getAndUpdateUsersUseCase: GetAndUpdateUsersUseCase
+    private val getUserUseCase: GetUsersUseCase
 ) : ViewModel() {
     private val _uiState = MutableLiveData<UserViewState>()
     val uiState: LiveData<UserViewState>
         get() = _uiState
 
-    fun refresh() {
+    fun getUsers(isRefresh: Boolean) {
         viewModelScope.launch {
-            getAndUpdateUsersUseCase.invoke().onStart {
+            getUserUseCase.invoke(GetUsersUseCase.Request(!isRefresh)).onStart {
                 _uiState.value = UserViewState.Loading
             }.collect { result ->
-                handleUseCaseOutcome(result)
-            }
-        }
-    }
-
-    fun getUsers() {
-        viewModelScope.launch {
-            getUserUseCase.invoke().onStart {
-                _uiState.value = UserViewState.Loading
-            }.collect { result ->
-                handleUseCaseOutcome(result)
-            }
-        }
-    }
-
-    private fun handleUseCaseOutcome(result: Outcome<List<User>>) {
-        _uiState.value = when (result) {
-            is Outcome.Success -> UserViewState.Success(result.data)
-            is Outcome.Error -> {
-                UserViewState.Error(result.error)
+                _uiState.value = when (result) {
+                    is Outcome.Success -> UserViewState.Success(result.data)
+                    is Outcome.Error -> {
+                        UserViewState.Error(result.error)
+                    }
+                }
             }
         }
     }

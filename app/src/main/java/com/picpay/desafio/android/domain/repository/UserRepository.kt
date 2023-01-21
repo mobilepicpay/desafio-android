@@ -4,6 +4,5 @@ import com.picpay.desafio.android.data.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
-    fun getUser(): Flow<List<UserEntity>>
-    fun getUpDateUsers(): Flow<List<UserEntity>>
+    fun getUser(isGetCacheValues: Boolean): Flow<List<UserEntity>>
 }
