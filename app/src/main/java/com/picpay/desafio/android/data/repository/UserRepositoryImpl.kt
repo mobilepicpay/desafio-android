@@ -4,8 +4,10 @@ import com.picpay.desafio.android.data.entity.UserEntity
 import com.picpay.desafio.android.data.source.local.UserDao
 import com.picpay.desafio.android.data.source.remote.UserRemoteDataSource
 import com.picpay.desafio.android.domain.repository.UserRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class UserRepositoryImpl constructor(
     private val remoteDataSource: UserRemoteDataSource,
@@ -37,7 +39,7 @@ class UserRepositoryImpl constructor(
                     throw e
                 }
             }
-        }
+        }.flowOn(Dispatchers.IO)
 
     private fun getCachedUsers(): List<UserEntity> =
         userDao.getAll() ?: listOf()
