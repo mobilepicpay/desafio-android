@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_internet_image">no internet image</string>
+    <string name="no_internet_alert_text">Precisamos nos conectar pela primeira vez com a internet para buscar a lista de contatos</string>
+    <string name="circularprogressindicator_text">CircularProgressIndicator Test</string>
+    <string name="no_results_image">no results image</string>
+    <string name="no_results_sorry">Desculpe...</string>
+</resources>

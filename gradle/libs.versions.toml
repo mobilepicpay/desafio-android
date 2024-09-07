@@ -1,0 +1,128 @@
+[versions]
+
+appId = "com.picpay.desafio.android"
+androidApiCompile = "34"
+androidApiTarget = "34"
+androidApiMin = "26"
+appVersionCode = "1"
+appVersionName = "1.0"
+java = "17"
+kotinExtensionVersion = "1.5.2"
+baseUrl = "\"https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/\""
+testInstrumentationRunner = "com.picpay.desafio.android.core.testing.InstrumentationTestRunner"
+
+# CORE
+agp = "8.5.2"
+kotlin = "1.9.0"
+coreKtx = "1.13.1"
+lifecycleRuntimeKtx = "2.8.4"
+activityCompose = "1.9.1"
+
+# UI
+composeUi = "1.7.0-rc01"
+material3 = "1.2.1"
+composeNavigation = "2.7.7"
+coil = "2.4.0"
+
+# WORK
+androidxWork = "2.9.1"
+
+# Networking
+retrofit = '2.11.0'
+okhttp = '4.12.0'
+
+# D.I.
+koinAndroid = "3.5.3"
+
+# Persistence
+room = "2.6.1"
+androidxDataStore = "1.1.1"
+
+# Async
+kotlinxCoroutines = "1.8.1"
+
+# Mocks
+mockk = '1.13.5'
+mockito = '5.7.0'
+mockito_kotlin = '2.1.0'
+
+# Tests
+junit = "4.13.2"
+junitVersion = "1.2.1"
+core_testing = '2.2.0'
+core_ktx_test = "1.6.1"
+test_runner = '1.6.2'
+
+
+[libraries]
+# CORE
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+
+# UI | COMPOSE
+androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "composeUi"}
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "composeUi"}
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+androidx-compose-material3-windowSizeClass = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "material3" }
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
+# Coil
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
+# WORK
+androidx-work-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidxWork" }
+
+# D.I.
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koinAndroid" }
+koin-workmanager = { group = "io.insert-koin", name = "koin-androidx-workmanager", version.ref = "koinAndroid" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroid" }
+
+# Persistence
+roomRuntime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+roomCompiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+roomKtx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-dataStore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidxDataStore" }
+
+# Networking
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofitConverterGson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttp-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp"}
+okhttpMockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
+
+# Mocks
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+mockitoCore = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockitoKotlin = { group = "com.nhaarman.mockitokotlin2", name = "mockito-kotlin", version.ref = "mockito_kotlin" }
+
+# TESTS
+# UI
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4-android = { group = "androidx.compose.ui", name = "ui-test-junit4-android", version.ref = "composeUi" }
+androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "composeNavigation" }
+# Core
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-test-core = { group = "androidx.test", name = "core", version.ref = "core_ktx_test" }
+coreTesting = { group = "androidx.arch.core", name = "core-testing", version.ref = "core_testing" }
+androidx-test-coreKtx = { group = "androidx.test", name = "core-ktx", version.ref = "core_ktx_test" }
+testRunner = { group = "androidx.test", name = "runner", version.ref = "test_runner" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+koin-android-testJU4 = { module = "io.insert-koin:koin-test-junit4", version.ref = "koinAndroid" }
+koin-android-test = { module = "io.insert-koin:koin-test", version.ref = "koinAndroid" }
+
+
+
+[plugins]
+android-library = { id = "com.android.library", version.ref = "agp" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+
+android-test = { id = "com.android.test", version.ref = "agp" }
+
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlinKapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }

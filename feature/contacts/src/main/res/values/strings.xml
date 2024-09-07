@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="contacts_screen_list_header">Contatos</string>
+    <string name="retry">Tentar novamente...</string>
+    <string name="retry_icon">retry icon</string>
+    <string name="synchronizing">Sincronizando...</string>
+    <string name="contacts_searchfield_placeholder">Pesquisar</string>
+    <string name="all_items_are_loaded">all items are loaded</string>
+</resources>
