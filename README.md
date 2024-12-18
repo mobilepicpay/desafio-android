@@ -20,3 +20,22 @@ Com o passar do tempo identificamos alguns problemas que impedem esse aplicativo
 Boa sorte! =)
 
 Ps.: Fique à vontade para editar o projeto inteiro, organização de pastas e módulos, bem como as dependências utilizadas
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Olá, eu sou a Ana Carolina e é um prazer imenso estar fazendo parte desse processo seletivo.
+
+Aqui está a minha solução para o desafio proposto.
+
+# Desafio PicPay
+- O aplicativo foi desenvolvido em Kotlin.
+- Foi utilizado o padrão de arquitetura MVVM + Clean Architecture, dividindo nos packages data e ui (como domain é opcional e não escolhi fazer o uso de UseCases, esta camada não foi inserida na solução proposta mas é uma ótima abordagem
+para escalabilidade da aplicação quando houver um maior dluxo de dados com serviços externos. Futuramente, essas camadas podem até mesmo ser dividadas em modulos para maior escalabilidade da aplicação.
+- Foi utilizado o Retrofit para requisições HTTP.
+- Foi utilizado o Room para persistência de dados.
+- Foi utilizado o Picasso para carregamento de imagens.
+- Foi utilizado o Koin para injeção de dependências.
+- Foi utilizado o Compose para a declaração da UI.
+- Foi utilizado o Kotlin Coroutines para a execução de tarefas assíncronas.
+- Foi utilizado o Kotlin Flow para a persistência do estado da tela no ViewModel e para uma programação reativa a fim de manter a UI atualizada.
+
