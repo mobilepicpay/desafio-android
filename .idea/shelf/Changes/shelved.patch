@@ -1,0 +1,1842 @@
+Index: app/src/test/java/com/picpay/desafio/android/ExampleService.kt
+===================================================================
+diff --git a/app/src/test/java/com/picpay/desafio/android/ExampleService.kt b/app/src/test/java/com/picpay/desafio/android/ExampleService.kt
+deleted file mode 100644
+--- a/app/src/test/java/com/picpay/desafio/android/ExampleService.kt	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ /dev/null	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
+@@ -1,12 +0,0 @@
+-package com.picpay.desafio.android
+-
+-class ExampleService(
+-    private val service: PicPayService
+-) {
+-
+-    fun example(): List<User> {
+-        val users = service.getUsers().execute()
+-
+-        return users.body() ?: emptyList()
+-    }
+-}
+\ No newline at end of file
+Index: app/src/test/java/com/picpay/desafio/android/ExampleServiceTest.kt
+===================================================================
+diff --git a/app/src/test/java/com/picpay/desafio/android/ExampleServiceTest.kt b/app/src/test/java/com/picpay/desafio/android/ExampleServiceTest.kt
+deleted file mode 100644
+--- a/app/src/test/java/com/picpay/desafio/android/ExampleServiceTest.kt	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ /dev/null	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
+@@ -1,31 +0,0 @@
+-package com.picpay.desafio.android
+-
+-import com.nhaarman.mockitokotlin2.mock
+-import com.nhaarman.mockitokotlin2.whenever
+-import junit.framework.Assert.assertEquals
+-import org.junit.Test
+-import retrofit2.Call
+-import retrofit2.Response
+-
+-class ExampleServiceTest {
+-
+-    private val api = mock<PicPayService>()
+-
+-    private val service = ExampleService(api)
+-
+-    @Test
+-    fun exampleTest() {
+-        // given
+-        val call = mock<Call<List<User>>>()
+-        val expectedUsers = emptyList<User>()
+-
+-        whenever(call.execute()).thenReturn(Response.success(expectedUsers))
+-        whenever(api.getUsers()).thenReturn(call)
+-
+-        // when
+-        val users = service.example()
+-
+-        // then
+-        assertEquals(users, expectedUsers)
+-    }
+-}
+\ No newline at end of file
+Index: app/src/main/java/com/picpay/desafio/android/MainActivity.kt
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/MainActivity.kt b/app/src/main/java/com/picpay/desafio/android/MainActivity.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/picpay/desafio/android/MainActivity.kt	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ /dev/null	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
+@@ -1,75 +0,0 @@
+-package com.picpay.desafio.android
+-
+-import android.view.View
+-import android.widget.ProgressBar
+-import android.widget.Toast
+-import androidx.appcompat.app.AppCompatActivity
+-import androidx.recyclerview.widget.LinearLayoutManager
+-import androidx.recyclerview.widget.RecyclerView
+-import com.google.gson.Gson
+-import com.google.gson.GsonBuilder
+-import okhttp3.OkHttpClient
+-import retrofit2.Call
+-import retrofit2.Callback
+-import retrofit2.Response
+-import retrofit2.Retrofit
+-import retrofit2.converter.gson.GsonConverterFactory
+-
+-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+-
+-    private lateinit var recyclerView: RecyclerView
+-    private lateinit var progressBar: ProgressBar
+-    private lateinit var adapter: UserListAdapter
+-
+-    private val url = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
+-
+-    private val gson: Gson by lazy { GsonBuilder().create() }
+-
+-    private val okHttp: OkHttpClient by lazy {
+-        OkHttpClient.Builder()
+-            .build()
+-    }
+-
+-    private val retrofit: Retrofit by lazy {
+-        Retrofit.Builder()
+-            .baseUrl(url)
+-            .client(okHttp)
+-            .addConverterFactory(GsonConverterFactory.create(gson))
+-            .build()
+-    }
+-
+-    private val service: PicPayService by lazy {
+-        retrofit.create(PicPayService::class.java)
+-    }
+-
+-    override fun onResume() {
+-        super.onResume()
+-
+-        recyclerView = findViewById(R.id.recyclerView)
+-        progressBar = findViewById(R.id.user_list_progress_bar)
+-
+-        adapter = UserListAdapter()
+-        recyclerView.adapter = adapter
+-        recyclerView.layoutManager = LinearLayoutManager(this)
+-
+-        progressBar.visibility = View.VISIBLE
+-        service.getUsers()
+-            .enqueue(object : Callback<List<User>> {
+-                override fun onFailure(call: Call<List<User>>, t: Throwable) {
+-                    val message = getString(R.string.error)
+-
+-                    progressBar.visibility = View.GONE
+-                    recyclerView.visibility = View.GONE
+-
+-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
+-                        .show()
+-                }
+-
+-                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+-                    progressBar.visibility = View.GONE
+-
+-                    adapter.users = response.body()!!
+-                }
+-            })
+-    }
+-}
+Index: app/src/main/java/com/picpay/desafio/android/PicPayService.kt
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/PicPayService.kt b/app/src/main/java/com/picpay/desafio/android/PicPayService.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/picpay/desafio/android/PicPayService.kt	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ /dev/null	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
+@@ -1,11 +0,0 @@
+-package com.picpay.desafio.android
+-
+-import retrofit2.Call
+-import retrofit2.http.GET
+-
+-
+-interface PicPayService {
+-
+-    @GET("users")
+-    fun getUsers(): Call<List<User>>
+-}
+\ No newline at end of file
+Index: app/src/androidTest/java/com/picpay/desafio/android/RecyclerViewMatchers.kt
+===================================================================
+diff --git a/app/src/androidTest/java/com/picpay/desafio/android/RecyclerViewMatchers.kt b/app/src/androidTest/java/com/picpay/desafio/android/RecyclerViewMatchers.kt
+deleted file mode 100644
+--- a/app/src/androidTest/java/com/picpay/desafio/android/RecyclerViewMatchers.kt	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ /dev/null	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
+@@ -1,39 +0,0 @@
+-package com.picpay.desafio.android
+-
+-import android.view.View
+-import androidx.recyclerview.widget.RecyclerView
+-import androidx.test.espresso.Espresso
+-import androidx.test.espresso.assertion.ViewAssertions
+-import androidx.test.espresso.matcher.BoundedMatcher
+-import androidx.test.espresso.matcher.ViewMatchers
+-import org.hamcrest.Description
+-import org.hamcrest.Matcher
+-
+-object RecyclerViewMatchers {
+-
+-    fun atPosition(
+-        position: Int,
+-        itemMatcher: Matcher<View>
+-    ) = object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
+-        override fun describeTo(description: Description?) {
+-            description?.appendText("has item at position $position: ")
+-            itemMatcher.describeTo(description)
+-        }
+-
+-        override fun matchesSafely(item: RecyclerView?): Boolean {
+-            val viewHolder = item?.findViewHolderForAdapterPosition(position) ?: return false
+-            return itemMatcher.matches(viewHolder.itemView)
+-        }
+-    }
+-
+-    fun checkRecyclerViewItem(resId: Int, position: Int, withMatcher: Matcher<View>) {
+-        Espresso.onView(ViewMatchers.withId(resId)).check(
+-            ViewAssertions.matches(
+-                atPosition(
+-                    position,
+-                    ViewMatchers.hasDescendant(withMatcher)
+-                )
+-            )
+-        )
+-    }
+-}
+\ No newline at end of file
+Index: .idea/runConfigurations.xml
+===================================================================
+diff --git a/.idea/runConfigurations.xml b/.idea/runConfigurations.xml
+deleted file mode 100644
+--- a/.idea/runConfigurations.xml	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ /dev/null	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
+@@ -1,12 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RunConfigurationProducerService">
+-    <option name="ignoredProducers">
+-      <set>
+-        <option value="org.jetbrains.plugins.gradle.execution.test.runner.AllInPackageGradleConfigurationProducer" />
+-        <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestClassGradleConfigurationProducer" />
+-        <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestMethodGradleConfigurationProducer" />
+-      </set>
+-    </option>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: app/src/main/java/com/picpay/desafio/android/User.kt
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/User.kt b/app/src/main/java/com/picpay/desafio/android/User.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/picpay/desafio/android/User.kt	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ /dev/null	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
+@@ -1,13 +0,0 @@
+-package com.picpay.desafio.android
+-
+-import android.os.Parcelable
+-import com.google.gson.annotations.SerializedName
+-import kotlinx.android.parcel.Parcelize
+-
+-@Parcelize
+-data class User(
+-    @SerializedName("img") val img: String,
+-    @SerializedName("name") val name: String,
+-    @SerializedName("id") val id: Int,
+-    @SerializedName("username") val username: String
+-) : Parcelable
+\ No newline at end of file
+Index: app/src/main/java/com/picpay/desafio/android/UserListAdapter.kt
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/UserListAdapter.kt b/app/src/main/java/com/picpay/desafio/android/UserListAdapter.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/picpay/desafio/android/UserListAdapter.kt	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ /dev/null	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
+@@ -1,34 +0,0 @@
+-package com.picpay.desafio.android
+-
+-import android.view.LayoutInflater
+-import android.view.ViewGroup
+-import androidx.recyclerview.widget.DiffUtil
+-import androidx.recyclerview.widget.RecyclerView
+-
+-class UserListAdapter : RecyclerView.Adapter<UserListItemViewHolder>() {
+-
+-    var users = emptyList<User>()
+-        set(value) {
+-            val result = DiffUtil.calculateDiff(
+-                UserListDiffCallback(
+-                    field,
+-                    value
+-                )
+-            )
+-            result.dispatchUpdatesTo(this)
+-            field = value
+-        }
+-
+-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListItemViewHolder {
+-        val view = LayoutInflater.from(parent.context)
+-            .inflate(R.layout.list_item_user, parent, false)
+-
+-        return UserListItemViewHolder(view)
+-    }
+-
+-    override fun onBindViewHolder(holder: UserListItemViewHolder, position: Int) {
+-        holder.bind(users[position])
+-    }
+-
+-    override fun getItemCount(): Int = users.size
+-}
+\ No newline at end of file
+Index: app/src/main/java/com/picpay/desafio/android/UserListDiffCallback.kt
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/UserListDiffCallback.kt b/app/src/main/java/com/picpay/desafio/android/UserListDiffCallback.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/picpay/desafio/android/UserListDiffCallback.kt	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ /dev/null	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
+@@ -1,26 +0,0 @@
+-package com.picpay.desafio.android
+-
+-import androidx.recyclerview.widget.DiffUtil
+-import com.picpay.desafio.android.User
+-
+-class UserListDiffCallback(
+-    private val oldList: List<User>,
+-    private val newList: List<User>
+-) : DiffUtil.Callback() {
+-
+-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+-        return oldList[oldItemPosition].username.equals(newList[newItemPosition].username)
+-    }
+-
+-    override fun getOldListSize(): Int {
+-        return oldList.size
+-    }
+-
+-    override fun getNewListSize(): Int {
+-        return newList.size
+-    }
+-
+-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+-        return true
+-    }
+-}
+\ No newline at end of file
+Index: app/src/main/java/com/picpay/desafio/android/UserListItemViewHolder.kt
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/UserListItemViewHolder.kt b/app/src/main/java/com/picpay/desafio/android/UserListItemViewHolder.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/picpay/desafio/android/UserListItemViewHolder.kt	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ /dev/null	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
+@@ -1,30 +0,0 @@
+-package com.picpay.desafio.android
+-
+-import android.view.View
+-import androidx.recyclerview.widget.RecyclerView
+-import com.squareup.picasso.Callback
+-import com.squareup.picasso.Picasso
+-import kotlinx.android.synthetic.main.list_item_user.view.*
+-
+-class UserListItemViewHolder(
+-    itemView: View
+-) : RecyclerView.ViewHolder(itemView) {
+-
+-    fun bind(user: User) {
+-        itemView.name.text = user.name
+-        itemView.username.text = user.username
+-        itemView.progressBar.visibility = View.VISIBLE
+-        Picasso.get()
+-            .load(user.img)
+-            .error(R.drawable.ic_round_account_circle)
+-            .into(itemView.picture, object : Callback {
+-                override fun onSuccess() {
+-                    itemView.progressBar.visibility = View.GONE
+-                }
+-
+-                override fun onError(e: Exception?) {
+-                    itemView.progressBar.visibility = View.GONE
+-                }
+-            })
+-    }
+-}
+\ No newline at end of file
+Index: app/src/main/java/com/picpay/desafio/android/PicPayApplication.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/PicPayApplication.kt b/app/src/main/java/com/picpay/desafio/android/PicPayApplication.kt
+new file mode 100644
+--- /dev/null	(date 1738699216262)
++++ b/app/src/main/java/com/picpay/desafio/android/PicPayApplication.kt	(date 1738699216262)
+@@ -0,0 +1,7 @@
++package com.picpay.desafio.android
++
++import android.app.Application
++import dagger.hilt.android.HiltAndroidApp
++
++@HiltAndroidApp
++class PicPayApplication : Application()
+Index: gradlew.bat
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>@if \"%DEBUG%\" == \"\" @echo off\n@rem ##########################################################################\n@rem\n@rem  Gradle startup script for Windows\n@rem\n@rem ##########################################################################\n\n@rem Set local scope for the variables with windows NT shell\nif \"%OS%\"==\"Windows_NT\" setlocal\n\nset DIRNAME=%~dp0\nif \"%DIRNAME%\" == \"\" set DIRNAME=.\nset APP_BASE_NAME=%~n0\nset APP_HOME=%DIRNAME%\n\n@rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.\nset DEFAULT_JVM_OPTS=\n\n@rem Find java.exe\nif defined JAVA_HOME goto findJavaFromJavaHome\n\nset JAVA_EXE=java.exe\n%JAVA_EXE% -version >NUL 2>&1\nif \"%ERRORLEVEL%\" == \"0\" goto init\n\necho.\necho ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.\necho.\necho Please set the JAVA_HOME variable in your environment to match the\necho location of your Java installation.\n\ngoto fail\n\n:findJavaFromJavaHome\nset JAVA_HOME=%JAVA_HOME:\"=%\nset JAVA_EXE=%JAVA_HOME%/bin/java.exe\n\nif exist \"%JAVA_EXE%\" goto init\n\necho.\necho ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME%\necho.\necho Please set the JAVA_HOME variable in your environment to match the\necho location of your Java installation.\n\ngoto fail\n\n:init\n@rem Get command-line arguments, handling Windows variants\n\nif not \"%OS%\" == \"Windows_NT\" goto win9xME_args\n\n:win9xME_args\n@rem Slurp the command line arguments.\nset CMD_LINE_ARGS=\nset _SKIP=2\n\n:win9xME_args_slurp\nif \"x%~1\" == \"x\" goto execute\n\nset CMD_LINE_ARGS=%*\n\n:execute\n@rem Setup the command line\n\nset CLASSPATH=%APP_HOME%\\gradle\\wrapper\\gradle-wrapper.jar\n\n@rem Execute Gradle\n\"%JAVA_EXE%\" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% \"-Dorg.gradle.appname=%APP_BASE_NAME%\" -classpath \"%CLASSPATH%\" org.gradle.wrapper.GradleWrapperMain %CMD_LINE_ARGS%\n\n:end\n@rem End local scope for the variables with windows NT shell\nif \"%ERRORLEVEL%\"==\"0\" goto mainEnd\n\n:fail\nrem Set variable GRADLE_EXIT_CONSOLE if you need the _script_ return code instead of\nrem the _cmd.exe /c_ return code!\nif  not \"\" == \"%GRADLE_EXIT_CONSOLE%\" exit 1\nexit /b 1\n\n:mainEnd\nif \"%OS%\"==\"Windows_NT\" endlocal\n\n:omega\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/gradlew.bat b/gradlew.bat
+--- a/gradlew.bat	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ b/gradlew.bat	(date 1738507729071)
+@@ -1,3 +1,19 @@
++@rem
++@rem Copyright 2015 the original author or authors.
++@rem
++@rem Licensed under the Apache License, Version 2.0 (the "License");
++@rem you may not use this file except in compliance with the License.
++@rem You may obtain a copy of the License at
++@rem
++@rem      https://www.apache.org/licenses/LICENSE-2.0
++@rem
++@rem Unless required by applicable law or agreed to in writing, software
++@rem distributed under the License is distributed on an "AS IS" BASIS,
++@rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++@rem See the License for the specific language governing permissions and
++@rem limitations under the License.
++@rem
++
+ @if "%DEBUG%" == "" @echo off
+ @rem ##########################################################################
+ @rem
+@@ -13,15 +29,18 @@
+ set APP_BASE_NAME=%~n0
+ set APP_HOME=%DIRNAME%
+ 
++@rem Resolve any "." and ".." in APP_HOME to make it shorter.
++for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
++
+ @rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+-set DEFAULT_JVM_OPTS=
++set DEFAULT_JVM_OPTS="-Xmx64m" "-Xms64m"
+ 
+ @rem Find java.exe
+ if defined JAVA_HOME goto findJavaFromJavaHome
+ 
+ set JAVA_EXE=java.exe
+ %JAVA_EXE% -version >NUL 2>&1
+-if "%ERRORLEVEL%" == "0" goto init
++if "%ERRORLEVEL%" == "0" goto execute
+ 
+ echo.
+ echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+@@ -35,7 +54,7 @@
+ set JAVA_HOME=%JAVA_HOME:"=%
+ set JAVA_EXE=%JAVA_HOME%/bin/java.exe
+ 
+-if exist "%JAVA_EXE%" goto init
++if exist "%JAVA_EXE%" goto execute
+ 
+ echo.
+ echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME%
+@@ -45,28 +64,14 @@
+ 
+ goto fail
+ 
+-:init
+-@rem Get command-line arguments, handling Windows variants
+-
+-if not "%OS%" == "Windows_NT" goto win9xME_args
+-
+-:win9xME_args
+-@rem Slurp the command line arguments.
+-set CMD_LINE_ARGS=
+-set _SKIP=2
+-
+-:win9xME_args_slurp
+-if "x%~1" == "x" goto execute
+-
+-set CMD_LINE_ARGS=%*
+-
+ :execute
+ @rem Setup the command line
+ 
+ set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
+ 
++
+ @rem Execute Gradle
+-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %CMD_LINE_ARGS%
++"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %*
+ 
+ :end
+ @rem End local scope for the variables with windows NT shell
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"GradleSettings\">\n    <option name=\"linkedExternalProjectsSettings\">\n      <GradleProjectSettings>\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\n        <option name=\"modules\">\n          <set>\n            <option value=\"$PROJECT_DIR$\" />\n            <option value=\"$PROJECT_DIR$/app\" />\n          </set>\n        </option>\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\n      </GradleProjectSettings>\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ b/.idea/gradle.xml	(date 1738507642895)
+@@ -1,17 +1,19 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
++        <option name="testRunner" value="GRADLE" />
+         <option name="distributionType" value="DEFAULT_WRAPPED" />
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
++        <option name="gradleJvm" value="Embedded JDK" />
+         <option name="modules">
+           <set>
+             <option value="$PROJECT_DIR$" />
+             <option value="$PROJECT_DIR$/app" />
+           </set>
+         </option>
+-        <option name="resolveModulePerSourceSet" value="false" />
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: app/src/main/java/com/picpay/desafio/android/data/local/AppDatabase.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/data/local/AppDatabase.kt b/app/src/main/java/com/picpay/desafio/android/data/local/AppDatabase.kt
+new file mode 100644
+--- /dev/null	(date 1738553161326)
++++ b/app/src/main/java/com/picpay/desafio/android/data/local/AppDatabase.kt	(date 1738553161326)
+@@ -0,0 +1,10 @@
++package com.picpay.desafio.android.data.local
++
++import androidx.room.Database
++import androidx.room.RoomDatabase
++import com.picpay.desafio.android.domain.model.User
++
++@Database(entities = [User::class], version = 1, exportSchema = false)
++abstract class AppDatabase : RoomDatabase() {
++    abstract fun userDao(): UserDao
++}
+Index: .idea/codeStyles/Project.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><component name=\"ProjectCodeStyleConfiguration\">\n  <code_scheme name=\"Project\" version=\"173\">\n    <AndroidXmlCodeStyleSettings>\n      <option name=\"ARRANGEMENT_SETTINGS_MIGRATED_TO_191\" value=\"true\" />\n    </AndroidXmlCodeStyleSettings>\n    <JetCodeStyleSettings>\n      <option name=\"CODE_STYLE_DEFAULTS\" value=\"KOTLIN_OFFICIAL\" />\n    </JetCodeStyleSettings>\n    <codeStyleSettings language=\"XML\">\n      <indentOptions>\n        <option name=\"CONTINUATION_INDENT_SIZE\" value=\"4\" />\n      </indentOptions>\n      <arrangement>\n        <rules>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>xmlns:android</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>^$</XML_NAMESPACE>\n                </AND>\n              </match>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>xmlns:.*</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>^$</XML_NAMESPACE>\n                </AND>\n              </match>\n              <order>BY_NAME</order>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>.*:id</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>\n                </AND>\n              </match>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>.*:name</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>\n                </AND>\n              </match>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>name</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>^$</XML_NAMESPACE>\n                </AND>\n              </match>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>style</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>^$</XML_NAMESPACE>\n                </AND>\n              </match>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>.*</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>^$</XML_NAMESPACE>\n                </AND>\n              </match>\n              <order>BY_NAME</order>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>.*</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>\n                </AND>\n              </match>\n              <order>ANDROID_ATTRIBUTE_ORDER</order>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>.*</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>.*</XML_NAMESPACE>\n                </AND>\n              </match>\n              <order>BY_NAME</order>\n            </rule>\n          </section>\n        </rules>\n      </arrangement>\n    </codeStyleSettings>\n    <codeStyleSettings language=\"kotlin\">\n      <option name=\"CODE_STYLE_DEFAULTS\" value=\"KOTLIN_OFFICIAL\" />\n    </codeStyleSettings>\n  </code_scheme>\n</component>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/codeStyles/Project.xml b/.idea/codeStyles/Project.xml
+--- a/.idea/codeStyles/Project.xml	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ b/.idea/codeStyles/Project.xml	(date 1738511130092)
+@@ -1,8 +1,5 @@
+ <component name="ProjectCodeStyleConfiguration">
+   <code_scheme name="Project" version="173">
+-    <AndroidXmlCodeStyleSettings>
+-      <option name="ARRANGEMENT_SETTINGS_MIGRATED_TO_191" value="true" />
+-    </AndroidXmlCodeStyleSettings>
+     <JetCodeStyleSettings>
+       <option name="CODE_STYLE_DEFAULTS" value="KOTLIN_OFFICIAL" />
+     </JetCodeStyleSettings>
+Index: app/src/main/res/drawable/shimmer_background.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/shimmer_background.xml b/app/src/main/res/drawable/shimmer_background.xml
+new file mode 100644
+--- /dev/null	(date 1738764487312)
++++ b/app/src/main/res/drawable/shimmer_background.xml	(date 1738764487312)
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<shape xmlns:android="http://schemas.android.com/apk/res/android">
++    <solid android:color="#DDDDDD" />
++    <corners android:radius="50dp" />
++</shape>
+Index: app/src/main/java/com/picpay/desafio/android/data/remote/PicPayService.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/data/remote/PicPayService.kt b/app/src/main/java/com/picpay/desafio/android/data/remote/PicPayService.kt
+new file mode 100644
+--- /dev/null	(date 1738555694178)
++++ b/app/src/main/java/com/picpay/desafio/android/data/remote/PicPayService.kt	(date 1738555694178)
+@@ -0,0 +1,9 @@
++package com.picpay.desafio.android.data.remote
++
++import com.picpay.desafio.android.domain.model.User
++import retrofit2.http.GET
++
++interface PicPayService {
++    @GET("users")
++    suspend fun getUsers(): List<User>
++}
+Index: app/src/main/java/com/picpay/desafio/android/data/local/UserDao.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/data/local/UserDao.kt b/app/src/main/java/com/picpay/desafio/android/data/local/UserDao.kt
+new file mode 100644
+--- /dev/null	(date 1738699101527)
++++ b/app/src/main/java/com/picpay/desafio/android/data/local/UserDao.kt	(date 1738699101527)
+@@ -0,0 +1,17 @@
++package com.picpay.desafio.android.data.local
++
++import androidx.room.Dao
++import androidx.room.Insert
++import androidx.room.OnConflictStrategy
++import androidx.room.Query
++import com.picpay.desafio.android.domain.model.User
++import kotlinx.coroutines.flow.Flow
++
++@Dao
++interface UserDao {
++    @Query("SELECT * FROM users")
++    fun getAllUsers(): Flow<List<User>>
++
++    @Insert(onConflict = OnConflictStrategy.REPLACE)
++    suspend fun insertUsers(users: List<User>)
++}
+Index: gradle.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Project-wide Gradle settings.\n# IDE (e.g. Android Studio) users:\n# Gradle settings configured through the IDE *will override*\n# any settings specified in this file.\n# For more details on how to configure your build environment visit\n# http://www.gradle.org/docs/current/userguide/build_environment.html\n# Specifies the JVM arguments used for the daemon process.\n# The setting is particularly useful for tweaking memory settings.\norg.gradle.jvmargs=-Xmx1536m\n# When configured, Gradle will run in incubating parallel mode.\n# This option should only be used with decoupled projects. More details, visit\n# http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects\n# org.gradle.parallel=true\n# AndroidX package structure to make it clearer which packages are bundled with the\n# Android operating system, and which are packaged with your app's APK\n# https://developer.android.com/topic/libraries/support-library/androidx-rn\nandroid.useAndroidX=true\n# Automatically convert third-party libraries to use AndroidX\nandroid.enableJetifier=true\n# Kotlin code style for this project: \"official\" or \"obsolete\":\nkotlin.code.style=official\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/gradle.properties b/gradle.properties
+--- a/gradle.properties	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ b/gradle.properties	(date 1738517867459)
+@@ -4,18 +4,29 @@
+ # any settings specified in this file.
+ # For more details on how to configure your build environment visit
+ # http://www.gradle.org/docs/current/userguide/build_environment.html
++
+ # Specifies the JVM arguments used for the daemon process.
+ # The setting is particularly useful for tweaking memory settings.
+ org.gradle.jvmargs=-Xmx1536m
++
+ # When configured, Gradle will run in incubating parallel mode.
+ # This option should only be used with decoupled projects. More details, visit
+ # http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects
+ # org.gradle.parallel=true
++
+ # AndroidX package structure to make it clearer which packages are bundled with the
+ # Android operating system, and which are packaged with your app's APK
+ # https://developer.android.com/topic/libraries/support-library/androidx-rn
+ android.useAndroidX=true
++
+ # Automatically convert third-party libraries to use AndroidX
+ android.enableJetifier=true
++
+ # Kotlin code style for this project: "official" or "obsolete":
+ kotlin.code.style=official
++
++# Definição da versão do Kotlin usada no projeto
++kotlin.version=1.8.0
++kapt.verbose=true
++kapt.keepGeneratedFiles=true
++
+Index: app/src/main/java/com/picpay/desafio/android/presentation/UserListAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/presentation/UserListAdapter.kt b/app/src/main/java/com/picpay/desafio/android/presentation/UserListAdapter.kt
+new file mode 100644
+--- /dev/null	(date 1738763034646)
++++ b/app/src/main/java/com/picpay/desafio/android/presentation/UserListAdapter.kt	(date 1738763034646)
+@@ -0,0 +1,68 @@
++package com.picpay.desafio.android.presentation
++
++import android.view.LayoutInflater
++import android.view.View
++import android.view.ViewGroup
++import androidx.recyclerview.widget.DiffUtil
++import androidx.recyclerview.widget.ListAdapter
++import androidx.recyclerview.widget.RecyclerView
++import com.picpay.desafio.android.databinding.ListItemUserBinding
++import com.picpay.desafio.android.domain.model.User
++import com.squareup.picasso.Picasso
++
++class UserListAdapter(
++    private val onItemClick: (User) -> Unit
++) : ListAdapter<User, UserListAdapter.UserViewHolder>(UserDiffCallback()) {
++
++    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
++        val binding = ListItemUserBinding.inflate(
++            LayoutInflater.from(parent.context),
++            parent,
++            false
++        )
++        return UserViewHolder(binding, onItemClick)
++    }
++
++    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
++        holder.bind(getItem(position))
++    }
++
++    class UserViewHolder(
++        private val binding: ListItemUserBinding,
++        private val onItemClick: (User) -> Unit
++    ) : RecyclerView.ViewHolder(binding.root) {
++
++        fun bind(user: User) {
++            binding.name.text = user.name
++            binding.username.text = user.username
++            binding.progressBar.visibility = View.VISIBLE
++
++            Picasso.get()
++                .load(user.img)
++                .error(com.picpay.desafio.android.R.drawable.ic_round_account_circle)
++                .into(binding.picture, object : com.squareup.picasso.Callback {
++                    override fun onSuccess() {
++                        binding.progressBar.visibility = View.GONE
++                    }
++
++                    override fun onError(e: Exception?) {
++                        binding.progressBar.visibility = View.GONE
++                    }
++                })
++
++            binding.root.setOnClickListener {
++                onItemClick(user)
++            }
++        }
++    }
++
++    class UserDiffCallback : DiffUtil.ItemCallback<User>() {
++        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
++            return oldItem.id == newItem.id
++        }
++
++        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
++            return oldItem == newItem
++        }
++    }
++}
+Index: app/src/main/res/layout/list_item_shimmer.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/list_item_shimmer.xml b/app/src/main/res/layout/list_item_shimmer.xml
+new file mode 100644
+--- /dev/null	(date 1738764839049)
++++ b/app/src/main/res/layout/list_item_shimmer.xml	(date 1738764839049)
+@@ -0,0 +1,58 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:paddingTop="16dp"
++    android:background="@color/colorPrimaryDark">
++
++    <!-- Placeholder da imagem do usuário -->
++    <View
++        android:id="@+id/shimmer_picture"
++        android:layout_width="52dp"
++        android:layout_height="52dp"
++        android:layout_marginStart="24dp"
++        android:layout_marginTop="12dp"
++        android:layout_marginBottom="12dp"
++        android:background="@drawable/shimmer_background"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        app:layout_constraintBottom_toBottomOf="parent" />
++
++    <!-- Placeholder do username -->
++    <View
++        android:id="@+id/shimmer_username"
++        android:layout_width="140dp"
++        android:layout_height="20dp"
++        android:layout_marginStart="16dp"
++        android:layout_marginTop="8dp"
++        android:background="@drawable/shimmer_background"
++        app:layout_constraintStart_toEndOf="@id/shimmer_picture"
++        app:layout_constraintTop_toTopOf="@id/shimmer_picture"
++        android:minWidth="80dp" />
++
++    <!-- Placeholder do nome -->
++    <View
++        android:id="@+id/shimmer_name"
++        android:layout_width="120dp"
++        android:layout_height="20dp"
++        android:layout_marginStart="16dp"
++        android:layout_marginBottom="8dp"
++        android:background="@drawable/shimmer_background"
++        app:layout_constraintStart_toStartOf="@id/shimmer_username"
++        app:layout_constraintTop_toBottomOf="@id/shimmer_username"
++        android:maxWidth="60dp"/>
++
++    <!-- Placeholder do ProgressBar (para manter o espaço reservado) -->
++    <View
++        android:id="@+id/shimmer_progressBar"
++        android:layout_width="0dp"
++        android:layout_height="0dp"
++        android:visibility="gone"
++        app:layout_constraintBottom_toBottomOf="@+id/shimmer_picture"
++        app:layout_constraintEnd_toEndOf="@+id/shimmer_picture"
++        app:layout_constraintStart_toStartOf="@+id/shimmer_picture"
++        app:layout_constraintTop_toTopOf="@+id/shimmer_picture" />
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Sun Feb 16 19:36:17 BRT 2020\ndistributionBase=GRADLE_USER_HOME\ndistributionPath=wrapper/dists\nzipStoreBase=GRADLE_USER_HOME\nzipStorePath=wrapper/dists\ndistributionUrl=https\\://services.gradle.org/distributions/gradle-5.4.1-all.zip\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/gradle/wrapper/gradle-wrapper.properties b/gradle/wrapper/gradle-wrapper.properties
+--- a/gradle/wrapper/gradle-wrapper.properties	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ b/gradle/wrapper/gradle-wrapper.properties	(date 1738518227873)
+@@ -1,6 +1,6 @@
+-#Sun Feb 16 19:36:17 BRT 2020
++#Sun Feb 02 14:25:41 BRT 2025
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
++distributionUrl=https\://services.gradle.org/distributions/gradle-8.2-bin.zip
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-5.4.1-all.zip
+Index: app/src/test/java/com/picpay/desafio/android/UserViewModelTest.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/test/java/com/picpay/desafio/android/UserViewModelTest.kt b/app/src/test/java/com/picpay/desafio/android/UserViewModelTest.kt
+new file mode 100644
+--- /dev/null	(date 1738705216683)
++++ b/app/src/test/java/com/picpay/desafio/android/UserViewModelTest.kt	(date 1738705216683)
+@@ -0,0 +1,63 @@
++package com.picpay.desafio.android
++
++import androidx.arch.core.executor.testing.InstantTaskExecutorRule
++import androidx.lifecycle.Observer
++import com.picpay.desafio.android.domain.model.User
++import com.picpay.desafio.android.domain.repository.UserRepository
++import com.picpay.desafio.android.presentation.UserViewModel
++import kotlinx.coroutines.Dispatchers
++import kotlinx.coroutines.ExperimentalCoroutinesApi
++import kotlinx.coroutines.test.*
++import org.junit.*
++import org.junit.rules.TestRule
++import org.mockito.kotlin.*
++
++@ExperimentalCoroutinesApi
++class UserViewModelTest {
++
++    @get:Rule
++    val instantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
++
++    private val testDispatcher = StandardTestDispatcher()
++
++    private lateinit var viewModel: UserViewModel
++    private val repository: UserRepository = mock()
++    private val usersObserver: Observer<List<User>> = mock()
++    private val errorObserver: Observer<String> = mock()
++
++    @Before
++    fun setup() {
++        Dispatchers.setMain(testDispatcher)
++        viewModel = UserViewModel(repository).apply {
++            users.observeForever(usersObserver)
++            error.observeForever(errorObserver)
++        }
++    }
++
++    @After
++    fun tearDown() {
++        Dispatchers.resetMain()
++    }
++
++    @Test
++    fun givenSuccessfulFetch_whenFetchUsersIsCalled_thenPostUsers() = runTest {
++        val users = listOf(User(1, "url", "User Test", "usertest"))
++        whenever(repository.getUsers()).thenReturn(users)
++
++        viewModel.fetchUsers()
++        advanceUntilIdle()
++
++        verify(usersObserver).onChanged(users)
++        verify(errorObserver, never()).onChanged(any())
++    }
++
++    @Test
++    fun givenAPIFailure_whenFetchUsersIsCalled_thenPostErrorMessage() = runTest {
++        whenever(repository.getUsers()).thenThrow(RuntimeException("API Error"))
++
++        viewModel.fetchUsers()
++        advanceUntilIdle()
++
++        verify(errorObserver).onChanged("Erro ao carregar usuários")
++    }
++}
+Index: app/src/test/java/com/picpay/desafio/android/UserRepositoryTest.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/test/java/com/picpay/desafio/android/UserRepositoryTest.kt b/app/src/test/java/com/picpay/desafio/android/UserRepositoryTest.kt
+new file mode 100644
+--- /dev/null	(date 1738703614888)
++++ b/app/src/test/java/com/picpay/desafio/android/UserRepositoryTest.kt	(date 1738703614888)
+@@ -0,0 +1,61 @@
++package com.picpay.desafio.android
++
++import com.picpay.desafio.android.data.local.UserDao
++import com.picpay.desafio.android.data.remote.PicPayService
++import com.picpay.desafio.android.data.repository.UserRepositoryImpl
++import com.picpay.desafio.android.domain.model.User
++import com.picpay.desafio.android.domain.repository.UserRepository
++import kotlinx.coroutines.flow.flowOf
++import kotlinx.coroutines.runBlocking
++import org.junit.Assert.assertEquals
++import org.junit.Before
++import org.junit.Test
++import org.mockito.kotlin.mock
++import org.mockito.kotlin.never
++import org.mockito.kotlin.verify
++import org.mockito.kotlin.whenever
++
++class UserRepositoryTest {
++
++    private lateinit var repository: UserRepository
++    private val api: PicPayService = mock()
++    private val dao: UserDao = mock()
++
++    @Before
++    fun setup() {
++        repository = UserRepositoryImpl(api, dao)
++    }
++
++    @Test
++    fun givenCachedUsersWhenGetUsersIsCalledThenReturnCachedUsers() {
++        runBlocking {
++            // Given
++            val cachedUsers = listOf(User(1, "url", "User Test", "usertest"))
++            whenever(dao.getAllUsers()).thenReturn(flowOf(cachedUsers))
++
++            // When
++            val result = repository.getUsers()
++
++            // Then
++            assertEquals(cachedUsers, result)
++            verify(api, never()).getUsers()
++        }
++    }
++
++    @Test
++    fun givenEmptyCacheWhenGetUsersIsCalledThenFetchFromApiAndStoreInCache() {
++        runBlocking {
++            // Given
++            val apiUsers = listOf(User(1, "url", "User Test", "usertest"))
++            whenever(dao.getAllUsers()).thenReturn(flowOf(emptyList()))
++            whenever(api.getUsers()).thenReturn(apiUsers)
++
++            // When
++            val result = repository.getUsers()
++
++            // Then
++            assertEquals(apiUsers, result)
++            verify(dao).insertUsers(apiUsers)
++        }
++    }
++}
+Index: app/src/androidTest/java/com/picpay/desafio/android/MainActivityTest.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.picpay.desafio.android\n\nimport androidx.lifecycle.Lifecycle\nimport androidx.test.core.app.launchActivity\nimport androidx.test.espresso.Espresso.onView\nimport androidx.test.espresso.assertion.ViewAssertions.matches\nimport androidx.test.espresso.matcher.ViewMatchers.isDisplayed\nimport androidx.test.espresso.matcher.ViewMatchers.withText\nimport androidx.test.platform.app.InstrumentationRegistry\nimport okhttp3.mockwebserver.Dispatcher\nimport okhttp3.mockwebserver.MockResponse\nimport okhttp3.mockwebserver.MockWebServer\nimport okhttp3.mockwebserver.RecordedRequest\nimport org.junit.Test\n\n\nclass MainActivityTest {\n\n    private val server = MockWebServer()\n\n    private val context = InstrumentationRegistry.getInstrumentation().targetContext\n\n    @Test\n    fun shouldDisplayTitle() {\n        launchActivity<MainActivity>().apply {\n            val expectedTitle = context.getString(R.string.title)\n\n            moveToState(Lifecycle.State.RESUMED)\n\n            onView(withText(expectedTitle)).check(matches(isDisplayed()))\n        }\n    }\n\n    @Test\n    fun shouldDisplayListItem() {\n        server.dispatcher = object : Dispatcher() {\n            override fun dispatch(request: RecordedRequest): MockResponse {\n                return when (request.path) {\n                    \"/users\" -> successResponse\n                    else -> errorResponse\n                }\n            }\n        }\n\n        server.start(serverPort)\n\n        launchActivity<MainActivity>().apply {\n            // TODO(\"validate if list displays items returned by server\")\n        }\n\n        server.close()\n    }\n\n    companion object {\n        private const val serverPort = 8080\n\n        private val successResponse by lazy {\n            val body =\n                \"[{\\\"id\\\":1001,\\\"name\\\":\\\"Eduardo Santos\\\",\\\"img\\\":\\\"https://randomuser.me/api/portraits/men/9.jpg\\\",\\\"username\\\":\\\"@eduardo.santos\\\"}]\"\n\n            MockResponse()\n                .setResponseCode(200)\n                .setBody(body)\n        }\n\n        private val errorResponse by lazy { MockResponse().setResponseCode(404) }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/androidTest/java/com/picpay/desafio/android/MainActivityTest.kt b/app/src/androidTest/java/com/picpay/desafio/android/MainActivityTest.kt
+--- a/app/src/androidTest/java/com/picpay/desafio/android/MainActivityTest.kt	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ b/app/src/androidTest/java/com/picpay/desafio/android/MainActivityTest.kt	(date 1738705216803)
+@@ -1,68 +1,32 @@
+ package com.picpay.desafio.android
+ 
+-import androidx.lifecycle.Lifecycle
+-import androidx.test.core.app.launchActivity
++import androidx.test.core.app.ActivityScenario
+ import androidx.test.espresso.Espresso.onView
+ import androidx.test.espresso.assertion.ViewAssertions.matches
+-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+-import androidx.test.espresso.matcher.ViewMatchers.withText
+-import androidx.test.platform.app.InstrumentationRegistry
+-import okhttp3.mockwebserver.Dispatcher
+-import okhttp3.mockwebserver.MockResponse
+-import okhttp3.mockwebserver.MockWebServer
+-import okhttp3.mockwebserver.RecordedRequest
++import androidx.test.espresso.matcher.ViewMatchers.*
++import androidx.test.ext.junit.runners.AndroidJUnit4
++import androidx.test.filters.MediumTest
++import com.picpay.desafio.android.presentation.MainActivity
++import org.junit.Before
+ import org.junit.Test
++import org.junit.runner.RunWith
+ 
+-
++@MediumTest
++@RunWith(AndroidJUnit4::class)
+ class MainActivityTest {
+ 
+-    private val server = MockWebServer()
+-
+-    private val context = InstrumentationRegistry.getInstrumentation().targetContext
++    @Before
++    fun setup() {
++        ActivityScenario.launch(MainActivity::class.java)
++    }
+ 
+     @Test
+-    fun shouldDisplayTitle() {
+-        launchActivity<MainActivity>().apply {
+-            val expectedTitle = context.getString(R.string.title)
+-
+-            moveToState(Lifecycle.State.RESUMED)
+-
+-            onView(withText(expectedTitle)).check(matches(isDisplayed()))
+-        }
++    fun givenActivityLaunched_whenMainActivityStarts_thenDisplayRecyclerView() {
++        onView(withId(R.id.recyclerView)).check(matches(isDisplayed()))
+     }
+ 
+     @Test
+-    fun shouldDisplayListItem() {
+-        server.dispatcher = object : Dispatcher() {
+-            override fun dispatch(request: RecordedRequest): MockResponse {
+-                return when (request.path) {
+-                    "/users" -> successResponse
+-                    else -> errorResponse
+-                }
+-            }
+-        }
+-
+-        server.start(serverPort)
+-
+-        launchActivity<MainActivity>().apply {
+-            // TODO("validate if list displays items returned by server")
+-        }
+-
+-        server.close()
++    fun givenActivityLaunched_whenMainActivityStarts_thenDisplayProgressBarInitially() {
++        onView(withId(R.id.userListProgressBar)).check(matches(isDisplayed()))
+     }
+-
+-    companion object {
+-        private const val serverPort = 8080
+-
+-        private val successResponse by lazy {
+-            val body =
+-                "[{\"id\":1001,\"name\":\"Eduardo Santos\",\"img\":\"https://randomuser.me/api/portraits/men/9.jpg\",\"username\":\"@eduardo.santos\"}]"
+-
+-            MockResponse()
+-                .setResponseCode(200)
+-                .setBody(body)
+-        }
+-
+-        private val errorResponse by lazy { MockResponse().setResponseCode(404) }
+-    }
+-}
+\ No newline at end of file
++}
+Index: app/src/androidTest/java/com/picpay/desafio/android/UserDaoTest.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/androidTest/java/com/picpay/desafio/android/UserDaoTest.kt b/app/src/androidTest/java/com/picpay/desafio/android/UserDaoTest.kt
+new file mode 100644
+--- /dev/null	(date 1738705216620)
++++ b/app/src/androidTest/java/com/picpay/desafio/android/UserDaoTest.kt	(date 1738705216620)
+@@ -0,0 +1,68 @@
++package com.picpay.desafio.android
++
++import androidx.room.Room
++import androidx.test.core.app.ApplicationProvider
++import androidx.test.ext.junit.runners.AndroidJUnit4
++import com.picpay.desafio.android.data.local.AppDatabase
++import com.picpay.desafio.android.data.local.UserDao
++import com.picpay.desafio.android.domain.model.User
++import kotlinx.coroutines.flow.first
++import kotlinx.coroutines.runBlocking
++import org.junit.*
++import org.junit.Assert.assertEquals
++import org.junit.runner.RunWith
++
++@RunWith(AndroidJUnit4::class)
++class UserDaoTest {
++
++    private lateinit var db: AppDatabase
++    private lateinit var dao: UserDao
++
++    @Before
++    fun setup() {
++        db = Room.inMemoryDatabaseBuilder(
++            ApplicationProvider.getApplicationContext(),
++            AppDatabase::class.java
++        )
++            .allowMainThreadQueries()
++            .build()
++        dao = db.userDao()
++    }
++
++    @After
++    fun tearDown() {
++        db.close()
++    }
++
++    @Test
++    fun shouldInsertAndRetrieveUsers_whenUsersAreStored() = runBlocking {
++        val users = listOf(
++            User(1, "https://example.com/img1.png", "User One", "userone"),
++            User(2, "https://example.com/img2.png", "User Two", "usertwo")
++        )
++
++        dao.insertUsers(users)
++        val result = dao.getAllUsers().first()
++
++        assertEquals(users, result)
++    }
++
++    @Test
++    fun shouldReplaceUsers_whenSameIdIsInserted() = runBlocking {
++        val user1 = User(1, "https://example.com/img1.png", "User One", "userone")
++        val user2 = User(1, "https://example.com/img2.png", "Updated User", "updateduser")
++
++        dao.insertUsers(listOf(user1))
++        dao.insertUsers(listOf(user2))
++
++        val result = dao.getAllUsers().first()
++        Assert.assertEquals(1, result.size)
++        Assert.assertEquals(user2, result[0])
++    }
++
++    @Test
++    fun shouldReturnEmptyList_whenDatabaseIsEmpty() = runBlocking {
++        val result = dao.getAllUsers().first()
++        assertEquals(emptyList<User>(), result)
++    }
++}
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    package=\"com.picpay.desafio.android\">\n\n    <uses-permission android:name=\"android.permission.INTERNET\" />\n\n    <application\n        android:allowBackup=\"true\"\n        android:icon=\"@mipmap/ic_launcher\"\n        android:label=\"@string/app_name\"\n        android:networkSecurityConfig=\"@xml/network_security_config\"\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\n        android:supportsRtl=\"true\"\n        android:theme=\"@style/AppTheme\"\n        tools:ignore=\"AllowBackup,GoogleAppIndexingWarning\">\n        <activity android:name=\".MainActivity\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\" />\n\n                <category android:name=\"android.intent.category.LAUNCHER\" />\n            </intent-filter>\n        </activity>\n    </application>\n\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ b/app/src/main/AndroidManifest.xml	(date 1738556111076)
+@@ -1,26 +1,32 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:tools="http://schemas.android.com/tools"
+-    package="com.picpay.desafio.android">
++<manifest
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools">
+ 
++    <!-- Permissão para acesso à Internet -->
+     <uses-permission android:name="android.permission.INTERNET" />
+ 
+     <application
+-        android:allowBackup="true"
+-        android:icon="@mipmap/ic_launcher"
+-        android:label="@string/app_name"
+-        android:networkSecurityConfig="@xml/network_security_config"
+-        android:roundIcon="@mipmap/ic_launcher_round"
+-        android:supportsRtl="true"
+-        android:theme="@style/AppTheme"
+-        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+-        <activity android:name=".MainActivity">
+-            <intent-filter>
+-                <action android:name="android.intent.action.MAIN" />
+-
+-                <category android:name="android.intent.category.LAUNCHER" />
+-            </intent-filter>
+-        </activity>
+-    </application>
++        android:name=".PicPayApplication"
++    android:allowBackup="true"
++    android:icon="@mipmap/ic_launcher"
++    android:label="@string/app_name"
++    android:networkSecurityConfig="@xml/network_security_config"
++    android:roundIcon="@mipmap/ic_launcher_round"
++    android:supportsRtl="true"
++    android:theme="@style/AppTheme"
++    tools:ignore="AllowBackup,GoogleAppIndexingWarning">
++
++    <!-- Activity Principal -->
++    <activity
++        android:name=".presentation.MainActivity"
++        android:exported="true">
++        <intent-filter>
++            <action android:name="android.intent.action.MAIN" />
++            <category android:name="android.intent.category.LAUNCHER" />
++        </intent-filter>
++    </activity>
++
++</application>
+ 
+-</manifest>
+\ No newline at end of file
++    </manifest>
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\n\nbuildscript {\n    ext {\n        kotlin_version = '1.3.61'\n\n        appcompat_version = '1.1.0'\n        core_ktx_version = '1.2.0'\n        core_testing_version = '2.1.0'\n        constraintlayout_version = '1.1.3'\n        material_version = \"1.1.0\"\n        moshi_version = '1.8.0'\n        retrofit_version = '2.7.1'\n        okhttp_version = '4.3.1'\n        picasso_version = '2.71828'\n        circleimageview_version = '3.0.0'\n\n        junit_version = '4.12'\n        mockito_version = '2.27.0'\n        mockito_kotlin_version = '2.1.0'\n\n        test_runner_version = '1.1.1'\n        espresso_version = '3.1.1'\n\n        koin_version = \"2.0.1\"\n        dagger_version = \"2.23.2\"\n        lifecycle_version = \"2.2.0\"\n        coroutines_version = \"1.3.3\"\n        rxjava_version = \"2.2.17\"\n        rxandroid_version = \"2.1.1\"\n        core_ktx_test_version = \"1.2.0\"\n    }\n\n    repositories {\n        google()\n        jcenter()\n\n    }\n    dependencies {\n        classpath 'com.android.tools.build:gradle:3.5.3'\n        classpath \"org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version\"\n        // NOTE: Do not place your application dependencies here; they belong\n        // in the individual module build.gradle files\n    }\n}\n\nallprojects {\n    repositories {\n        google()\n        jcenter()\n\n    }\n}\n\ntask clean(type: Delete) {\n    delete rootProject.buildDir\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/build.gradle b/build.gradle
+--- a/build.gradle	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ b/build.gradle	(date 1738555452882)
+@@ -1,54 +1,67 @@
+-// Top-level build file where you can add configuration options common to all sub-projects/modules.
++// build.gradle (Project-Level)
+ 
+ buildscript {
+     ext {
+-        kotlin_version = '1.3.61'
++        // Kotlin Version
++        kotlin_version = '1.8.21'
+ 
+-        appcompat_version = '1.1.0'
+-        core_ktx_version = '1.2.0'
++        // AndroidX and Third-Party Library Versions
++        appcompat_version = '1.3.1'
++        core_ktx_version = '1.6.0'
+         core_testing_version = '2.1.0'
+-        constraintlayout_version = '1.1.3'
+-        material_version = "1.1.0"
+-        moshi_version = '1.8.0'
+-        retrofit_version = '2.7.1'
+-        okhttp_version = '4.3.1'
++        constraintlayout_version = '2.1.0'
++        material_version = "1.4.0"
++        retrofit_version = '2.9.0'
++        okhttp_version = '4.9.1'
+         picasso_version = '2.71828'
+-        circleimageview_version = '3.0.0'
++        circleimageview_version = '3.1.0'
++
++        // Testing Libraries
++        junit_version = '4.13.2'
++        mockito_version = '3.12.4'
++        mockito_kotlin_version = '3.2.0'
+ 
+-        junit_version = '4.12'
+-        mockito_version = '2.27.0'
+-        mockito_kotlin_version = '2.1.0'
++        // Android Testing
++        test_runner_version = '1.4.0'
++        espresso_version = '3.4.0'
+ 
+-        test_runner_version = '1.1.1'
+-        espresso_version = '3.1.1'
++        // Dependency Injection
++        koin_version = "3.4.0"
++        dagger_version = "2.40"
+ 
+-        koin_version = "2.0.1"
+-        dagger_version = "2.23.2"
+-        lifecycle_version = "2.2.0"
+-        coroutines_version = "1.3.3"
+-        rxjava_version = "2.2.17"
+-        rxandroid_version = "2.1.1"
+-        core_ktx_test_version = "1.2.0"
++        // Jetpack and Coroutines
++        lifecycle_version = "2.4.0"
++        coroutines_version = "1.5.2"
++
++        // Reactive Programming
++        rxjava_version = "3.0.0"
++        rxandroid_version = "3.0.0"
++
++        // Kotlin Test
++        core_ktx_test_version = "1.4.0"
+     }
+ 
+     repositories {
+         google()
+-        jcenter()
+-
++        mavenCentral()
+     }
++
+     dependencies {
+-        classpath 'com.android.tools.build:gradle:3.5.3'
++        // ✅ Fix: Set AGP version to `8.0.1` (Compatible with your project)
++        classpath "com.android.tools.build:gradle:8.0.1"
++
++        // Kotlin Gradle Plugin
+         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+-        // NOTE: Do not place your application dependencies here; they belong
+-        // in the individual module build.gradle files
++
++        classpath "com.google.dagger:hilt-android-gradle-plugin:2.44" // 🔥 ESSENCIAL PARA FUNCIONAR
++
+     }
+ }
+ 
+ allprojects {
+     repositories {
+         google()
+-        jcenter()
+-
++        mavenCentral()
+     }
+ }
+ 
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\n\napply plugin: 'kotlin-android'\n\napply plugin: 'kotlin-android-extensions'\n\napply plugin: 'kotlin-kapt'\n\nandroid {\n    compileSdkVersion 29\n    defaultConfig {\n        applicationId \"com.picpay.desafio.android\"\n        minSdkVersion 21\n        targetSdkVersion 29\n        versionCode 1\n        versionName \"1.0\"\n\n        vectorDrawables.useSupportLibrary = true\n\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\n    }\n    buildTypes {\n        debug {}\n\n        release {\n            minifyEnabled true\n            shrinkResources true\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\n        }\n    }\n\n    compileOptions {\n        sourceCompatibility 1.8\n        targetCompatibility 1.8\n    }\n\n    kotlinOptions {\n        jvmTarget = JavaVersion.VERSION_1_8.toString()\n    }\n}\n\ndependencies {\n    implementation fileTree(dir: 'libs', include: ['*.jar'])\n\n    implementation \"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version\"\n\n    implementation \"androidx.core:core-ktx:$core_ktx_version\"\n\n    implementation \"androidx.appcompat:appcompat:$appcompat_version\"\n    implementation \"androidx.constraintlayout:constraintlayout:$constraintlayout_version\"\n\n    implementation \"com.google.android.material:material:$material_version\"\n\n    implementation \"org.koin:koin-core:$koin_version\"\n    implementation \"org.koin:koin-android:$koin_version\"\n    implementation \"org.koin:koin-androidx-viewmodel:$koin_version\"\n\n    implementation \"com.google.dagger:dagger:$dagger_version\"\n    kapt \"com.google.dagger:dagger-compiler:$dagger_version\"\n\n    implementation \"androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version\"\n    implementation \"androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version\"\n    implementation \"androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version\"\n\n    implementation \"org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version\"\n    implementation \"org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version\"\n    testImplementation \"org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version\"\n\n    implementation \"io.reactivex.rxjava2:rxjava:$rxjava_version\"\n    implementation \"io.reactivex.rxjava2:rxandroid:$rxandroid_version\"\n\n    implementation 'com.google.code.gson:gson:2.8.6'\n\n    implementation \"com.squareup.retrofit2:retrofit:$retrofit_version\"\n    implementation \"com.squareup.retrofit2:adapter-rxjava2:$retrofit_version\"\n    implementation \"com.squareup.retrofit2:converter-gson:$retrofit_version\"\n    implementation \"com.squareup.okhttp3:okhttp:$okhttp_version\"\n    implementation \"com.squareup.okhttp3:mockwebserver:$okhttp_version\"\n\n    implementation \"com.squareup.picasso:picasso:$picasso_version\"\n    implementation \"de.hdodenhof:circleimageview:$circleimageview_version\"\n\n    testImplementation \"junit:junit:$junit_version\"\n    testImplementation \"org.mockito:mockito-core:$mockito_version\"\n    testImplementation \"com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version\"\n    testImplementation \"androidx.arch.core:core-testing:$core_testing_version\"\n    implementation \"org.koin:koin-test:$koin_version\"\n\n    androidTestImplementation \"androidx.test:runner:$test_runner_version\"\n    androidTestImplementation \"androidx.test.espresso:espresso-core:$espresso_version\"\n    androidTestImplementation \"androidx.test:core-ktx:$core_ktx_test_version\"\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ b/app/build.gradle	(date 1738761242609)
+@@ -1,27 +1,28 @@
+ apply plugin: 'com.android.application'
+-
+ apply plugin: 'kotlin-android'
+-
+-apply plugin: 'kotlin-android-extensions'
+-
++apply plugin: 'kotlin-parcelize'
+ apply plugin: 'kotlin-kapt'
++apply plugin: 'dagger.hilt.android.plugin' // 🔥 ESSENCIAL PARA O HILT FUNCIONAR
+ 
+ android {
+-    compileSdkVersion 29
++    namespace "com.picpay.desafio.android"
++    compileSdkVersion 33
++
+     defaultConfig {
+         applicationId "com.picpay.desafio.android"
+-        minSdkVersion 21
+-        targetSdkVersion 29
++        minSdkVersion 21  // ✅ Mantendo compatibilidade mínima
++        targetSdkVersion 33
+         versionCode 1
+         versionName "1.0"
+ 
+         vectorDrawables.useSupportLibrary = true
+-
+         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+     }
++
+     buildTypes {
+-        debug {}
+-
++        debug {
++            // Configurações específicas para debug (se necessário)
++        }
+         release {
+             minifyEnabled true
+             shrinkResources true
+@@ -29,64 +30,84 @@
+         }
+     }
+ 
++    buildFeatures {
++        viewBinding true
++    }
++
+     compileOptions {
+-        sourceCompatibility 1.8
+-        targetCompatibility 1.8
++        sourceCompatibility JavaVersion.VERSION_17
++        targetCompatibility JavaVersion.VERSION_17
++        coreLibraryDesugaringEnabled true  // ✅ Desugaring ativado corretamente
+     }
+ 
+     kotlinOptions {
+-        jvmTarget = JavaVersion.VERSION_1_8.toString()
++        jvmTarget = "17"
+     }
+ }
+ 
+ dependencies {
+-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+-
+-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+-
++    // ✅ Kotlin e Core AndroidX
++    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+     implementation "androidx.core:core-ktx:$core_ktx_version"
+ 
++    // ✅ AndroidX UI
+     implementation "androidx.appcompat:appcompat:$appcompat_version"
+     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+-
+     implementation "com.google.android.material:material:$material_version"
+ 
+-    implementation "org.koin:koin-core:$koin_version"
+-    implementation "org.koin:koin-android:$koin_version"
+-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+-
+-    implementation "com.google.dagger:dagger:$dagger_version"
+-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+-
++    // ✅ Jetpack (ViewModel, LiveData)
+     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
++    implementation "androidx.activity:activity-ktx:1.7.2"
+ 
++    // ✅ Corroutines
+     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
++    implementation 'androidx.test.espresso:espresso-contrib:3.6.1'
++    implementation 'androidx.test.ext:junit-ktx:1.2.1'
+     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+ 
+-    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+-    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+-
+-    implementation 'com.google.code.gson:gson:2.8.6'
+-
++    // ✅ Networking - Retrofit + OkHttp
+     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
++    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+     implementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
+ 
++    // ✅ JSON Parsing
++    implementation 'com.google.code.gson:gson:2.10.1'
++
++    // ✅ Room Database (Cache local)
++    implementation "androidx.room:room-runtime:2.5.2"
++    implementation "androidx.room:room-ktx:2.5.2" // 🔥 Adicionado para suporte a coroutines
++    kapt "androidx.room:room-compiler:2.5.2"
++
++    // ✅ Injeção de Dependências - Hilt
++    implementation "com.google.dagger:hilt-android:2.44"
++    kapt "com.google.dagger:hilt-compiler:2.44"
++    androidTestImplementation "com.google.dagger:hilt-android-testing:2.44"
++    kaptAndroidTest "com.google.dagger:hilt-compiler:2.44"
++
++    // ✅ Image Loading
+     implementation "com.squareup.picasso:picasso:$picasso_version"
+     implementation "de.hdodenhof:circleimageview:$circleimageview_version"
++    implementation 'com.facebook.shimmer:shimmer:0.5.0'
++
+ 
+-    testImplementation "junit:junit:$junit_version"
++
++    // ✅ Unit Testing
+     testImplementation "org.mockito:mockito-core:$mockito_version"
+-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
+-    testImplementation "androidx.arch.core:core-testing:$core_testing_version"
+-    implementation "org.koin:koin-test:$koin_version"
++    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockito_kotlin_version"
++    testImplementation "androidx.arch.core:core-testing:2.2.0"
++    testImplementation 'junit:junit:4.13.2'
+ 
++
++    // ✅ Instrumentation Testing
+     androidTestImplementation "androidx.test:runner:$test_runner_version"
+     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+     androidTestImplementation "androidx.test:core-ktx:$core_ktx_test_version"
++
++    // ✅ Core Library Desugaring (Compatibilidade com APIs mais antigas)
++    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.4"
+ }
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<androidx.core.widget.NestedScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\"\n    android:background=\"@color/colorPrimaryDark\"\n    tools:context=\".MainActivity\">\n\n    <LinearLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"\n        android:focusable=\"true\"\n        android:focusableInTouchMode=\"true\"\n        android:orientation=\"vertical\">\n\n        <TextView\n            android:id=\"@+id/title\"\n            style=\"@style/ScreenTitleTextView\"\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"wrap_content\"\n            android:layout_marginStart=\"24dp\"\n            android:layout_marginTop=\"48dp\"\n            android:text=\"@string/title\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toTopOf=\"parent\" />\n\n        <androidx.constraintlayout.widget.ConstraintLayout\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"wrap_content\">\n\n            <androidx.recyclerview.widget.RecyclerView\n                android:id=\"@+id/recyclerView\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"wrap_content\"\n                android:layout_marginTop=\"24dp\"\n                app:layout_constraintEnd_toEndOf=\"parent\"\n                app:layout_constraintStart_toStartOf=\"parent\"\n                app:layout_constraintTop_toTopOf=\"parent\"\n                tools:listitem=\"@layout/list_item_user\" />\n\n            <ProgressBar\n                android:id=\"@+id/user_list_progress_bar\"\n                style=\"?android:attr/progressBarStyle\"\n                android:layout_width=\"wrap_content\"\n                android:layout_height=\"wrap_content\"\n                android:layout_marginTop=\"8dp\"\n                android:layout_marginBottom=\"8dp\"\n                android:visibility=\"gone\"\n                app:layout_constraintBottom_toBottomOf=\"parent\"\n                app:layout_constraintEnd_toEndOf=\"@+id/recyclerView\"\n                app:layout_constraintStart_toStartOf=\"@+id/recyclerView\"\n                app:layout_constraintTop_toTopOf=\"@+id/recyclerView\"\n                app:layout_constraintVertical_bias=\"0.3\" />\n\n        </androidx.constraintlayout.widget.ConstraintLayout>\n\n    </LinearLayout>\n\n</androidx.core.widget.NestedScrollView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ b/app/src/main/res/layout/activity_main.xml	(date 1738762931759)
+@@ -1,17 +1,16 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
++<androidx.core.widget.NestedScrollView
++    xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:background="@color/colorPrimaryDark"
+-    tools:context=".MainActivity">
++    tools:context=".presentation.MainActivity">
+ 
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:focusable="true"
+-        android:focusableInTouchMode="true"
+         android:orientation="vertical">
+ 
+         <TextView
+@@ -21,40 +20,53 @@
+             android:layout_height="wrap_content"
+             android:layout_marginStart="24dp"
+             android:layout_marginTop="48dp"
+-            android:text="@string/title"
+-            app:layout_constraintStart_toStartOf="parent"
+-            app:layout_constraintTop_toTopOf="parent" />
++            android:text="@string/title" />
+ 
+         <androidx.constraintlayout.widget.ConstraintLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+ 
++            <!-- RecyclerView: inicialmente invisível -->
+             <androidx.recyclerview.widget.RecyclerView
+                 android:id="@+id/recyclerView"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
++                android:visibility="gone"
+                 android:layout_marginTop="24dp"
++                app:layout_constraintStart_toStartOf="parent"
++                app:layout_constraintTop_toTopOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
++                tools:listitem="@layout/list_item_user" />
++
++            <!-- ShimmerFrameLayout: placeholder enquanto os dados carregam -->
++            <com.facebook.shimmer.ShimmerFrameLayout
++                android:id="@+id/shimmerLayout"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                app:shimmer_auto_start="true"
++                app:shimmer_duration="1500"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintTop_toTopOf="parent"
+-                tools:listitem="@layout/list_item_user" />
++                app:layout_constraintEnd_toEndOf="parent"
++                app:layout_constraintBottom_toBottomOf="parent">
+ 
+-            <ProgressBar
+-                android:id="@+id/user_list_progress_bar"
+-                style="?android:attr/progressBarStyle"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:layout_marginTop="8dp"
+-                android:layout_marginBottom="8dp"
+-                android:visibility="gone"
+-                app:layout_constraintBottom_toBottomOf="parent"
+-                app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+-                app:layout_constraintStart_toStartOf="@+id/recyclerView"
+-                app:layout_constraintTop_toTopOf="@+id/recyclerView"
+-                app:layout_constraintVertical_bias="0.3" />
++                <LinearLayout
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content"
++                    android:orientation="vertical">
++
++                    <!-- Repetindo o placeholder para simular vários itens -->
++                    <include layout="@layout/list_item_shimmer" />
++                    <include layout="@layout/list_item_shimmer" />
++                    <include layout="@layout/list_item_shimmer" />
++                    <include layout="@layout/list_item_shimmer" />
++                    <include layout="@layout/list_item_shimmer" />
++
++                </LinearLayout>
++            </com.facebook.shimmer.ShimmerFrameLayout>
+ 
+         </androidx.constraintlayout.widget.ConstraintLayout>
+ 
+     </LinearLayout>
+ 
+-</androidx.core.widget.NestedScrollView>
+\ No newline at end of file
++</androidx.core.widget.NestedScrollView>
+Index: app/src/main/java/com/picpay/desafio/android/domain/repository/UserRepository.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/domain/repository/UserRepository.kt b/app/src/main/java/com/picpay/desafio/android/domain/repository/UserRepository.kt
+new file mode 100644
+--- /dev/null	(date 1738635234578)
++++ b/app/src/main/java/com/picpay/desafio/android/domain/repository/UserRepository.kt	(date 1738635234578)
+@@ -0,0 +1,7 @@
++package com.picpay.desafio.android.domain.repository
++
++import com.picpay.desafio.android.domain.model.User
++
++interface UserRepository {
++    suspend fun getUsers(): List<User>
++}
+Index: app/src/main/java/com/picpay/desafio/android/presentation/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/presentation/MainActivity.kt b/app/src/main/java/com/picpay/desafio/android/presentation/MainActivity.kt
+new file mode 100644
+--- /dev/null	(date 1738763006275)
++++ b/app/src/main/java/com/picpay/desafio/android/presentation/MainActivity.kt	(date 1738763006275)
+@@ -0,0 +1,59 @@
++package com.picpay.desafio.android.presentation
++
++import android.os.Bundle
++import android.view.View
++import android.widget.Toast
++import androidx.activity.viewModels
++import androidx.appcompat.app.AppCompatActivity
++import androidx.recyclerview.widget.LinearLayoutManager
++import com.picpay.desafio.android.databinding.ActivityMainBinding
++import dagger.hilt.android.AndroidEntryPoint
++
++@AndroidEntryPoint
++class MainActivity : AppCompatActivity() {
++
++    private lateinit var binding: ActivityMainBinding
++    private val viewModel: UserViewModel by viewModels()
++
++    private val adapter by lazy {
++        UserListAdapter { user ->
++            Toast.makeText(this, "Usuário clicado: ${user.name}", Toast.LENGTH_SHORT).show()
++        }
++    }
++
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        binding = ActivityMainBinding.inflate(layoutInflater)
++        setContentView(binding.root)
++
++        setupRecyclerView()
++        observeViewModel()
++
++        // Inicia o Shimmer (caso não inicie automaticamente)
++        binding.shimmerLayout.startShimmer()
++
++        viewModel.fetchUsers()
++    }
++
++    private fun setupRecyclerView() {
++        binding.recyclerView.layoutManager = LinearLayoutManager(this)
++        binding.recyclerView.adapter = adapter
++    }
++
++    private fun observeViewModel() {
++        viewModel.users.observe(this) { userList ->
++            // Para o Shimmer e exibe o RecyclerView
++            binding.shimmerLayout.stopShimmer()
++            binding.shimmerLayout.visibility = View.GONE
++            binding.recyclerView.visibility = View.VISIBLE
++
++            adapter.submitList(userList)
++        }
++
++        viewModel.error.observe(this) { errorMessage ->
++            binding.shimmerLayout.stopShimmer()
++            binding.shimmerLayout.visibility = View.GONE
++            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
++        }
++    }
++}
+Index: app/src/main/java/com/picpay/desafio/android/di/AppModule.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/di/AppModule.kt b/app/src/main/java/com/picpay/desafio/android/di/AppModule.kt
+new file mode 100644
+--- /dev/null	(date 1738699125514)
++++ b/app/src/main/java/com/picpay/desafio/android/di/AppModule.kt	(date 1738699125514)
+@@ -0,0 +1,54 @@
++package com.picpay.desafio.android.di
++
++import android.content.Context
++import androidx.room.Room
++import com.picpay.desafio.android.data.local.AppDatabase
++import com.picpay.desafio.android.data.local.UserDao
++import com.picpay.desafio.android.data.remote.PicPayService
++import com.picpay.desafio.android.data.repository.UserRepositoryImpl
++import com.picpay.desafio.android.domain.repository.UserRepository
++import dagger.Module
++import dagger.Provides
++import dagger.hilt.InstallIn
++import dagger.hilt.android.qualifiers.ApplicationContext
++import dagger.hilt.components.SingletonComponent
++import retrofit2.Retrofit
++import retrofit2.converter.gson.GsonConverterFactory
++import javax.inject.Singleton
++
++@Module
++@InstallIn(SingletonComponent::class)
++object AppModule {
++
++    @Provides
++    @Singleton
++    fun provideRetrofit(): PicPayService {
++        return Retrofit.Builder()
++            .baseUrl("https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/")
++            .addConverterFactory(GsonConverterFactory.create())
++            .build()
++            .create(PicPayService::class.java)
++    }
++
++    @Provides
++    @Singleton
++    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
++        return Room.databaseBuilder(
++            context.applicationContext,
++            AppDatabase::class.java,
++            "app_db"
++        ).build()
++    }
++
++    @Provides
++    @Singleton
++    fun provideUserDao(db: AppDatabase): UserDao {
++        return db.userDao()
++    }
++
++    @Provides
++    @Singleton
++    fun provideUserRepository(api: PicPayService, dao: UserDao): UserRepository {
++        return UserRepositoryImpl(api, dao)
++    }
++}
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"CMakeSettings\">\n    <configurations>\n      <configuration PROFILE_NAME=\"Debug\" CONFIG_NAME=\"Debug\" />\n    </configurations>\n  </component>\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\n  </component>\n  <component name=\"ProjectType\">\n    <option name=\"id\" value=\"Android\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 7f84a9604ac71ec066aa5fdfce5f18c0d9d61748)
++++ b/.idea/misc.xml	(date 1738799787543)
+@@ -1,11 +1,10 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="CMakeSettings">
+     <configurations>
+       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+     </configurations>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: app/src/main/java/com/picpay/desafio/android/presentation/UserViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/presentation/UserViewModel.kt b/app/src/main/java/com/picpay/desafio/android/presentation/UserViewModel.kt
+new file mode 100644
+--- /dev/null	(date 1738766253859)
++++ b/app/src/main/java/com/picpay/desafio/android/presentation/UserViewModel.kt	(date 1738766253859)
+@@ -0,0 +1,35 @@
++package com.picpay.desafio.android.presentation
++
++import androidx.lifecycle.LiveData
++import androidx.lifecycle.MutableLiveData
++import androidx.lifecycle.ViewModel
++import androidx.lifecycle.viewModelScope
++import com.picpay.desafio.android.domain.model.User
++import com.picpay.desafio.android.domain.repository.UserRepository
++import dagger.hilt.android.lifecycle.HiltViewModel
++import kotlinx.coroutines.delay
++import kotlinx.coroutines.launch
++import javax.inject.Inject
++
++@HiltViewModel
++class UserViewModel @Inject constructor(
++    private val repository: UserRepository
++) : ViewModel() {
++
++    private val _users = MutableLiveData<List<User>>()
++    val users: LiveData<List<User>> get() = _users
++
++    private val _error = MutableLiveData<String>()
++    val error: LiveData<String> get() = _error
++
++    fun fetchUsers() {
++        viewModelScope.launch {
++            delay(1500)
++            try {
++                _users.value = repository.getUsers()
++            } catch (e: Exception) {
++                _error.value = "Erro ao carregar usuários"
++            }
++        }
++    }
++}
+Index: app/src/main/java/com/picpay/desafio/android/data/repository/UserRepositoryImpl.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/data/repository/UserRepositoryImpl.kt b/app/src/main/java/com/picpay/desafio/android/data/repository/UserRepositoryImpl.kt
+new file mode 100644
+--- /dev/null	(date 1738635220849)
++++ b/app/src/main/java/com/picpay/desafio/android/data/repository/UserRepositoryImpl.kt	(date 1738635220849)
+@@ -0,0 +1,28 @@
++package com.picpay.desafio.android.data.repository
++
++import com.picpay.desafio.android.data.local.UserDao
++import com.picpay.desafio.android.data.remote.PicPayService
++import com.picpay.desafio.android.domain.model.User
++import com.picpay.desafio.android.domain.repository.UserRepository
++import kotlinx.coroutines.Dispatchers
++import kotlinx.coroutines.flow.first
++import kotlinx.coroutines.withContext
++
++class UserRepositoryImpl(
++    private val api: PicPayService,
++    private val dao: UserDao
++) : UserRepository {
++
++    override suspend fun getUsers(): List<User> {
++        return withContext(Dispatchers.IO) {
++            val cache = dao.getAllUsers().first()
++            if (cache.isNotEmpty()) {
++                cache
++            } else {
++                val users = api.getUsers()
++                dao.insertUsers(users)
++                users
++            }
++        }
++    }
++}
+Index: app/src/main/java/com/picpay/desafio/android/domain/model/User.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/picpay/desafio/android/domain/model/User.kt b/app/src/main/java/com/picpay/desafio/android/domain/model/User.kt
+new file mode 100644
+--- /dev/null	(date 1738553361679)
++++ b/app/src/main/java/com/picpay/desafio/android/domain/model/User.kt	(date 1738553361679)
+@@ -0,0 +1,16 @@
++package com.picpay.desafio.android.domain.model
++
++import androidx.room.Entity
++import androidx.room.PrimaryKey
++import android.os.Parcelable
++import com.google.gson.annotations.SerializedName
++import kotlinx.parcelize.Parcelize
++
++@Entity(tableName = "users")
++@Parcelize
++data class User(
++    @PrimaryKey val id: Int,
++    @SerializedName("img") val img: String,
++    @SerializedName("name") val name: String,
++    @SerializedName("username") val username: String
++) : Parcelable

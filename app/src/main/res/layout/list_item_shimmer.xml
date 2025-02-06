@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    android:paddingTop="16dp">
+
+    <View
+        android:id="@+id/shimmer_picture"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/shimmer_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/shimmer_username"
+        android:layout_width="140dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shimmer_background"
+        android:minWidth="80dp"
+        app:layout_constraintStart_toEndOf="@id/shimmer_picture"
+        app:layout_constraintTop_toTopOf="@id/shimmer_picture" />
+
+    <View
+        android:id="@+id/shimmer_name"
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/shimmer_background"
+        android:maxWidth="60dp"
+        app:layout_constraintStart_toStartOf="@id/shimmer_username"
+        app:layout_constraintTop_toBottomOf="@id/shimmer_username" />
+
+    <View
+        android:id="@+id/shimmer_progressBar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/shimmer_picture"
+        app:layout_constraintEnd_toEndOf="@+id/shimmer_picture"
+        app:layout_constraintStart_toStartOf="@+id/shimmer_picture"
+        app:layout_constraintTop_toTopOf="@+id/shimmer_picture" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
