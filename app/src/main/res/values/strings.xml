@@ -2,5 +2,8 @@
     <string name="app_name">PicPay</string>
     <string name="title">Contatos</string>
     <string name="error">Ocorreu um erro. Tente novamente.</string>
+    <string name="errorWithCache">Não foi possível conectar ao servidor. Exibindo dados em cache.</string>
+    <string name="reload">Recarregar</string>
 
+    <string name="image_profile_description">Imagem do perfil de um contato</string>
 </resources>

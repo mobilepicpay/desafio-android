@@ -1,17 +1,20 @@
-apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
-
-apply plugin: 'kotlin-kapt'
+plugins {
+    id('com.android.application')
+    id('kotlin-android')
+    id('kotlin-kapt')
+    id('kotlin-parcelize')
+    id('org.jetbrains.kotlin.plugin.compose')
+    id('io.gitlab.arturbosch.detekt')
+}
 
 android {
-    compileSdkVersion 29
+    namespace = "com.picpay.desafio.android"
+
     defaultConfig {
         applicationId "com.picpay.desafio.android"
-        minSdkVersion 21
-        targetSdkVersion 29
+        compileSdk 34
+        minSdkVersion 24
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
 
@@ -19,6 +22,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         debug {}
 
@@ -30,13 +34,53 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
+
+    buildFeatures {
+        compose true
+    }
+
+    kapt {
+        correctErrorTypes true
+
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas".toString())
+        }
+    }
+
+    lint {
+        abortOnError = false
+        warningsAsErrors = true
+        checkReleaseBuilds = false
+        disable.add("UnusedResources")
+        enable.add("ObsoleteSdkInt")
+        lintConfig = file("lint.xml")
+    }
+
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            merges += "META-INF/LICENSE.md"
+            merges += "META-INF/LICENSE-notice.md"
+        }
+    }
+}
+
+detekt {
+    config = files("$rootDir/config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
+    allRules = false
+    autoCorrect = true
+}
+
+tasks.named("check") {
+    dependsOn("detekt")
 }
 
 dependencies {
@@ -46,17 +90,15 @@ dependencies {
 
     implementation "androidx.core:core-ktx:$core_ktx_version"
 
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
-
-    implementation "com.google.android.material:material:$material_version"
-
-    implementation "org.koin:koin-core:$koin_version"
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-
-    implementation "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    implementation(project.dependencies.platform("io.insert-koin:koin-bom:$koin_version"))
+    implementation "io.insert-koin:koin-core"
+    implementation "io.insert-koin:koin-core-coroutines"
+    implementation "io.insert-koin:koin-android"
+    implementation "io.insert-koin:koin-androidx-compose"
+    implementation "io.insert-koin:koin-androidx-compose-navigation"
+    implementation "io.insert-koin:koin-androidx-workmanager"
+    implementation "io.insert-koin:koin-androidx-navigation"
+    implementation "io.insert-koin:koin-test"
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
@@ -69,24 +111,38 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
 
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation "com.google.code.gson:gson:$gson_version"
 
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
-    implementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
 
-    implementation "com.squareup.picasso:picasso:$picasso_version"
-    implementation "de.hdodenhof:circleimageview:$circleimageview_version"
+    implementation(platform "com.squareup.okhttp3:okhttp-bom:$okhttp_version")
+    implementation "com.squareup.okhttp3:okhttp"
+    implementation"com.squareup.okhttp3:logging-interceptor"
+    testImplementation "com.squareup.okhttp3:mockwebserver"
 
+    implementation 'androidx.compose.ui:ui-test-junit4-android:1.7.8'
     testImplementation "junit:junit:$junit_version"
-    testImplementation "org.mockito:mockito-core:$mockito_version"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
-    implementation "org.koin:koin-test:$koin_version"
+    testImplementation("io.mockk:mockk:$mockk_version")
+    androidTestImplementation("io.mockk:mockk-android:$mockk_version")
 
-    androidTestImplementation "androidx.test:runner:$test_runner_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-    androidTestImplementation "androidx.test:core-ktx:$core_ktx_test_version"
+    implementation(platform("androidx.compose:compose-bom:$compose_version"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:$compose_version"))
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_viewmodel_compose_version")
+    implementation("androidx.compose.runtime:runtime-livedata")
+    implementation("androidx.compose.runtime:runtime-rxjava2")
+
+    implementation("io.coil-kt.coil3:coil-compose:$coil_version")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:$coil_version")
+
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
 }
