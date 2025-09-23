@@ -15,7 +15,7 @@ sealed class PostsState {
 }
 
 class PostsViewModel(private val getPostsUseCase: GetPostsUseCase) : ViewModel() {
-    private val _state = MutableLiveData<PostsState>()
+    private val _state = MutableLiveData<PostsState>(PostsState.Loading)
     val state: LiveData<PostsState> get() = _state
 
     fun loadPosts() {
