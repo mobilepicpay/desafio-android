@@ -8,11 +8,11 @@ apply plugin: 'kotlin-kapt'
 
 android {
     namespace 'com.picpay.desafio.android'
-    compileSdkVersion 34
+    compileSdkVersion 35
     defaultConfig {
         applicationId "com.picpay.desafio.android"
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion 35
         versionCode 1
         versionName "1.0"
 
@@ -56,10 +56,8 @@ dependencies {
 
     implementation "com.google.android.material:material:$material_version"
 
-//    implementation "org.koin:koin-core:$koin_version"
-//    implementation "org.koin:koin-android:$koin_version"
-//    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "io.insert-koin:koin-core:$koin_version"
+    implementation "io.insert-koin:koin-android:$koin_version"
 
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
