@@ -10,17 +10,20 @@ import com.picpay.desafio.android.R
 import com.picpay.desafio.android.presentation.users.adapter.UserListAdapter
 import com.picpay.desafio.android.presentation.users.viewmodel.UsersState
 import com.picpay.desafio.android.presentation.users.viewmodel.UsersViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
+
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var adapter: UserListAdapter
-    private val viewModel: UsersViewModel by viewModel()
+
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val viewModel = getViewModel <UsersViewModel> ()
 
         // Configurar UI
         recyclerView = findViewById(R.id.recyclerView)
