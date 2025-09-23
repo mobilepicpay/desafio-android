@@ -20,3 +20,63 @@ Com o passar do tempo identificamos alguns problemas que impedem esse aplicativo
 Boa sorte! =)
 
 Ps.: Fique à vontade para editar o projeto inteiro, organização de pastas e módulos, bem como as dependências utilizadas
+
+
+# Refatoração
+O app foi completamente refatorado para seguir a arquitetura Clean Architecture + MVVM conforme as recomendações oficiais do time do Android (https://developer.android.com/topic/architecture), implementando as melhores práticas de desenvolvimento Android moderno.
+Arquitetura Implementada
+
+# MVVM (Model-View-ViewModel)
+View: Activities/Fragments responsáveis apenas pela UI
+ViewModel: Gerencia estado da UI, expõe LiveData para observers
+Model: Dados e lógica de negócio (Domain + Data layers)
+
+# Clean Architecture - 3 Camadas
+## Domain Layer
+Regras de negócio, interfaces dos repositórios e entidades do domínio
+Model: User, Post - entidades puras do domínio
+Repository Interfaces: UserRepository, PostRepository - contratos para acesso a dados
+Use Cases: GetUsersUseCase, GetPostsUseCase - encapsulam lógica de negócio
+
+## Data Layer
+Implementações concretas de acesso a dados e mapeamento
+Models: UserResponse, PostResponse - DTOs da API
+Mappers: UserMapper, PostMapper - conversão DTO ↔ Domain
+Repositories: UserRepositoryImpl, PostRepositoryImpl - implementações dos repositórios
+Services: PicPayService, PostsService - clientes HTTP especializados
+
+## Presentation Layer
+UI e gerenciamento de estado visual
+Activities/Fragments: MainActivity, UsersFragment, PostsFragment
+ViewModels: UsersViewModel, PostsViewModel - estados (Loading/Success/Error)
+Adapters/ViewHolders: UserListAdapter, PostListAdapter - exibição de listas
+UI Components: RecyclerView com DiffUtil para performance
+
+# Funcionalidades Implementadas
+## Multi-API Architecture
+PicPay API: https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/
+JSONPlaceholder API: https://jsonplaceholder.typicode.com/
+Separação clara com módulos Koin dedicados para isolamento
+
+# Interface Moderna
+Tabbed Navigation: ViewPager2 + TabLayout (Usuários + Posts)
+Progressive UI: Loading states, error handling, empty states
+Material Design: Tema consistente e responsivo
+
+# Testes Unitários Completos (usando IA para criar)
+PostsViewModelTest: Estados Loading/Success/Error
+GetPostsUseCaseTest: Lógica de negócio
+PostRepositoryImplTest: Acesso a dados + mapeamento
+PostMapperTest: Conversões DTO ↔ Domain
+Cobertura: 11 testes passando (100% sucesso)
+
+# Injeção de Dependência
+Koin: Módulos organizados por camada
+Qualifiers: Separação de instâncias Retrofit (picpay, jsonplaceholder)
+Scopes: ViewModels, factories, singletons apropriados
+
+# Performance & Qualidade
+Coroutines + LiveData (poderia usar Flow): Programação assíncrona
+View Binding: Substituição de findViewById
+DiffUtil: Atualizações eficientes de listas
+Error Handling: Tratamento robusto de exceções
