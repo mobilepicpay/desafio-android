@@ -1,59 +1,44 @@
 package com.picpay.desafio.android.presentation.users
 
-import android.view.View
-import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.presentation.users.adapter.UserListAdapter
-import com.picpay.desafio.android.presentation.users.viewmodel.UsersState
-import com.picpay.desafio.android.presentation.users.viewmodel.UsersViewModel
-import org.koin.androidx.viewmodel.ext.android.getViewModel
-
+import com.picpay.desafio.android.presentation.posts.PostsFragment
+import com.picpay.desafio.android.presentation.users.UsersFragment
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
-
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var progressBar: ProgressBar
-    private lateinit var adapter: UserListAdapter
-
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val viewModel = getViewModel <UsersViewModel> ()
+        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+        val viewPager = findViewById<ViewPager2>(R.id.viewPager)
 
-        // Configurar UI
-        recyclerView = findViewById(R.id.recyclerView)
-        progressBar = findViewById(R.id.user_list_progress_bar)
+        val adapter = ViewPagerAdapter(this)
+        viewPager.adapter = adapter
 
-        adapter = UserListAdapter()
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Usuários"
+                1 -> "Posts"
+                else -> "Tab $position"
+            }
+        }.attach()
+    }
 
-        // Observar estados do ViewModel
-        viewModel.state.observe(this) { state ->
-            when (state) {
-                is UsersState.Loading -> {
-                    progressBar.visibility = View.VISIBLE
-                    recyclerView.visibility = View.GONE
-                }
-                is UsersState.Success -> {
-                    progressBar.visibility = View.GONE
-                    recyclerView.visibility = View.VISIBLE
-                    adapter.users = state.users
-                }
-                is UsersState.Error -> {
-                    progressBar.visibility = View.GONE
-                    recyclerView.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
-                }
+    class ViewPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
+        override fun getItemCount(): Int = 2
+
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> UsersFragment()
+                1 -> PostsFragment()
+                else -> throw IllegalStateException("Invalid position $position")
             }
         }
-
-        // Carregar dados
-        viewModel.loadUsers()
     }
 }
