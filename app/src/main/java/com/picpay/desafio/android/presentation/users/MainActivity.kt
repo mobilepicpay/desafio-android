@@ -1,4 +1,4 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.presentation.users
 
 import android.view.View
 import android.widget.ProgressBar
@@ -8,6 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.picpay.desafio.android.R
+import com.picpay.desafio.android.User
+import com.picpay.desafio.android.PicPayService
+import com.picpay.desafio.android.presentation.users.adapter.UserListAdapter
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
