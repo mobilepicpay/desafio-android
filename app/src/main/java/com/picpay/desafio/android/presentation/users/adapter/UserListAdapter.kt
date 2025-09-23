@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.picpay.desafio.android.User
+import com.picpay.desafio.android.domain.model.User
 import com.picpay.desafio.android.databinding.ListItemUserBinding
 import com.picpay.desafio.android.presentation.users.adapter.UserListDiffCallback
 import com.picpay.desafio.android.presentation.users.viewholder.UserListItemViewHolder
