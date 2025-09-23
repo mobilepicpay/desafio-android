@@ -1,6 +1,6 @@
 package com.picpay.desafio.android.di.modules
 
-import com.picpay.desafio.android.PicPayService
+import com.picpay.desafio.android.data.remote.PicPayService
 import okhttp3.OkHttpClient
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
