@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.picpay.desafio.android.domain.model.User
+import com.picpay.desafio.android.domain.usecase.GetUsersUseCase
 import kotlinx.coroutines.launch
 
 sealed class UsersState {
@@ -13,7 +14,7 @@ sealed class UsersState {
     data class Error(val message: String) : UsersState()
 }
 
-class UsersViewModel : ViewModel() {
+class UsersViewModel(private val getUsersUseCase: GetUsersUseCase) : ViewModel() {
     private val _state = MutableLiveData<UsersState>()
     val state: LiveData<UsersState> get() = _state
 
@@ -21,9 +22,8 @@ class UsersViewModel : ViewModel() {
         _state.value = UsersState.Loading
         viewModelScope.launch {
             try {
-                // TODO: Implementar chamada da API através de UseCase/Repository
-                // Por enquanto, simulando uma chamada bem-sucedida vazia
-                _state.value = UsersState.Success(emptyList())
+                val users = getUsersUseCase()
+                _state.value = UsersState.Success(users)
             } catch (e: Exception) {
                 _state.value = UsersState.Error(e.message ?: "Erro desconhecido")
             }
